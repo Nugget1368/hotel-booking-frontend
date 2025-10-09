@@ -59,4 +59,16 @@ export default class Api {
             return response;
         })
     }
+
+    static getGuestFromEmailAsync = async (email) => {
+        const apiUrl = import.meta.env.VITE_API_URL;
+        let encodedemail = encodeURIComponent(email);
+        try {
+            const response = await fetch(apiUrl + `/guests/${encodedemail}`);
+            return response.json();
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
 }

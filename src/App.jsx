@@ -16,9 +16,15 @@ function App() {
     let response = await api.makeReservationAsync(data);
   }
 
+  const getGuests = async () => {
+    let response = await api.getGuestFromEmailAsync("notbatman@gmail.com");
+    console.log(response);
+  }
+
 return (
   <>
     <button onClick={reservation}>Make Reservation</button>
+    <button onClick={getGuests}></button>
   </>
 )
 }
