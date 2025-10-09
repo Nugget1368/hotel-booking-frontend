@@ -4,28 +4,22 @@ import { useState } from 'react'
 
 
 function App() {
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [roomType, setRoomType] = useState("");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
 
-  const reservation = async () => {
-    // let data = {
-    //   "firstName": "Bruce",
-    //   "lastName": "Wayne",
-    //   "email": "notbatman@gmail.com",
-    //   "phone": "1234567890",
-    //   "roomType": "single",
-    //   "checkIn": "2025-11-01",
-    //   "checkOut": "2025-11-05"
-    // }
-    // let response = await api.makeReservationAsync(data);
-  }
-
-  const getGuests = async () => {
-    let response = await api.getGuestFromEmailAsync("notbatman@gmail.com");
+  const reservation = async (e) => {
+    e.preventDefault();
+    let data = {firstName, lastName, email, phone, roomType, checkIn, checkOut};
+    let response = await api.makeReservationAsync(data);
+    if (response) {
+      alert("Reservation was made!");
+      closeModal();
+    }
     console.log(response);
   }
 
@@ -52,11 +46,11 @@ function App() {
               <div className="row">
                 <div className="column">
                   <label htmlFor="firstName">First Name</label>
-                  <input type="text" name="firstName" id="firstName" required autoFocus value={name} onChange={(e) => setName(e.target.value)} />
+                  <input type="text" name="firstName" id="firstName" required autoFocus value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                 </div>
                 <div className="column">
                   <label htmlFor="lastName">Last Name</label>
-                  <input type="text" name="lastName" id="lastName" value={name} onChange={(e) => setName(e.target.value)} />
+                  <input type="text" name="lastName" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
                 </div>
               </div>
               <div className="column">

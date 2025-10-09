@@ -52,12 +52,15 @@ export default class Api {
             let id = response.guestId;
             if(!id)
                 throw new Error("Missing id");
-            return this.createReservationAsync(id, data);
+            let reservationResponse = this.createReservationAsync(id, data);
+            return reservationResponse;
         }).then((response) => {
             if(!response.success)
                 throw new Error(response.message);
-            return response;
-        })
+        }).catch((e) => {
+            console.log(e);
+        });
+        return true;
     }
 
     static getGuestFromEmailAsync = async (email) => {
