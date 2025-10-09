@@ -40,3 +40,115 @@
 .read-the-docs {
   color: #888;
 }
+
+
+/* Grundinställningar */
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+
+/* SECTION: row + wrap (row) */
+section,
+.row {
+  display: flex;
+  flex-direction: row;   /* row */
+  flex-wrap: wrap;      /* wrap */
+  gap: 1rem;            /* utrymme mellan barnen */
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ARTICLE: column */
+article,
+.column {
+  display: flex;
+  flex-direction: column; /* column */
+  align-items: stretch;
+  text-align: start;
+  gap: 0.75rem;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 8px;
+}
+
+fieldset{
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: start;
+  gap: 0.75rem;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 8px
+}
+
+/* Utility-klass .row = row + wrap */
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+input{
+  height: 1.75rem;
+  font-size: 20px;
+}
+
+.row > * {
+  flex: 1;
+  flex-grow: 1;
+}
+
+/* Utility-klass .column = column (kan användas på valfri container) */
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Responsiva beteenden - justera breakpoint som du vill */
+@media (max-width: 720px) {
+  /* Gör section-barn fullbredd (stacka) på mindre skärmar */
+  section > * {
+    flex: 1 1 100%;
+    min-width: 0; /* för text-trunkering etc */
+  }
+
+  /* Justera gaps och paddings för mindre yta */
+  section, article, .row {
+    gap: 0.5rem;
+    padding: 0.75rem;
+  }
+
+  /* Knapprad görs gärna fullbredd eller wrappar */
+  .row {
+    justify-content: stretch;
+  }
+}
+
+/* Desktop / större layouter: exempel på hur du ger artiklar proportioner */
+@media (min-width: 721px) {
+  /* Två kolumner + en sidokolumn-exempel */
+  section > article:nth-child(1) { flex: 1 1 48%; } /* nära halva bredden */
+  section > article:nth-child(2) { flex: 1 1 48%; }
+  section > .aside { flex: 0 0 100%; } /* om du vill att aside hamnar under (ändra efter behov) */
+  
+  /* Alternativ: make aside a fixed sidebar */
+  /* section > .aside { flex: 0 0 24%; } */
+}
+
+/* Små visuella förbättringar */
+button {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+fieldset{
+  border: none;
+  padding: 0;
+  margin: 0;
+}
