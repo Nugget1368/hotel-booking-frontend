@@ -8,7 +8,7 @@ function App() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [roomType, setRoomType] = useState("");
+  const [roomType, setRoomType] = useState("single");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
 
