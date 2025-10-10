@@ -9,3 +9,5 @@
     - [ ] Om användaren redan finns, använd den befintliga användaren istället.
 
 # :red_circle: Felhantering
+
+- [ ] **Inputfältet för Telefonnumer** Måste komma in som **string** och inte som number, det blir **null i databasen**
