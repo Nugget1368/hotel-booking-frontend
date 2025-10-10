@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import api from "../../application/api.js"
 
 export default function BookingForms() {
@@ -10,13 +11,15 @@ export default function BookingForms() {
     const [checkIn, setCheckIn] = useState("");
     const [checkOut, setCheckOut] = useState("");
 
+    const navigate = useNavigate();
+
     const reservation = async (e) => {
         e.preventDefault();
         let data = { firstName, lastName, email, phone, roomType, checkIn, checkOut };
         let response = await api.makeReservationAsync(data);
         if (response) {
             alert("Reservation was made!");
-            closeModal();
+            navigate("/");
         }
         else{
             alert("Reservation was not made!");
@@ -24,19 +27,9 @@ export default function BookingForms() {
         }
     }
 
-    const OpenModal = () => {
-        document.querySelector("dialog").showModal();
-    }
-
-    const closeModal = () => {
-        document.querySelector("dialog").close();
-    }
     return (
         <>
-            <button onClick={OpenModal}>Open Modal</button>
-            <dialog data-modal>
                 <article>
-                    <button onClick={closeModal}>Close</button>
                     <form onSubmit={reservation}>
                         <fieldset>
                             <div className="row">
@@ -78,7 +71,6 @@ export default function BookingForms() {
                         </fieldset>
                     </form>
                 </article>
-            </dialog>
         </>
     );
 }
