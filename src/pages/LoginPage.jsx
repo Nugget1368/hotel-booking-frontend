@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import api from "../application/api.js"
+import { MySessionStorage } from "../application/localStorage.js";
 
 const LoginPage = () => {
     const [firstName, setFirstName] = useState("");
@@ -27,11 +28,9 @@ const LoginPage = () => {
         e.preventDefault();
         let data = { email, password };
         let response = await api.loginUserAsync(data);
-        sessionStorage.setItem("token", response.token);
         if (response) {
-            //TODO navigate to home-page OR Admin-page depending on role
+            MySessionStorage.setUserToken(response.token);
             let roleResponse = await api.getUserRoleAsync(response.token);
-            console.log(roleResponse);
             roleResponse.role === "admin" ? navigate("/admin/dashboard") : navigate("/"); 
         }
         else {
