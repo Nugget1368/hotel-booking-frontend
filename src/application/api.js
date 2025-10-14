@@ -98,7 +98,6 @@ export default class Api {
 
     static loginUserAsync = async (data) =>{
         let apiUrl = import.meta.env.VITE_API_URL;
-        console.log("data", data);
         try {
             const response = await fetch(apiUrl + "/guests/profile/login", {
                 method: "POST",
@@ -107,7 +106,6 @@ export default class Api {
                 },
                 body: JSON.stringify(data)
             });
-            console.log(response);
             return response.json();
         }
         catch (e) {

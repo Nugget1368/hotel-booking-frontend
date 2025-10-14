@@ -17,7 +17,6 @@ const LoginPage = () => {
         }
         else {
             alert("Account was not created!");
-            console.log(response);
         }
     }
 
@@ -25,14 +24,12 @@ const LoginPage = () => {
         e.preventDefault();
         let data = { email, password };
         let response = await api.loginUserAsync(data);
-        console.log(response);
         sessionStorage.setItem("token", response.token);
         if (response) {
             alert("Login was successful!");
         }
         else {
             alert("Login was not successful!");
-            console.log(response);
         }
     }
 
