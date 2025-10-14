@@ -1,5 +1,6 @@
 import BookingForms from "../components/forms/BookingForms"
 import { Link } from "react-router"
+import Header from "../components/Header"
 const HotelsPage = () => {
     let hotels = [
         {
@@ -25,6 +26,14 @@ const HotelsPage = () => {
             "country": "Norway",
             "phone": "123456789",
             "email": "email@domain"
+        },
+        {
+            "name": "Hotel 3",
+            "address": "",
+            "city": "Oslo",
+            "country": "Norway",
+            "phone": "123456789",
+            "email": "email@domain"
         }
     ]
 
@@ -32,8 +41,8 @@ const HotelsPage = () => {
         <section>
             {
                 hotels.map((hotel, index) => (
-                    <article key={index}>
-                        <div className="column">
+                    <article key={index} className="card">
+                        <div className="column" style={{ width: "100%" }}>
                             <img src="https://picsum.photos/200/300" alt="" />
                         </div>
                         <div className="column">

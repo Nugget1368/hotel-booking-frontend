@@ -1,63 +1,71 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-
 /* Grundinställningar */
-* { box-sizing: border-box; }
-html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: auto;
+}
 
 /* SECTION: row + wrap (row) */
 section,
 .row {
   display: flex;
-  flex-direction: row;   /* row */
-  flex-wrap: wrap;      /* wrap */
-  gap: 1rem;            /* utrymme mellan barnen */
+  flex-direction: row; /* row */
+  flex-wrap: wrap; /* wrap */
+  gap: 1rem; /* utrymme mellan barnen */
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+}
+
+img {
+  width: 100%; /* Gör bilden fullbredd i kortet */
+  height: auto; /* Bevarar proportionerna */
+  border-radius: 8px; /* Mjuka hörn som matchar kortet */
+  object-fit: cover; /* Beskär snyggt om bilden är större */
+  display: block; /* Tar bort oönskade mellanrum */
+  margin-bottom: 1rem; /* Luft mellan bild och text */
+  aspect-ratio: 16 / 9; /* Styrar bilden till 16:9 */
+}
+
+/* För extra små skärmar */
+@media (max-width: 480px) {
+  img {
+    border-radius: 6px;
+    margin-bottom: 0.75rem;
+  }
+}
+
+header {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
+  align-items: stretch;
+  justify-content: space-between;
+  padding: 1rem;
+}
+header > * {
+  flex: 1;
+  flex-grow: 1;
+}
+
+header >*:nth-last-child(1) {
+  text-align: end;
 }
 
 /* ARTICLE: column */
@@ -68,18 +76,18 @@ article,
   align-items: stretch;
   text-align: start;
   gap: 0.75rem;
-  border: 1px solid rgba(0,0,0,0.06);
+  border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: 8px;
 }
 
-fieldset{
+fieldset {
   display: flex;
   flex-direction: column;
   align-items: stretch;
   text-align: start;
   gap: 0.75rem;
-  border: 1px solid rgba(0,0,0,0.06);
-  border-radius: 8px
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
 }
 
 /* Utility-klass .row = row + wrap */
@@ -91,7 +99,7 @@ fieldset{
   align-items: center;
 }
 
-input{
+input {
   height: 1.75rem;
   font-size: 20px;
 }
@@ -117,7 +125,9 @@ input{
   }
 
   /* Justera gaps och paddings för mindre yta */
-  section, article, .row {
+  section,
+  article,
+  .row {
     gap: 0.5rem;
     padding: 0.75rem;
   }
@@ -131,10 +141,16 @@ input{
 /* Desktop / större layouter: exempel på hur du ger artiklar proportioner */
 @media (min-width: 721px) {
   /* Två kolumner + en sidokolumn-exempel */
-  section > article:nth-child(1) { flex: 1 1 48%; } /* nära halva bredden */
-  section > article:nth-child(2) { flex: 1 1 48%; }
-  section > .aside { flex: 0 0 100%; } /* om du vill att aside hamnar under (ändra efter behov) */
-  
+  section > article:nth-child(1) {
+    flex: 1 1 48%;
+  } /* nära halva bredden */
+  section > article:nth-child(2) {
+    flex: 1 1 48%;
+  }
+  section > .aside {
+    flex: 0 0 100%;
+  } /* om du vill att aside hamnar under (ändra efter behov) */
+
   /* Alternativ: make aside a fixed sidebar */
   /* section > .aside { flex: 0 0 24%; } */
 }
@@ -142,13 +158,40 @@ input{
 /* Små visuella förbättringar */
 button {
   padding: 0.5rem 0.75rem;
-  border: 1px solid rgba(0,0,0,0.08);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 6px;
   cursor: pointer;
 }
 
-fieldset{
+fieldset {
   border: none;
   padding: 0;
   margin: 0;
+}
+
+.card {
+  background-color: #1e1e1e; /* Mörk bakgrund */
+  color: #f5f5f5; /* Ljus text */
+  border-radius: 12px; /* Mjuka hörn */
+  padding: 1.5rem; /* Luft runt innehållet */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* Subtil skugga */
+  border: 1px solid #2c2c2c; /* Tunn kontrastkant */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Om du vill lägga till en titel och text */
+.card h3 {
+  margin-top: 0;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.card p {
+  color: #cccccc;
+  line-height: 1.5;
 }
