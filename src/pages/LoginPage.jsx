@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import api from "../application/api.js"
+import { MySessionStorage } from "../application/localStorage.js";
 
 const LoginPage = () => {
     const [firstName, setFirstName] = useState("");
@@ -7,6 +9,8 @@ const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
+
+    const navigate = useNavigate();
 
     const createAccount = async (e) => {
         e.preventDefault();
@@ -24,24 +28,13 @@ const LoginPage = () => {
         e.preventDefault();
         let data = { email, password };
         let response = await api.loginUserAsync(data);
-        console.log(response);
-        sessionStorage.setItem("token", response.token);
-        let apiUrl = import.meta.env.VITE_API_URL;
         if (response) {
-            alert("Login was successful!");
-            //TODO navigate to home-page OR Admin-page depending on role
-            let user = await fetch(apiUrl + `/guests/admin/dashboard`, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${response.token}`,
-                    "Content-Type": "application/json"
-                },
-            });
-            let json = await user.json();
-            console.log(json);
+            MySessionStorage.setUserToken(response.token);
+            let roleResponse = await api.getUserRoleAsync(response.token);
+            roleResponse.role === "admin" ? navigate("/admin/dashboard") : navigate("/"); 
         }
         else {
-            alert("Login was not successful!");
+            alert("Login was not successful...");
         }
     }
 

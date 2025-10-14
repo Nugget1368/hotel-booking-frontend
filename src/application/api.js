@@ -1,4 +1,4 @@
-import { data } from "react-router";
+import { MySessionStorage } from "./localStorage";
 
 export default class Api {
     static getReservationsAsync = async (path) => {
@@ -105,6 +105,24 @@ export default class Api {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(data)
+            });
+            return response.json();
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    static getUserRoleAsync = async () => {
+        let apiUrl = import.meta.env.VITE_API_URL;
+        let token = MySessionStorage.getUserToken();
+        try {
+            const response = await fetch(apiUrl + "/guests/profile/role", {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
             });
             return response.json();
         }
