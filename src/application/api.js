@@ -1,3 +1,5 @@
+import { data } from "react-router";
+
 export default class Api {
     static getReservationsAsync = async (path) => {
         const apiUrl = import.meta.env.VITE_API_URL;
@@ -69,6 +71,43 @@ export default class Api {
         let encodedemail = encodeURIComponent(email);
         try {
             const response = await fetch(apiUrl + `/guests/${encodedemail}`);
+            return response.json();
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    static createAccountAsync = async (data) => {
+        const apiUrl = import.meta.env.VITE_API_URL;
+        console.log(data);
+        try {
+            const response = await fetch(apiUrl + "/guests/profile/create", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+            return response.json();
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    static loginUserAsync = async (data) =>{
+        let apiUrl = import.meta.env.VITE_API_URL;
+        console.log("data", data);
+        try {
+            const response = await fetch(apiUrl + "/guests/profile/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+            console.log(response);
             return response.json();
         }
         catch (e) {

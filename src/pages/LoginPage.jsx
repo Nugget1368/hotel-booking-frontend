@@ -1,4 +1,5 @@
 import { useState } from "react";
+import api from "../application/api.js"
 
 const LoginPage = () => {
     const [firstName, setFirstName] = useState("");
@@ -7,14 +8,41 @@ const LoginPage = () => {
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
 
-    // TODO: Implement Funtionality for login and creating account
+    const createAccount = async (e) => {
+        e.preventDefault();
+        let data = { firstName, lastName, email, phone, password };
+        let response = await api.createAccountAsync(data);
+        if (response) {
+            alert("Account was created!");
+        }
+        else {
+            alert("Account was not created!");
+            console.log(response);
+        }
+    }
+
+    const login = async (e) => {
+        e.preventDefault();
+        let data = { email, password };
+        let response = await api.loginUserAsync(data);
+        console.log(response);
+        sessionStorage.setItem("token", response.token);
+        if (response) {
+            alert("Login was successful!");
+        }
+        else {
+            alert("Login was not successful!");
+            console.log(response);
+        }
+    }
+
     return (
         <>
             <h1>Log in or create an account</h1>
             <section>
                 <article>
                     <h2>Log in</h2>
-                    <form onSubmit={(e) => e.preventDefault()}>
+                    <form onSubmit={(e) => login(e)}>
                         <fieldset>
                             <div className="column">
                                 <label htmlFor="email">Email</label>
@@ -30,7 +58,7 @@ const LoginPage = () => {
                 </article>
                 <article>
                     <h2>Create Account</h2>
-                    <form onSubmit={(e) => e.preventDefault()}>
+                    <form onSubmit={(e) => createAccount(e)}>
                         <fieldset>
                             <div className="row">
                                 <div className="column">
