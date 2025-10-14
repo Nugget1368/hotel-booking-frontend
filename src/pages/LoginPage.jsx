@@ -24,10 +24,21 @@ const LoginPage = () => {
         e.preventDefault();
         let data = { email, password };
         let response = await api.loginUserAsync(data);
+        console.log(response);
         sessionStorage.setItem("token", response.token);
+        let apiUrl = import.meta.env.VITE_API_URL;
         if (response) {
             alert("Login was successful!");
             //TODO navigate to home-page OR Admin-page depending on role
+            let user = await fetch(apiUrl + `/guests/admin/dashboard`, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${response.token}`,
+                    "Content-Type": "application/json"
+                },
+            });
+            let json = await user.json();
+            console.log(json);
         }
         else {
             alert("Login was not successful!");
