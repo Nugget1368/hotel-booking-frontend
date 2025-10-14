@@ -112,4 +112,21 @@ export default class Api {
             console.log(e);
         }
     }
+
+    static getUserRoleAsync = async (token) => {
+        let apiUrl = import.meta.env.VITE_API_URL;
+        try {
+            const response = await fetch(apiUrl + "/guests/profile/role", {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+            });
+            return response.json();
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
 }
