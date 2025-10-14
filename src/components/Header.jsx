@@ -5,7 +5,7 @@ const Header = () => {
     <header>
         <div className="row"></div>
         <div className="row">
-            <Link to="/">Login</Link>
+            <Link to="/profile/login">Login</Link>
         </div>
     </header>
   )
