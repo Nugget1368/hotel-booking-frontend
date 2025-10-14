@@ -27,6 +27,7 @@ const LoginPage = () => {
         sessionStorage.setItem("token", response.token);
         if (response) {
             alert("Login was successful!");
+            //TODO navigate to home-page OR Admin-page depending on role
         }
         else {
             alert("Login was not successful!");
