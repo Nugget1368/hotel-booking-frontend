@@ -6,6 +6,8 @@ const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
+
+    // TODO: Implement Funtionality for login and creating account
     return (
         <>
             <h1>Log in or create an account</h1>
