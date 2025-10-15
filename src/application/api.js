@@ -54,12 +54,12 @@ export default class Api {
         }
     }
 
-    static editReservationAsync = async (data) => {
+    static editReservationAsync = async (id, data) => {
         const apiUrl = import.meta.env.VITE_API_URL;
         let token = MySessionStorage.getUserToken();
-        let newData = {checkIn:data.checkIn, checkOut:data.checkOut, roomType:data.roomType, id:data.id};
+        let newData = {checkIn:data.checkIn, checkOut:data.checkOut, roomType:data.roomType};
         try{
-            let response = await fetch(apiUrl + `/reservations/${data.id}`, {
+            let response = await fetch(apiUrl + `/reservations/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
