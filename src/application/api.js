@@ -5,7 +5,7 @@ export default class Api {
         const apiUrl = import.meta.env.VITE_API_URL;
         let token = MySessionStorage.getUserToken();
         try {
-            const response = await fetch(apiUrl + "/reservations", {
+            let response = await fetch(apiUrl + "/reservations", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -22,7 +22,7 @@ export default class Api {
         const apiUrl = import.meta.env.VITE_API_URL;
         let newData = { ...data, "guestId": id };
         try {
-            const response = await fetch(apiUrl + "/reservations", {
+            let response = await fetch(apiUrl + "/reservations", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -35,10 +35,49 @@ export default class Api {
             console.log(e);
         }
     }
+
+    static deleteReservationAsync = async(id) =>{
+        const apiUrl = import.meta.env.VITE_API_URL;
+        let token = MySessionStorage.getUserToken();
+        try {
+            let response = await fetch(apiUrl + `/reservations/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            return response.json();
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    static editReservationAsync = async (data) => {
+        const apiUrl = import.meta.env.VITE_API_URL;
+        let token = MySessionStorage.getUserToken();
+        let newData = {checkIn:data.checkIn, checkOut:data.checkOut, roomType:data.roomType, id:data.id};
+        try{
+            let response = await fetch(apiUrl + `/reservations/${data.id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(newData)
+            });
+            return response.json();
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
     static createGuestAsync = async (data) => {
         const apiUrl = import.meta.env.VITE_API_URL;
         try {
-            const response = await fetch(apiUrl + `/guests`, {
+            let response = await fetch(apiUrl + "/guests", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -67,7 +106,7 @@ export default class Api {
             if(!response.success)
                 throw new Error(response.message);
             return true;
-        }).catch((e) => {
+        }).catch(() => {
             return false;
         });
         return resp;
@@ -77,7 +116,7 @@ export default class Api {
         const apiUrl = import.meta.env.VITE_API_URL;
         let encodedemail = encodeURIComponent(email);
         try {
-            const response = await fetch(apiUrl + `/guests/${encodedemail}`);
+            let response = await fetch(apiUrl + `/guests/${encodedemail}`);
             return response.json();
         }
         catch (e) {
@@ -89,7 +128,7 @@ export default class Api {
         const apiUrl = import.meta.env.VITE_API_URL;
         console.log(data);
         try {
-            const response = await fetch(apiUrl + "/guests/profile/create", {
+            let response = await fetch(apiUrl + "/guests/profile/create", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -104,9 +143,9 @@ export default class Api {
     }
 
     static loginUserAsync = async (data) =>{
-        let apiUrl = import.meta.env.VITE_API_URL;
+        const apiUrl = import.meta.env.VITE_API_URL;
         try {
-            const response = await fetch(apiUrl + "/guests/profile/login", {
+            let response = await fetch(apiUrl + "/guests/profile/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -121,10 +160,10 @@ export default class Api {
     }
 
     static getUserRoleAsync = async () => {
-        let apiUrl = import.meta.env.VITE_API_URL;
+        const apiUrl = import.meta.env.VITE_API_URL;
         let token = MySessionStorage.getUserToken();
         try {
-            const response = await fetch(apiUrl + "/guests/profile/role", {
+            let response = await fetch(apiUrl + "/guests/profile/role", {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`,
