@@ -1,10 +1,17 @@
 import { MySessionStorage } from "./localStorage";
 
 export default class Api {
-    static getReservationsAsync = async (path) => {
+    static getReservationsAsync = async () => {
         const apiUrl = import.meta.env.VITE_API_URL;
+        let token = MySessionStorage.getUserToken();
         try {
-            const response = await fetch(apiUrl + path);
+            const response = await fetch(apiUrl + "/reservations", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
             return response.json();
         }
         catch (e) {
@@ -15,7 +22,7 @@ export default class Api {
         const apiUrl = import.meta.env.VITE_API_URL;
         let newData = { ...data, "guestId": id };
         try {
-            const response = await fetch(apiUrl + `/reservations`, {
+            const response = await fetch(apiUrl + "/reservations", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
