@@ -2,7 +2,7 @@ import { Link } from "react-router"
 
 const Header = () => {
   return (
-    <header>
+    <header id="main-header">
         <div className="row"></div>
         <div className="row">
             <Link to="/profile/login">Login</Link>
