@@ -29,6 +29,7 @@ export default class Api {
                 },
                 body: JSON.stringify(newData)
             });
+            console.log(response);
             return response.json();
         }
         catch (e) {
@@ -36,7 +37,7 @@ export default class Api {
         }
     }
 
-    static deleteReservationAsync = async(id) =>{
+    static deleteReservationAsync = async (id) => {
         const apiUrl = import.meta.env.VITE_API_URL;
         let token = MySessionStorage.getUserToken();
         try {
@@ -57,8 +58,8 @@ export default class Api {
     static editReservationAsync = async (id, data) => {
         const apiUrl = import.meta.env.VITE_API_URL;
         let token = MySessionStorage.getUserToken();
-        let newData = {checkIn:data.checkIn, checkOut:data.checkOut, roomType:data.roomType};
-        try{
+        let newData = { checkIn: data.checkIn, checkOut: data.checkOut, roomType: data.roomType };
+        try {
             let response = await fetch(apiUrl + `/reservations/${id}`, {
                 method: "PUT",
                 headers: {
@@ -91,13 +92,13 @@ export default class Api {
         }
     }
 
-    static makeReservationAsync = async (data)=>{
+    static makeReservationAsync = async (data) => {
         let resp = await this.createGuestAsync(data).then((response) => {
             if(!response.success)
                 throw new Error(response.message);
             return response;
         }).then((response) => {
-            let id = response.guestId;
+            let id = response.userId;
             if(!id)
                 throw new Error("Missing id");
             let reservationResponse = this.createReservationAsync(id, data);
@@ -142,7 +143,7 @@ export default class Api {
         }
     }
 
-    static loginUserAsync = async (data) =>{
+    static loginUserAsync = async (data) => {
         const apiUrl = import.meta.env.VITE_API_URL;
         try {
             let response = await fetch(apiUrl + "/guests/profile/login", {
