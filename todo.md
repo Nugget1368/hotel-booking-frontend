@@ -1,13 +1,18 @@
 # :star: Nice To Have
 
-- [ ] Validering med JWT inloggning
+- [x] Validering med JWT inloggning
 
 # :hammer: Needs Fixing
 
 - [ ] Just nu skapas en användare i backend varje gång en bokning ska göras. **Problem**: Om en användares mail-address redan existerar så kan inte en ny användare skapas.
     - [ ] **Lösning**: Se till att kolla om användaren redan finns registerad i databasen.
     - [ ] Om användaren redan finns, använd den befintliga användaren istället.
+- [ ] När en *guest* tas bort så ska även dess *reservation* göra det.
+- [ ] En inloggad användare ska kunna se sina *reservations*.
+- [ ] En inloggad användare ska **enkelt** kunna göra en ny *reservation*.
+- [ ] En användare som tidigare gjort en *reservation* ska kunna skapa ett **konto i efterhand**.
+- [ ] :exclamation:**Fyll i rapporten**.
 
 # :red_circle: Felhantering
 
-- [ ] **Inputfältet för Telefonnumer** Måste komma in som **string** och inte som number, det blir **null i databasen**
+- [ ] **Inputfältet för Telefonnumer** Måste komma in som **string** och inte som number, det blir **null i databasen** (Kanske redan är fixat)
