@@ -18,6 +18,23 @@ export default class Api {
             console.log(e);
         }
     }
+    static getReservationAsync = async (token) => {
+        const apiUrl = import.meta.env.VITE_API_URL;
+        try {
+            let response = await fetch(apiUrl + `/reservations/${token}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            return response.json();
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
     static createReservationAsync = async (id, data) => {
         const apiUrl = import.meta.env.VITE_API_URL;
         let newData = { ...data, "guestId": id };
