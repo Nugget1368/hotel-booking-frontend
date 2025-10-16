@@ -8,7 +8,7 @@ import api from "../application/api"
 const HotelsPage = () => {
     const [myReservations, setMyReservations] = useState([]);
     const getReservations = async () => {
-        let result = await api.getReservationAsync(MySessionStorage.getUserToken());
+        let result = await api.getUserReservationAsync(MySessionStorage.getUserToken());
         if (result) {
             setMyReservations(result);
         }

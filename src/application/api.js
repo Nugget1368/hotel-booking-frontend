@@ -18,10 +18,10 @@ export default class Api {
             console.log(e);
         }
     }
-    static getReservationAsync = async (token) => {
+    static getUserReservationAsync = async (token) => {
         const apiUrl = import.meta.env.VITE_API_URL;
         try {
-            let response = await fetch(apiUrl + `/reservations/${token}`, {
+            let response = await fetch(apiUrl + `/reservations/user/${token}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
