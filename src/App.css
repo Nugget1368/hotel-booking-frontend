@@ -84,6 +84,11 @@ li h3 {
   margin: 0;
 }
 
+li > div >:nth-child(1) {
+  flex: 1;
+  flex-grow: 2;
+}
+
 .btn-container {
   display: flex;
   flex-flow: row wrap;

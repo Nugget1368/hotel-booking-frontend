@@ -11,6 +11,7 @@ const AdminPage = () => {
     checkIn: "",
     checkOut: ""
   });
+  const [users, setUsers] = useState([]);
 
   const toggleEditMode = (id) => {
     setEditId(id);
@@ -25,6 +26,11 @@ const AdminPage = () => {
   const getReservations = async () => {
     let result = await Api.getReservationsAsync();
     setReservations(result);
+  }
+
+  const getAllUSers = async () => {
+    let result = await Api.getAllGuestsAsync();
+    setUsers(result);
   }
 
   const deleteReservation = async (id) => {
@@ -42,21 +48,22 @@ const AdminPage = () => {
     Object.keys(editData).forEach(key => {
       if (editData[key] === "")
         editData[key] = reservation[key];
-    })    
+    })
     let id = reservation.reservationId;
     let result = await Api.editReservationAsync(id, editData);
-    if(result.success){
+    if (result.success) {
       let newList = reservations.map((r) => r.reservationId === id ? result.reservation : r);
       setReservations(newList);
       toggleEditMode(null);
     }
-    else{
+    else {
       alert("Could not edit reservation.");
     }
   }
 
   useEffect(() => {
     getReservations();
+    getAllUSers();
   }, [])
 
   return (
@@ -77,15 +84,15 @@ const AdminPage = () => {
                     <div className="row">
                       <div className="column">
                         <h3>{reservation.firstName} {reservation.lastName}</h3>
-                        { editMode && editId === reservation.reservationId ?
+                        {editMode && editId === reservation.reservationId ?
                           <p><strong>Room Type:</strong> <input type="text" placeholder={reservation.roomType} defaultValue={reservation.roomType} onChange={(e) => setEditData({ ...editData, roomType: e.target.value })} /></p>
                           :
                           <p><strong>Room Type:</strong> {reservation.roomType}</p>
                         }
                         {editMode && editId === reservation.reservationId ?
                           <>
-                            <p><strong>Check In:</strong> <input type="date" defaultValue={reservation.checkIn}  placeholder={reservation.checkIn} onChange={(e) => setEditData({ ...editData, checkIn: e.target.value })} /></p>
-                            <p><strong>Check Out:</strong> <input type="date" defaultValue={reservation.checkOut}  placeholder={reservation.checkOut} onChange={(e) => setEditData({ ...editData, checkOut: e.target.value })} /></p>
+                            <p><strong>Check In:</strong> <input type="date" defaultValue={reservation.checkIn} placeholder={reservation.checkIn} onChange={(e) => setEditData({ ...editData, checkIn: e.target.value })} /></p>
+                            <p><strong>Check Out:</strong> <input type="date" defaultValue={reservation.checkOut} placeholder={reservation.checkOut} onChange={(e) => setEditData({ ...editData, checkOut: e.target.value })} /></p>
                           </>
                           :
                           <p><strong>Check In:</strong> {reservation.checkIn} | <strong>Check Out:</strong> {reservation.checkOut}</p>
@@ -111,6 +118,34 @@ const AdminPage = () => {
               :
               <li>
                 <p>There are no reservations</p>
+              </li>
+            }
+          </ul>
+        </article>
+        <article>
+          <header>
+            <h2>Users</h2>
+          </header>
+          <ul>
+            {users && users.length > 0 ?
+              users.map((user) => {
+                return (
+                  <li key={user.userId} className="card">
+                    <div className="row">
+                      <div className="column">
+                        <h3>{user.firstName} {user.lastName}</h3>
+                        <p><strong>Email:</strong> {user.email}</p>
+                      </div>
+                      <div className="btn-container">
+                        <button className="btn">Delete</button>
+                      </div>
+                    </div>
+                  </li>
+                )
+              })
+              :
+              <li>
+                <p>There are no users</p>
               </li>
             }
           </ul>
