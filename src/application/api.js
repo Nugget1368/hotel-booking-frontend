@@ -129,10 +129,8 @@ export default class Api {
     static makeReservationAsync = async (data) => {
         let resp = await this.createGuestAsync(data).then((response) => {
             if(!response.success){
-                //TODO: Kan vi hitta användaren?
-                response = this.loginUserAsync(data);
-                console.log(response);
-                throw new Error(response.message);
+                //TODO: Kan vi hitta användaren trots detta?
+                throw new Error();
             }
             return response;
         }).then((response) => {
