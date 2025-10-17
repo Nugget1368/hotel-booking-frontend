@@ -30,6 +30,7 @@ const LoginPage = () => {
         let response = await api.loginUserAsync(data);
         if (response) {
             MySessionStorage.setUserToken(response.token);
+            MySessionStorage.saveUserInfo(response);
             let roleResponse = await api.getUserRoleAsync(response.token);
             roleResponse.role === "admin" ? navigate("/admin/dashboard") : navigate("/"); 
         }

@@ -41,12 +41,12 @@ const AdminPage = () => {
   const editReservation = async (reservation) => {
     Object.keys(editData).forEach(key => {
       if (editData[key] === "")
-        editData[key] = reservation[key].split("T")[0];
+        editData[key] = reservation[key];
     })    
     let id = reservation.reservationId;
     let result = await Api.editReservationAsync(id, editData);
     if(result.success){
-      let newList = reservations.map((r) => r.reservationId === reservation.reservationId ? result.reservation : r);
+      let newList = reservations.map((r) => r.reservationId === id ? result.reservation : r);
       setReservations(newList);
       toggleEditMode(null);
     }
@@ -84,11 +84,11 @@ const AdminPage = () => {
                         }
                         {editMode && editId === reservation.reservationId ?
                           <>
-                            <p><strong>Check In:</strong> <input type="date" defaultValue={reservation.checkIn.split("T")[0]}  placeholder={reservation.checkIn.split("T")[0]} onChange={(e) => setEditData({ ...editData, checkIn: e.target.value.split("T")[0] })} /></p>
-                            <p><strong>Check Out:</strong> <input type="date" defaultValue={reservation.checkOut.split("T")[0]}  placeholder={reservation.checkOut.split("T")[0]} onChange={(e) => setEditData({ ...editData, checkOut: e.target.value.split("T")[0] })} /></p>
+                            <p><strong>Check In:</strong> <input type="date" defaultValue={reservation.checkIn}  placeholder={reservation.checkIn} onChange={(e) => setEditData({ ...editData, checkIn: e.target.value })} /></p>
+                            <p><strong>Check Out:</strong> <input type="date" defaultValue={reservation.checkOut}  placeholder={reservation.checkOut} onChange={(e) => setEditData({ ...editData, checkOut: e.target.value })} /></p>
                           </>
                           :
-                          <p><strong>Check In:</strong> {reservation.checkIn.split("T")[0]} | <strong>Check Out:</strong> {reservation.checkOut.split("T")[0]}</p>
+                          <p><strong>Check In:</strong> {reservation.checkIn} | <strong>Check Out:</strong> {reservation.checkOut}</p>
                         }
                       </div>
                       <div className="btn-container">

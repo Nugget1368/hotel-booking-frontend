@@ -18,6 +18,23 @@ export default class Api {
             console.log(e);
         }
     }
+    static getUserReservationAsync = async (token) => {
+        const apiUrl = import.meta.env.VITE_API_URL;
+        try {
+            let response = await fetch(apiUrl + `/reservations/user/${token}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            return response.json();
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
     static createReservationAsync = async (id, data) => {
         const apiUrl = import.meta.env.VITE_API_URL;
         let newData = { ...data, "guestId": id };
@@ -29,7 +46,24 @@ export default class Api {
                 },
                 body: JSON.stringify(newData)
             });
-            console.log(response);
+            return response.json();
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    static makeUserReservationAsync = async (token, data) => {
+        const apiUrl = import.meta.env.VITE_API_URL;
+        try {
+            let response = await fetch(apiUrl + "/reservations/user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(data)
+            });
             return response.json();
         }
         catch (e) {
@@ -94,8 +128,10 @@ export default class Api {
 
     static makeReservationAsync = async (data) => {
         let resp = await this.createGuestAsync(data).then((response) => {
-            if(!response.success)
-                throw new Error(response.message);
+            if(!response.success){
+                //TODO: Kan vi hitta användaren trots detta?
+                throw new Error();
+            }
             return response;
         }).then((response) => {
             let id = response.userId;
