@@ -167,6 +167,24 @@ export default class Api {
         }
     }
 
+    static deleteUserAsync = async (id) => {
+        const apiUrl = import.meta.env.VITE_API_URL;
+        let token = MySessionStorage.getUserToken();
+        try {
+            let response = await fetch(apiUrl + `/guests/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            return response.json();
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
     static getGuestFromEmailAsync = async (email) => {
         // TODO: Use this to get guest without account?
         const apiUrl = import.meta.env.VITE_API_URL;

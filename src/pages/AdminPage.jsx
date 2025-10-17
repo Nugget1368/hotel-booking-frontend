@@ -30,7 +30,20 @@ const AdminPage = () => {
 
   const getAllUSers = async () => {
     let result = await Api.getAllGuestsAsync();
+    console.log(result);
     setUsers(result);
+  }
+
+  const deleteUser = async (id) => {
+    let result = await Api.deleteUserAsync(id);
+    if (result.success) {
+      let newList = users.filter((user) => user.guestId !== id);
+      setUsers(newList);
+      getReservations();
+    }
+    else {
+      alert("Could not delete user.");
+    }
   }
 
   const deleteReservation = async (id) => {
@@ -130,14 +143,14 @@ const AdminPage = () => {
             {users && users.length > 0 ?
               users.map((user) => {
                 return (
-                  <li key={user.userId} className="card">
+                  <li key={user.guestId} className="card">
                     <div className="row">
                       <div className="column">
                         <h3>{user.firstName} {user.lastName}</h3>
                         <p><strong>Email:</strong> {user.email}</p>
                       </div>
                       <div className="btn-container">
-                        <button className="btn">Delete</button>
+                        <button className="btn" onClick={() => deleteUser(user.guestId)}>Delete</button>
                       </div>
                     </div>
                   </li>
