@@ -46,7 +46,24 @@ export default class Api {
                 },
                 body: JSON.stringify(newData)
             });
-            console.log(response);
+            return response.json();
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    static makeUserReservationAsync = async (token, data) => {
+        const apiUrl = import.meta.env.VITE_API_URL;
+        try {
+            let response = await fetch(apiUrl + "/reservations/user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(data)
+            });
             return response.json();
         }
         catch (e) {
@@ -111,8 +128,12 @@ export default class Api {
 
     static makeReservationAsync = async (data) => {
         let resp = await this.createGuestAsync(data).then((response) => {
-            if(!response.success)
+            if(!response.success){
+                //TODO: Kan vi hitta användaren?
+                response = this.loginUserAsync(data);
+                console.log(response);
                 throw new Error(response.message);
+            }
             return response;
         }).then((response) => {
             let id = response.userId;
