@@ -35,16 +35,15 @@ export default class Api {
         }
     }
 
-    static createReservationAsync = async (id, data) => {
+        static createGuestReservationAsync = async (data) => {
         const apiUrl = import.meta.env.VITE_API_URL;
-        let newData = { ...data, "guestId": id };
         try {
-            let response = await fetch(apiUrl + "/reservations", {
+            let response = await fetch(apiUrl + "/reservations/guest", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(newData)
+                body: JSON.stringify(data)
             });
             return response.json();
         }
@@ -53,7 +52,7 @@ export default class Api {
         }
     }
 
-    static makeUserReservationAsync = async (token, data) => {
+    static createUserReservationAsync = async (token, data) => {
         const apiUrl = import.meta.env.VITE_API_URL;
         try {
             let response = await fetch(apiUrl + "/reservations/user", {
@@ -70,6 +69,7 @@ export default class Api {
             console.log(e);
         }
     }
+
 
     static deleteReservationAsync = async (id) => {
         const apiUrl = import.meta.env.VITE_API_URL;
@@ -109,46 +109,6 @@ export default class Api {
         }
     }
 
-    static createGuestAsync = async (data) => {
-        const apiUrl = import.meta.env.VITE_API_URL;
-        try {
-            let response = await fetch(apiUrl + "/guests", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
-            });
-            return response.json();
-        }
-        catch (e) {
-            console.log(e);
-        }
-    }
-
-    static makeReservationAsync = async (data) => {
-        let resp = await this.createGuestAsync(data).then((response) => {
-            if (!response.success) {
-                //TODO: Kan vi hitta användaren trots detta?
-                throw new Error();
-            }
-            return response;
-        }).then((response) => {
-            let id = response.userId;
-            if (!id)
-                throw new Error("Missing id");
-            let reservationResponse = this.createReservationAsync(id, data);
-            return reservationResponse;
-        }).then((response) => {
-            if (!response.success)
-                throw new Error(response.message);
-            return true;
-        }).catch(() => {
-            return false;
-        });
-        return resp;
-    }
-
     static getAllGuestsAsync = async () => {
         const apiUrl = import.meta.env.VITE_API_URL;
         let token = MySessionStorage.getUserToken();
@@ -178,19 +138,6 @@ export default class Api {
                     "Authorization": `Bearer ${token}`
                 }
             });
-            return response.json();
-        }
-        catch (e) {
-            console.log(e);
-        }
-    }
-
-    static getGuestFromEmailAsync = async (email) => {
-        // TODO: Use this to get guest without account?
-        const apiUrl = import.meta.env.VITE_API_URL;
-        let encodedemail = encodeURIComponent(email);
-        try {
-            let response = await fetch(apiUrl + `/guests/${encodedemail}`);
             return response.json();
         }
         catch (e) {

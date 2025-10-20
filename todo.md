@@ -5,9 +5,9 @@
 
 # :hammer: Needs Fixing
 
-- [ ] Just nu skapas en användare i backend varje gång en bokning ska göras. **Problem**: Om en användares mail-address redan existerar så kan inte en ny användare skapas.
-    - [ ] **Lösning**: Se till att kolla om användaren redan finns registerad i databasen. Se *:star: Se till ifall användare finns - Create-or-find-user*
-    - [ ] Om användaren redan finns, använd den befintliga användaren istället.
+- [x] Just nu skapas en användare i backend varje gång en bokning ska göras. **Problem**: Om en användares mail-address redan existerar så kan inte en ny användare skapas.
+    - [x] **Lösning**: Se till att kolla om användaren redan finns registerad i databasen. Se *:star: Se till ifall användare finns - Create-or-find-user*
+    - [x] Om användaren redan finns, använd den befintliga användaren istället.
 - [x] När en *guest* tas bort så ska även dess *reservation* göra det.
 - [x] En inloggad användare ska kunna se sina *reservations*.
 - [x] En inloggad användare ska **enkelt** kunna göra en ny *reservation*.
