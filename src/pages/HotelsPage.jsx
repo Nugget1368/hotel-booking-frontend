@@ -38,7 +38,7 @@ const HotelsPage = () => {
         },
         {
             "name": "Hotel 3",
-            "address": "",
+            "address": "Address 3",
             "city": "Oslo",
             "country": "Norway",
             "phone": "123456789",
@@ -46,7 +46,7 @@ const HotelsPage = () => {
         },
         {
             "name": "Hotel 3",
-            "address": "",
+            "address": " Address 3",
             "city": "Oslo",
             "country": "Norway",
             "phone": "123456789",

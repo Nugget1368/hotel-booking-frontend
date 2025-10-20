@@ -1,9 +1,12 @@
 import { Link } from "react-router"
 import { useState, useEffect } from "react";
 import {MySessionStorage} from "../application/localStorage"
+import { useNavigate } from "react-router";
 
 const Header = () => {
   const [loggedIn, setLoggedIn] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     MySessionStorage.getUserInfo() ? setLoggedIn(true) : setLoggedIn(false);
@@ -12,6 +15,7 @@ const Header = () => {
   const logout = () => {
     MySessionStorage.removeUser();
     setLoggedIn(false);
+    navigate("/");
   }
 
   return (
