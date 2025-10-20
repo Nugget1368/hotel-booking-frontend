@@ -1,7 +1,7 @@
 # :star: Nice To Have
 
 - [x] Validering med JWT inloggning
-- [ ] Logga ut knapp - Töm sessionStorage
+- [x] Logga ut knapp - Töm sessionStorage
 
 # :hammer: Needs Fixing
 
@@ -16,7 +16,7 @@
 
 # :red_circle: Felhantering
 
-- [ ] **Inputfältet för Telefonnumer** Måste komma in som **string** och inte som number, det blir **null i databasen** (Kanske redan är fixat)
+- [x] **Inputfältet för Telefonnumer** Måste komma in som **string** och inte som number, det blir **null i databasen** (Kanske redan är fixat)
 
 # :star: Se till ifall användare finns - Create-or-find-user
 
