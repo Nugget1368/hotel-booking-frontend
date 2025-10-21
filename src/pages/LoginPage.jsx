@@ -16,7 +16,8 @@ const LoginPage = () => {
         e.preventDefault();
         let data = { firstName, lastName, email, phone, password };
         let response = await api.createAccountAsync(data);
-        if (response) {
+        console.log(response);
+        if (response.success) {
             alert("Account was created!");
         }
         else {
@@ -28,10 +29,11 @@ const LoginPage = () => {
         e.preventDefault();
         let data = { email, password };
         let response = await api.loginUserAsync(data);
-        if (response) {
-            MySessionStorage.setUserToken(response.token);
-            MySessionStorage.saveUserInfo(response);
-            let roleResponse = await api.getUserRoleAsync(response.token);
+        console.log(response);
+        if (response.success) {
+            MySessionStorage.setUserToken(response.rows.token);
+            MySessionStorage.saveUserInfo(response.rows);
+            let roleResponse = await api.getUserRoleAsync(response.rows.token);
             roleResponse.role === "admin" ? navigate("/admin/dashboard") : navigate("/"); 
         }
         else {

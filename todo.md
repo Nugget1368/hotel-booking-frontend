@@ -11,8 +11,8 @@
 - [x] När en *guest* tas bort så ska även dess *reservation* göra det.
 - [x] En inloggad användare ska kunna se sina *reservations*.
 - [x] En inloggad användare ska **enkelt** kunna göra en ny *reservation*.
-- [ ] En användare som tidigare gjort en *reservation* ska kunna skapa ett **konto i efterhand**.
-- [ ] :exclamation:**Fyll i rapporten**.
+- [x] En användare som tidigare gjort en *reservation* ska kunna skapa ett **konto i efterhand**.
+- [x] :exclamation:**Fyll i rapporten**.
 
 # :red_circle: Felhantering
 
