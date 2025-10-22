@@ -16,7 +16,6 @@ const LoginPage = () => {
         e.preventDefault();
         let data = { firstName, lastName, email, phone, password };
         let response = await api.createAccountAsync(data);
-        console.log(response);
         if (response.success) {
             alert("Account was created!");
         }
@@ -29,7 +28,6 @@ const LoginPage = () => {
         e.preventDefault();
         let data = { email, password };
         let response = await api.loginUserAsync(data);
-        console.log(response);
         if (response.success) {
             MySessionStorage.setUserToken(response.rows.token);
             MySessionStorage.saveUserInfo(response.rows);

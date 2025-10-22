@@ -10,7 +10,6 @@ export class MySessionStorage {
 
     //TODO: Simple solution - this should be made as redux-store instead
     static saveUserInfo(user) {
-        console.log(user);
         let userInfo = {
             firstName: user.firstName,
             lastName: user.lastName,

@@ -14,8 +14,8 @@ export default class Api {
             });
             return response.json();
         }
-        catch (e) {
-            console.log(e);
+        catch {
+            return [];
         }
     }
     static getUserReservationAsync = async (token) => {
@@ -30,12 +30,12 @@ export default class Api {
             });
             return response.json();
         }
-        catch (e) {
-            console.log(e);
+        catch {
+            return null;
         }
     }
 
-        static createGuestReservationAsync = async (data) => {
+    static createGuestReservationAsync = async (data) => {
         const apiUrl = import.meta.env.VITE_API_URL;
         try {
             let response = await fetch(apiUrl + "/reservations/guest", {
@@ -47,8 +47,8 @@ export default class Api {
             });
             return response.json();
         }
-        catch (e) {
-            console.log(e);
+        catch {
+            return { success: false };
         }
     }
 
@@ -65,8 +65,8 @@ export default class Api {
             });
             return response.json();
         }
-        catch (e) {
-            console.log(e);
+        catch {
+            return { success: false };
         }
     }
 
@@ -84,8 +84,8 @@ export default class Api {
             });
             return response.json();
         }
-        catch (e) {
-            console.log(e);
+        catch {
+            return { success: false };
         }
     }
 
@@ -104,8 +104,8 @@ export default class Api {
             });
             return response.json();
         }
-        catch (e) {
-            console.log(e);
+        catch {
+            return { success: false };
         }
     }
 
@@ -122,8 +122,8 @@ export default class Api {
             });
             return response.json();
         }
-        catch (e) {
-            console.log(e);
+        catch {
+            return [];
         }
     }
 
@@ -140,8 +140,8 @@ export default class Api {
             });
             return response.json();
         }
-        catch (e) {
-            console.log(e);
+        catch {
+            return { success: false };
         }
     }
 
@@ -158,8 +158,8 @@ export default class Api {
             });
             return response.json();
         }
-        catch (e) {
-            console.log(e);
+        catch {
+            return { success: false };
         }
     }
 
@@ -175,8 +175,8 @@ export default class Api {
             });
             return response.json();
         }
-        catch (e) {
-            console.log(e);
+        catch {
+            return { success: false };
         }
     }
 
@@ -193,8 +193,8 @@ export default class Api {
             });
             return response.json();
         }
-        catch (e) {
-            console.log(e);
+        catch {
+            return { success: false, role: "" };
         }
     }
 }

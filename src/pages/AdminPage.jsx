@@ -30,7 +30,6 @@ const AdminPage = () => {
 
   const getAllUSers = async () => {
     let result = await Api.getAllGuestsAsync();
-    console.log(result);
     setUsers(result);
   }
 
