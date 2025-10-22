@@ -31,7 +31,7 @@ export default function BookingForms() {
         let data = { firstName, lastName, email, phone, roomType, checkIn, checkOut };
         let response;
         loggedIn ? response = await api.createUserReservationAsync(MySessionStorage.getUserToken(), data) : response = await api.createGuestReservationAsync(data);
-        if (response) {
+        if (response.success) {
             alert("Reservation was made!");
             navigate("/");
         }
