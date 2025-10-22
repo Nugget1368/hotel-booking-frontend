@@ -29,6 +29,8 @@ export default function BookingForms() {
     const reservation = async (e) => {
         e.preventDefault();
         let data = { firstName, lastName, email, phone, roomType, checkIn, checkOut };
+        ///TODO: Move this to backend
+        Object.keys(data).forEach(key => data[key] === "" ? data[key] = null : data[key]);
         let response;
         loggedIn ? response = await api.createUserReservationAsync(MySessionStorage.getUserToken(), data) : response = await api.createGuestReservationAsync(data);
         if (response.success) {

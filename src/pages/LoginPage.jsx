@@ -15,6 +15,7 @@ const LoginPage = () => {
     const createAccount = async (e) => {
         e.preventDefault();
         let data = { firstName, lastName, email, phone, password };
+        ///TODO: Move this to backend
         Object.keys(data).forEach(key => data[key] === "" ? data[key] = null : data[key]);
         console.log("data, ", data);
         let response = await api.createAccountAsync(data);
