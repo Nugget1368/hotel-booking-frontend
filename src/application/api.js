@@ -147,7 +147,6 @@ export default class Api {
 
     static createAccountAsync = async (data) => {
         const apiUrl = import.meta.env.VITE_API_URL;
-        console.log(data);
         try {
             let response = await fetch(apiUrl + "/guests/profile/create", {
                 method: "POST",
