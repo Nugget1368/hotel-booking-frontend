@@ -19,8 +19,10 @@ const HotelsPage = () => {
             getReservations();
         }
     }, [])
+    /// TODO: Properly get hotels from backend, this is just a placeholder for now
     let hotels = [
         {
+            "id": 2,
             "name": "Hotel 1",
             "address": "yomamas address",
             "city": "Stockholm",
@@ -28,30 +30,6 @@ const HotelsPage = () => {
             "phone": "123456789",
             "email": "email@domain"
         },
-        {
-            "name": "Hotel 2",
-            "address": "Coppenhagen 2",
-            "city": "Coppenhagen",
-            "country": "Denmark",
-            "phone": "123456789",
-            "email": "email@domain"
-        },
-        {
-            "name": "Hotel 3",
-            "address": "Address 3",
-            "city": "Oslo",
-            "country": "Norway",
-            "phone": "123456789",
-            "email": "email@domain"
-        },
-        {
-            "name": "Hotel 3",
-            "address": " Address 3",
-            "city": "Oslo",
-            "country": "Norway",
-            "phone": "123456789",
-            "email": "email@domain"
-        }
     ]
 
     return (
@@ -81,7 +59,7 @@ const HotelsPage = () => {
                                 <p>Phone: {hotel.phone}</p>
                                 <p>Email: {hotel.email}</p>
                             </div>
-                            <Link to="/booking">Book This</Link>
+                            <Link to={`/booking?hotelId=${hotel.id}`}>Book This</Link>
                         </article>
                     ))
                 }
