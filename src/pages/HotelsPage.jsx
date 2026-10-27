@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 import api from "../application/api"
 const HotelsPage = () => {
     const [myReservations, setMyReservations] = useState([]);
+    const [hotels, setHotels] = useState([]);
     const getReservations = async () => {
         let result = await api.getUserReservationAsync(MySessionStorage.getUserToken());
         if (result) {
@@ -14,23 +15,21 @@ const HotelsPage = () => {
         }
     }
 
+    const getHotels = async () => {
+        let result = await api.getHotelsAsync();
+        if (result) {
+            setHotels(result);
+        }
+    }
+
     useEffect(() => {
         if (MySessionStorage.getUserToken()) {
             getReservations();
         }
+        if(hotels === undefined || hotels.length === 0) {
+            getHotels();
+        }
     }, [])
-    /// TODO: Properly get hotels from backend, this is just a placeholder for now
-    let hotels = [
-        {
-            "id": 2,
-            "name": "Hotel 1",
-            "address": "yomamas address",
-            "city": "Stockholm",
-            "country": "Sweden",
-            "phone": "123456789",
-            "email": "email@domain"
-        },
-    ]
 
     return (
         <>
