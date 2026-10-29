@@ -12,6 +12,7 @@ const AdminPage = () => {
     checkOut: ""
   });
   const [users, setUsers] = useState([]);
+  const [hotels, setHotels] = useState([]);
 
   const toggleEditMode = (id) => {
     setEditId(id);
@@ -73,9 +74,16 @@ const AdminPage = () => {
     }
   }
 
+  const getAllHotels = async () => {
+    let result = await Api.getHotelsAsync();
+    console.log(result);
+    setHotels(result);
+  }
+
   useEffect(() => {
     getReservations();
     getAllUSers();
+    getAllHotels();
   }, [])
 
   return (
@@ -83,6 +91,29 @@ const AdminPage = () => {
       <header>
         <h1>AdminPage</h1>
       </header>
+      <section>
+        <article>
+          <header>
+            <h2>Hotels</h2>
+          </header>
+          <ul >
+            {hotels && hotels.length > 0 ?
+            hotels.map((hotel) => {
+              return (
+                <li key={hotel.hotelId} className="card">
+                  <h3>{hotel.name}</h3>
+                  <p><strong>Location:</strong> {hotel.city}, {hotel.country}</p>
+                </li>
+              )
+            })
+            :
+            <li>
+              <p>No hotels found.</p>
+            </li>
+          }
+          </ul>
+          </article>
+      </section>
       <section>
         <article>
           <header>
