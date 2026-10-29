@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import Api from "../application/api"
+import Card from "../components/Card"
 
 const AdminPage = () => {
 
@@ -98,21 +99,46 @@ const AdminPage = () => {
           </header>
           <ul >
             {hotels && hotels.length > 0 ?
-            hotels.map((hotel) => {
-              return (
-                <li key={hotel.hotelId} className="card">
-                  <h3>{hotel.name}</h3>
-                  <p><strong>Location:</strong> {hotel.city}, {hotel.country}</p>
-                </li>
-              )
-            })
-            :
-            <li>
-              <p>No hotels found.</p>
-            </li>
-          }
+              hotels.map((hotel) => {
+                return (
+                  <Card as="li" key={hotel.hotelId} className="row">
+                    {hotel.imageUrl && hotel.imageUrl !== "" ?
+                      <div className="column">
+                        <img src={hotel.imageUrl} alt={hotel.name} />
+                      </div>
+                      :
+                      <div className="column">
+                        <img src="https://via.placeholder.com/150" alt={hotel.name} />
+                      </div>
+                    }
+                    <div className="column">
+                      <header>
+                        <h3>{hotel.name}</h3>
+                      </header>
+                      <section className="column">
+                        <p><strong>Location:</strong> {hotel.city}, {hotel.country}</p>
+                      </section>
+                      <section className="column">
+                        <h4>Contacts</h4>
+                        <p><strong>Email:</strong> {hotel.email}</p>
+                        <p><strong>Phone:</strong> {hotel.phone}</p>
+                      </section>
+                      <section className="btn-container">
+                        <button className="btn">Edit</button>
+                        <button className="btn">Delete</button>
+                      </section>
+                    </div>
+
+                  </Card>
+                )
+              })
+              :
+              <li>
+                <p>No hotels found.</p>
+              </li>
+            }
           </ul>
-          </article>
+        </article>
       </section>
       <section>
         <article>
@@ -123,7 +149,7 @@ const AdminPage = () => {
             {reservations && reservations.length > 0 ?
               reservations.map((reservation) => {
                 return (
-                  <li key={reservation.reservationId} className="card">
+                  <Card as="li" key={reservation.reservationId}>
                     <div className="row">
                       <div className="column">
                         <h3>{reservation.firstName} {reservation.lastName}</h3>
@@ -155,7 +181,7 @@ const AdminPage = () => {
                         }
                       </div>
                     </div>
-                  </li>
+                  </Card>
                 )
               })
               :
@@ -173,7 +199,7 @@ const AdminPage = () => {
             {users && users.length > 0 ?
               users.map((user) => {
                 return (
-                  <li key={user.guestId} className="card">
+                  <Card as="li" key={user.guestId}>
                     <div className="row">
                       <div className="column">
                         <h3>{user.firstName} {user.lastName}</h3>
@@ -183,7 +209,7 @@ const AdminPage = () => {
                         <button className="btn" onClick={() => deleteUser(user.guestId)}>Delete</button>
                       </div>
                     </div>
-                  </li>
+                  </Card>
                 )
               })
               :
