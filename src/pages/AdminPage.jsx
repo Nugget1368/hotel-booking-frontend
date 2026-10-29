@@ -96,6 +96,8 @@ const AdminPage = () => {
         <article>
           <header>
             <h2>Hotels</h2>
+            <button onClick={getAllHotels}>Refresh</button>
+            <button>Add new Hotel</button>
           </header>
           <ul >
             {hotels && hotels.length > 0 ?
