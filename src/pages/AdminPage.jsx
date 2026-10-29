@@ -98,24 +98,21 @@ const AdminPage = () => {
         <article>
           <header className="row">
             <h2>Hotels</h2>
-            <section className="btn-container">
-              <button onClick={getAllHotels}>Refresh</button>
-              <button>Add new Hotel</button>
-            </section>
           </header>
-          <section className="column">
             <Slider label="Add new hotel" defaultOpen={false}>
               <HotelForms />
             </Slider>
+          <section className="btn-container">
+            <button onClick={getAllHotels}>Refresh</button>
           </section>
           <ul>
             {hotels && hotels.length > 0 ?
-              hotels.map((hotel) => {
+              hotels.map((hotel, index) => {
                 return (
-                  <Card as="li" key={hotel.hotelId} className="row">
-                    {hotel.imageUrl && hotel.imageUrl !== "" ?
+                  <Card as="li" key={`hotel-${hotel.hotelId ? hotel.hotelId : index}`} className="row">
+                    {hotel.img && hotel.img !== "" ?
                       <div className="column">
-                        <img src={hotel.imageUrl} alt={hotel.name} />
+                        <img src={`data:${hotel.imgType};base64,${hotel.img}`} alt={hotel.name} />
                       </div>
                       :
                       <div className="column">

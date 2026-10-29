@@ -1,10 +1,10 @@
 import BookingForms from "../components/forms/BookingForms"
 import { Link } from "react-router"
-import Header from "../components/Header"
 import { MySessionStorage } from "../application/localStorage"
 import ReservationsList from "../components/reservations/ReservationsList"
 import { useEffect, useState } from "react"
 import api from "../application/api"
+import Card from "../components/Card"
 const HotelsPage = () => {
     const [myReservations, setMyReservations] = useState([]);
     const [hotels, setHotels] = useState([]);
@@ -26,7 +26,7 @@ const HotelsPage = () => {
         if (MySessionStorage.getUserToken()) {
             getReservations();
         }
-        if(hotels === undefined || hotels.length === 0) {
+        if (hotels === undefined || hotels.length === 0) {
             getHotels();
         }
     }, [])
@@ -39,12 +39,15 @@ const HotelsPage = () => {
                     <ReservationsList reservations={myReservations} />
                 </>
             }
-            <section>
+            <section className="card-list">
                 {
                     hotels.map((hotel, index) => (
-                        <article key={index} className="card">
+                        <Card as="article" key={`hotel-${hotel.hotelId || index}`} className="card">
                             <div className="column" style={{ width: "100%" }}>
-                                <img src="https://picsum.photos/200/300" alt="" />
+                                {hotel.img && hotel.img !== "" ?
+                                    <img src={`data:${hotel.imgType};base64,${hotel.img}`} alt={hotel.name} />
+                                    :
+                                    <img src="https://via.placeholder.com/150" alt={hotel.name} />}
                             </div>
                             <div className="column">
                                 <h2>{hotel.name}</h2>
@@ -59,7 +62,7 @@ const HotelsPage = () => {
                                 <p>Email: {hotel.email}</p>
                             </div>
                             <Link to={`/booking?hotelId=${hotel.id}`}>Book This</Link>
-                        </article>
+                        </Card>
                     ))
                 }
             </section>

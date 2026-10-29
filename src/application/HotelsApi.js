@@ -1,5 +1,5 @@
 import { MySessionStorage } from "./localStorage";
-
+import FileHandler from "../utils/fileHadler.js"
 export default class HotelsApi {
     static getHotelsAsync = async () => {
         const apiUrl = import.meta.env.VITE_API_URL;
@@ -34,15 +34,17 @@ export default class HotelsApi {
     static createHotelAsync = async (hotel) => {
         const apiUrl = import.meta.env.VITE_API_URL;
         let token = MySessionStorage.getUserToken();
+        const img = hotel.img ? await FileHandler.fileToBase64(hotel.img) : null;
+        console.log("img: ", img);
+        const imgType = hotel.img ? hotel.img.type : null;
         try {
             let response = await fetch(apiUrl + "/hotels", {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,
                     "Content-Type": "application/json"
-
                 },
-                body: JSON.stringify(hotel)
+                body: JSON.stringify({ ...hotel, img: img, imgType: imgType })
             });
             return response.json();
         }
@@ -53,6 +55,8 @@ export default class HotelsApi {
     static updateHotelAsync = async (hotel) => {
         const apiUrl = import.meta.env.VITE_API_URL;
         let token = MySessionStorage.getUserToken();
+        const img = hotel.img ? await FileHandler.fileToBase64(hotel.img) : null;
+        const imgType = hotel.img ? hotel.img.type : null;
         try {
             let response = await fetch(apiUrl + "/hotels/" + hotel.id, {
                 method: "PUT",
@@ -61,7 +65,7 @@ export default class HotelsApi {
                     "Content-Type": "application/json"
 
                 },
-                body: JSON.stringify(hotel)
+                body: JSON.stringify({ ...hotel, img: img, imgType: imgType })
             });
             return response.json();
         }

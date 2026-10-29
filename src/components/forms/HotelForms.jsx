@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import api from "../../application/api.js"
+import ImageInput from "./ImageInput.jsx";
 
 export default function HotelForms() {
     const [name, setName] = useState("");
@@ -10,6 +11,7 @@ export default function HotelForms() {
     const [city, setCity] = useState("");
     const [country, setCountry] = useState("");
     const [hotelId, setHotelId] = useState(null);
+    const [image, setImage] = useState(null);
 
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
@@ -40,7 +42,7 @@ export default function HotelForms() {
 
     const submitHotel = async (e) => {
         e.preventDefault();
-        let data = { name, email, phone, adress, city, country };
+        let data = { name, email, phone, adress, city, country, img: image };
         if (hotelId !== null) {
             data.id = hotelId;
             updateHotel(data);
@@ -80,7 +82,6 @@ export default function HotelForms() {
                 <form onSubmit={submitHotel}>
                     <fieldset>
                         <div className="row">
-
                             <div className="column">
                                 <label htmlFor="name">Name</label>
                                 <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
@@ -95,7 +96,6 @@ export default function HotelForms() {
                             </div>
                         </div>
                         <div className="row">
-
                             <div className="column">
                                 <label htmlFor="adress">Address</label>
                                 <input type="text" placeholder="Adress" value={adress} onChange={(e) => setAdress(e.target.value)} />
@@ -108,8 +108,8 @@ export default function HotelForms() {
                                 <label htmlFor="country">Country</label>
                                 <input type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} />
                             </div>
+                            <ImageInput image={image} setImage={setImage} />
                         </div>
-
                         <section className="row">
                             <button type="button" onClick={() => navigate(previousPage)}>Cancel</button>
                             <button type="submit">Create</button>
