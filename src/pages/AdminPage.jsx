@@ -94,10 +94,12 @@ const AdminPage = () => {
       </header>
       <section>
         <article>
-          <header>
+          <header className="row">
             <h2>Hotels</h2>
-            <button onClick={getAllHotels}>Refresh</button>
-            <button>Add new Hotel</button>
+            <section className="btn-container">
+              <button onClick={getAllHotels}>Refresh</button>
+              <button>Add new Hotel</button>
+            </section>
           </header>
           <ul >
             {hotels && hotels.length > 0 ?
@@ -113,7 +115,7 @@ const AdminPage = () => {
                         <img src="https://via.placeholder.com/150" alt={hotel.name} />
                       </div>
                     }
-                    <div className="column">
+                    <div className="column align-self-start">
                       <header>
                         <h3>{hotel.name}</h3>
                       </header>
@@ -125,12 +127,12 @@ const AdminPage = () => {
                         <p><strong>Email:</strong> {hotel.email}</p>
                         <p><strong>Phone:</strong> {hotel.phone}</p>
                       </section>
-                      <section className="btn-container">
-                        <button className="btn">Edit</button>
-                        <button className="btn">Delete</button>
-                      </section>
                     </div>
+                    <section className="btn-container align-self-end">
+                      <button className="btn">Edit</button>
+                      <button className="btn">Delete</button>
 
+                    </section>
                   </Card>
                 )
               })
