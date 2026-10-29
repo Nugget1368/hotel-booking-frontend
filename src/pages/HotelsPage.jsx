@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 import api from "../application/api"
 const HotelsPage = () => {
     const [myReservations, setMyReservations] = useState([]);
+    const [hotels, setHotels] = useState([]);
     const getReservations = async () => {
         let result = await api.getUserReservationAsync(MySessionStorage.getUserToken());
         if (result) {
@@ -14,45 +15,21 @@ const HotelsPage = () => {
         }
     }
 
+    const getHotels = async () => {
+        let result = await api.getHotelsAsync();
+        if (result) {
+            setHotels(result);
+        }
+    }
+
     useEffect(() => {
         if (MySessionStorage.getUserToken()) {
             getReservations();
         }
-    }, [])
-    let hotels = [
-        {
-            "name": "Hotel 1",
-            "address": "yomamas address",
-            "city": "Stockholm",
-            "country": "Sweden",
-            "phone": "123456789",
-            "email": "email@domain"
-        },
-        {
-            "name": "Hotel 2",
-            "address": "Coppenhagen 2",
-            "city": "Coppenhagen",
-            "country": "Denmark",
-            "phone": "123456789",
-            "email": "email@domain"
-        },
-        {
-            "name": "Hotel 3",
-            "address": "Address 3",
-            "city": "Oslo",
-            "country": "Norway",
-            "phone": "123456789",
-            "email": "email@domain"
-        },
-        {
-            "name": "Hotel 3",
-            "address": " Address 3",
-            "city": "Oslo",
-            "country": "Norway",
-            "phone": "123456789",
-            "email": "email@domain"
+        if(hotels === undefined || hotels.length === 0) {
+            getHotels();
         }
-    ]
+    }, [])
 
     return (
         <>
@@ -81,7 +58,7 @@ const HotelsPage = () => {
                                 <p>Phone: {hotel.phone}</p>
                                 <p>Email: {hotel.email}</p>
                             </div>
-                            <Link to="/booking">Book This</Link>
+                            <Link to={`/booking?hotelId=${hotel.id}`}>Book This</Link>
                         </article>
                     ))
                 }

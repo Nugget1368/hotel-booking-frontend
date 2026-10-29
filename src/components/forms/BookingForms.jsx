@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import api from "../../application/api.js"
 import { MySessionStorage } from "../../application/localStorage.js"
 
@@ -14,6 +14,7 @@ export default function BookingForms() {
     const [loggedIn, setLoggedIn] = useState(false);
 
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
 
     useEffect(() => {
         if (MySessionStorage.getUserInfo()) {
@@ -28,7 +29,18 @@ export default function BookingForms() {
 
     const reservation = async (e) => {
         e.preventDefault();
-        let data = { firstName, lastName, email, phone, roomType, checkIn, checkOut };
+        const hotelIdParam = searchParams.get("hotelId");
+        const hotelId = hotelIdParam === null ? null : Number(hotelIdParam);
+        let data = {
+            firstName,
+            lastName,
+            email,
+            phone,
+            roomType,
+            checkIn,
+            checkOut,
+            ...(Number.isInteger(hotelId) && hotelId > 0 ? { hotelId } : {})
+        };
         ///TODO: Move this to backend
         Object.keys(data).forEach(key => data[key] === "" ? data[key] = null : data[key]);
         let response;
