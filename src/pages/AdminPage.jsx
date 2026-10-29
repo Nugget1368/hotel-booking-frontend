@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import Api from "../application/api"
 import Card from "../components/Card"
+import Slider from "../components/Slider"
+import HotelForms from "../components/forms/HotelForms"
 
 const AdminPage = () => {
 
@@ -101,7 +103,12 @@ const AdminPage = () => {
               <button>Add new Hotel</button>
             </section>
           </header>
-          <ul >
+          <section className="column">
+            <Slider label="Add new hotel" defaultOpen={false}>
+              <HotelForms />
+            </Slider>
+          </section>
+          <ul>
             {hotels && hotels.length > 0 ?
               hotels.map((hotel) => {
                 return (
@@ -131,7 +138,6 @@ const AdminPage = () => {
                     <section className="btn-container align-self-end">
                       <button className="btn">Edit</button>
                       <button className="btn">Delete</button>
-
                     </section>
                   </Card>
                 )

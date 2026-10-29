@@ -4,7 +4,9 @@ import api from "../../application/api.js"
 
 export default function HotelForms() {
     const [name, setName] = useState("");
-    const [address, setAddress] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [adress, setAdress] = useState("");
     const [city, setCity] = useState("");
     const [country, setCountry] = useState("");
     const [hotelId, setHotelId] = useState(null);
@@ -28,7 +30,9 @@ export default function HotelForms() {
         let response = await api.getHotelByIdAsync(hotelId);
         if (response) {
             setName(response.name);
-            setAddress(response.address);
+            setEmail(response.email);
+            setPhone(response.phone);
+            setAdress(response.adress);
             setCity(response.city);
             setCountry(response.country);
         }
@@ -36,8 +40,8 @@ export default function HotelForms() {
 
     const submitHotel = async (e) => {
         e.preventDefault();
-        let data = { name, address, city, country };
-        if(hotelId !== null) {
+        let data = { name, email, phone, adress, city, country };
+        if (hotelId !== null) {
             data.id = hotelId;
             updateHotel(data);
         }
@@ -71,16 +75,45 @@ export default function HotelForms() {
         <>
             <article>
                 <header>
-                    <h1>Create new hotel</h1>
+                    <h3>Create new hotel</h3>
                 </header>
                 <form onSubmit={submitHotel}>
                     <fieldset>
-                        <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-                        <input type="text" placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)} />
-                        <input type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
-                        <input type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} />
-                        <button type="button" onClick={() => navigate(previousPage)}>Cancel</button>
-                        <button type="submit">Create</button>
+                        <div className="row">
+
+                            <div className="column">
+                                <label htmlFor="name">Name</label>
+                                <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+                            </div>
+                            <div className="column">
+                                <label htmlFor="email">Email</label>
+                                <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                            </div>
+                            <div className="column">
+                                <label htmlFor="phone">Phone</label>
+                                <input type="text" placeholder="Phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                            </div>
+                        </div>
+                        <div className="row">
+
+                            <div className="column">
+                                <label htmlFor="adress">Address</label>
+                                <input type="text" placeholder="Adress" value={adress} onChange={(e) => setAdress(e.target.value)} />
+                            </div>
+                            <div className="column">
+                                <label htmlFor="city">City</label>
+                                <input type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
+                            </div>
+                            <div className="column">
+                                <label htmlFor="country">Country</label>
+                                <input type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} />
+                            </div>
+                        </div>
+
+                        <section className="row">
+                            <button type="button" onClick={() => navigate(previousPage)}>Cancel</button>
+                            <button type="submit">Create</button>
+                        </section>
                     </fieldset>
                 </form>
             </article>
