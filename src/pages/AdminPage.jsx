@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react"
 import Api from "../application/api"
+import Card from "../components/Card"
+import Slider from "../components/Slider"
+import HotelForms from "../components/forms/HotelForms"
 
 const AdminPage = () => {
 
@@ -12,6 +15,7 @@ const AdminPage = () => {
     checkOut: ""
   });
   const [users, setUsers] = useState([]);
+  const [hotels, setHotels] = useState([]);
 
   const toggleEditMode = (id) => {
     setEditId(id);
@@ -73,9 +77,16 @@ const AdminPage = () => {
     }
   }
 
+  const getAllHotels = async () => {
+    let result = await Api.getHotelsAsync();
+    console.log(result);
+    setHotels(result);
+  }
+
   useEffect(() => {
     getReservations();
     getAllUSers();
+    getAllHotels();
   }, [])
 
   return (
@@ -85,6 +96,59 @@ const AdminPage = () => {
       </header>
       <section>
         <article>
+          <header className="row">
+            <h2>Hotels</h2>
+          </header>
+            <Slider label="Add new hotel" defaultOpen={false}>
+              <HotelForms />
+            </Slider>
+          <section className="btn-container">
+            <button onClick={getAllHotels}>Refresh</button>
+          </section>
+          <ul>
+            {hotels && hotels.length > 0 ?
+              hotels.map((hotel, index) => {
+                return (
+                  <Card as="li" key={`hotel-${hotel.hotelId ? hotel.hotelId : index}`} className="row">
+                    {hotel.img && hotel.img !== "" ?
+                      <div className="column">
+                        <img src={`data:${hotel.imgType};base64,${hotel.img}`} alt={hotel.name} />
+                      </div>
+                      :
+                      <div className="column">
+                        <img src="https://via.placeholder.com/150" alt={hotel.name} />
+                      </div>
+                    }
+                    <div className="column align-self-start">
+                      <header>
+                        <h3>{hotel.name}</h3>
+                      </header>
+                      <section className="column">
+                        <p><strong>Location:</strong> {hotel.city}, {hotel.country}</p>
+                      </section>
+                      <section className="column">
+                        <h4>Contacts</h4>
+                        <p><strong>Email:</strong> {hotel.email}</p>
+                        <p><strong>Phone:</strong> {hotel.phone}</p>
+                      </section>
+                    </div>
+                    <section className="btn-container align-self-end">
+                      <button className="btn">Edit</button>
+                      <button className="btn">Delete</button>
+                    </section>
+                  </Card>
+                )
+              })
+              :
+              <li>
+                <p>No hotels found.</p>
+              </li>
+            }
+          </ul>
+        </article>
+      </section>
+      <section>
+        <article>
           <header>
             <h2>Reservations</h2>
           </header>
@@ -92,7 +156,7 @@ const AdminPage = () => {
             {reservations && reservations.length > 0 ?
               reservations.map((reservation) => {
                 return (
-                  <li key={reservation.reservationId} className="card">
+                  <Card as="li" key={reservation.reservationId}>
                     <div className="row">
                       <div className="column">
                         <h3>{reservation.firstName} {reservation.lastName}</h3>
@@ -124,7 +188,7 @@ const AdminPage = () => {
                         }
                       </div>
                     </div>
-                  </li>
+                  </Card>
                 )
               })
               :
@@ -142,7 +206,7 @@ const AdminPage = () => {
             {users && users.length > 0 ?
               users.map((user) => {
                 return (
-                  <li key={user.guestId} className="card">
+                  <Card as="li" key={user.guestId}>
                     <div className="row">
                       <div className="column">
                         <h3>{user.firstName} {user.lastName}</h3>
@@ -152,7 +216,7 @@ const AdminPage = () => {
                         <button className="btn" onClick={() => deleteUser(user.guestId)}>Delete</button>
                       </div>
                     </div>
-                  </li>
+                  </Card>
                 )
               })
               :
