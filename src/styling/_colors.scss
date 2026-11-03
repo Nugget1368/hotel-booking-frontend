@@ -1,0 +1,204 @@
+// =============================================================================
+//  _colors.scss — Green color system with light & dark mode
+// -----------------------------------------------------------------------------
+//  Usage:
+//    @use "colors" as *;
+//
+//    // 1) Emit the theme once (e.g. in your main stylesheet):
+//    :root            { @include theme-light; }
+//    [data-theme="dark"] { @include theme-dark; }
+//    // …or follow the OS setting automatically:
+//    @media (prefers-color-scheme: dark) {
+//      :root:not([data-theme="light"]) { @include theme-dark; }
+//    }
+//
+//    // 2) Use the semantic colors anywhere — they switch with the mode:
+//    .button {
+//      background: color(primary);
+//      color: color(on-primary);
+//      &:hover { background: color(primary-hover); }
+//    }
+//
+//  Switch modes at runtime by setting data-theme="dark" | "light" on <html>.
+// =============================================================================
+
+@use "sass:map";
+
+// -----------------------------------------------------------------------------
+//  1. Base palette (raw scales — prefer the semantic tokens in section 2)
+// -----------------------------------------------------------------------------
+
+// Green — the brand / primary color
+$green-50:  #effaf3;
+$green-100: #d8f3e1;
+$green-200: #b3e6c6;
+$green-300: #80d2a3;
+$green-400: #4bb77d;
+$green-500: #279c60;
+$green-600: #1a7e4c; // primary (light mode)
+$green-700: #16653f;
+$green-800: #145134;
+$green-900: #11432c;
+$green-950: #082518;
+
+// Neutral — gray with a subtle green tint so it sits well next to the brand
+$neutral-0:   #ffffff;
+$neutral-50:  #f6f8f6;
+$neutral-100: #edf1ee;
+$neutral-200: #dce3de;
+$neutral-300: #c2ccc5;
+$neutral-400: #9aa89f;
+$neutral-500: #74837a;
+$neutral-600: #59675f;
+$neutral-700: #46524b;
+$neutral-800: #2f3833;
+$neutral-900: #1d2420;
+$neutral-950: #111613;
+
+// Status colors
+$amber-400: #f0b44c;
+$amber-600: #a15c00;
+$red-400:   #f07a7a;
+$red-600:   #c93636;
+$blue-400:  #6aaee8;
+$blue-600:  #236fb5;
+
+// -----------------------------------------------------------------------------
+//  2. Semantic themes
+// -----------------------------------------------------------------------------
+
+$theme-light: (
+  // Surfaces
+  "background":        $neutral-50,
+  "surface":           $neutral-0,
+  "surface-raised":    $neutral-0,
+  "surface-sunken":    $neutral-100,
+
+  // Text
+  "text":              $neutral-900,
+  "text-muted":        $neutral-600,
+  "text-subtle":       $neutral-500,
+  "text-inverse":      $neutral-0,
+
+  // Lines
+  "border":            $neutral-200,
+  "border-strong":     $neutral-300,
+
+  // Primary (green)
+  "primary":           $green-600,
+  "primary-hover":     $green-700,
+  "primary-active":    $green-800,
+  "on-primary":        $neutral-0,
+  "primary-subtle":    $green-50,
+  "on-primary-subtle": $green-800,
+  "focus-ring":        $green-500,
+
+  // Secondary (neutral buttons, chips, etc.)
+  "secondary":         $neutral-100,
+  "secondary-hover":   $neutral-200,
+  "on-secondary":      $neutral-900,
+
+  // Status
+  "success":           $green-600,
+  "on-success":        $neutral-0,
+  "warning":           $amber-600,
+  "on-warning":        $neutral-0,
+  "danger":            $red-600,
+  "on-danger":         $neutral-0,
+  "info":              $blue-600,
+  "on-info":           $neutral-0,
+
+  // Misc
+  "link":              $green-700,
+  "link-hover":        $green-800,
+  "shadow":            rgba($neutral-950, 0.08),
+  "overlay":           rgba($neutral-950, 0.45),
+);
+
+$theme-dark: (
+  // Surfaces
+  "background":        $neutral-950,
+  "surface":           $neutral-900,
+  "surface-raised":    $neutral-800,
+  "surface-sunken":    #0b0f0d,
+
+  // Text
+  "text":              $neutral-100,
+  "text-muted":        $neutral-400,
+  "text-subtle":       $neutral-500,
+  "text-inverse":      $neutral-950,
+
+  // Lines
+  "border":            $neutral-800,
+  "border-strong":     $neutral-700,
+
+  // Primary (green — brighter so it pops on dark surfaces)
+  "primary":           $green-400,
+  "primary-hover":     $green-300,
+  "primary-active":    $green-200,
+  "on-primary":        $green-950,
+  "primary-subtle":    $green-900,
+  "on-primary-subtle": $green-200,
+  "focus-ring":        $green-400,
+
+  // Secondary
+  "secondary":         $neutral-800,
+  "secondary-hover":   $neutral-700,
+  "on-secondary":      $neutral-100,
+
+  // Status
+  "success":           $green-400,
+  "on-success":        $green-950,
+  "warning":           $amber-400,
+  "on-warning":        $neutral-950,
+  "danger":            $red-400,
+  "on-danger":         $neutral-950,
+  "info":              $blue-400,
+  "on-info":           $neutral-950,
+
+  // Misc
+  "link":              $green-300,
+  "link-hover":        $green-200,
+  "shadow":            rgba(#000000, 0.4),
+  "overlay":           rgba(#000000, 0.6),
+);
+
+// -----------------------------------------------------------------------------
+//  3. Helpers
+// -----------------------------------------------------------------------------
+
+// Writes every token in a theme map as a CSS custom property: --color-<name>
+@mixin emit-theme($theme) {
+  @each $name, $value in $theme {
+    --color-#{$name}: #{$value};
+  }
+}
+
+@mixin theme-light {
+  color-scheme: light;
+  @include emit-theme($theme-light);
+}
+
+@mixin theme-dark {
+  color-scheme: dark;
+  @include emit-theme($theme-dark);
+}
+
+// color(primary) -> var(--color-primary). Errors at compile time on typos.
+@function color($name) {
+  @if not map.has-key($theme-light, "#{$name}") {
+    @error "Unknown color token `#{$name}`. Available: #{map.keys($theme-light)}";
+  }
+  @return var(--color-#{$name});
+}
+
+// Static lookup when you need a fixed value for one mode (no runtime switching):
+//   background: light(primary);   // #1a7e4c
+//   background: dark(primary);    // #4bb77d
+@function light($name) {
+  @return map.get($theme-light, "#{$name}");
+}
+
+@function dark($name) {
+  @return map.get($theme-dark, "#{$name}");
+}

@@ -1,4 +1,4 @@
-:root {
+/* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -25,9 +25,14 @@ a:hover {
 body {
   margin: 0;
   display: flex;
+  justify-content: center;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background: white;
+  background-image: radial-gradient(color(primary) 1px, transparent 0);
+  background-size: 40px 40px;
+  background-position: -19px -19px;
 }
 
 h1 {
@@ -65,4 +70,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */

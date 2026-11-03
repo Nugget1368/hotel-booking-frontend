@@ -1,0 +1,185 @@
+:root {
+  color-scheme: light;
+  --color-background: #f6f8f6;
+  --color-surface: #ffffff;
+  --color-surface-raised: #ffffff;
+  --color-surface-sunken: #edf1ee;
+  --color-text: #1d2420;
+  --color-text-muted: #59675f;
+  --color-text-subtle: #74837a;
+  --color-text-inverse: #ffffff;
+  --color-border: #dce3de;
+  --color-border-strong: #c2ccc5;
+  --color-primary: #1a7e4c;
+  --color-primary-hover: #16653f;
+  --color-primary-active: #145134;
+  --color-on-primary: #ffffff;
+  --color-primary-subtle: #effaf3;
+  --color-on-primary-subtle: #145134;
+  --color-focus-ring: #279c60;
+  --color-secondary: #edf1ee;
+  --color-secondary-hover: #dce3de;
+  --color-on-secondary: #1d2420;
+  --color-success: #1a7e4c;
+  --color-on-success: #ffffff;
+  --color-warning: #a15c00;
+  --color-on-warning: #ffffff;
+  --color-danger: #c93636;
+  --color-on-danger: #ffffff;
+  --color-info: #236fb5;
+  --color-on-info: #ffffff;
+  --color-link: #16653f;
+  --color-link-hover: #145134;
+  --color-shadow: rgba(17, 22, 19, 0.08);
+  --color-overlay: rgba(17, 22, 19, 0.45);
+}
+
+[data-theme=dark] {
+  color-scheme: dark;
+  --color-background: #111613;
+  --color-surface: #1d2420;
+  --color-surface-raised: #2f3833;
+  --color-surface-sunken: #0b0f0d;
+  --color-text: #edf1ee;
+  --color-text-muted: #9aa89f;
+  --color-text-subtle: #74837a;
+  --color-text-inverse: #111613;
+  --color-border: #2f3833;
+  --color-border-strong: #46524b;
+  --color-primary: #4bb77d;
+  --color-primary-hover: #80d2a3;
+  --color-primary-active: #b3e6c6;
+  --color-on-primary: #082518;
+  --color-primary-subtle: #11432c;
+  --color-on-primary-subtle: #b3e6c6;
+  --color-focus-ring: #4bb77d;
+  --color-secondary: #2f3833;
+  --color-secondary-hover: #46524b;
+  --color-on-secondary: #edf1ee;
+  --color-success: #4bb77d;
+  --color-on-success: #082518;
+  --color-warning: #f0b44c;
+  --color-on-warning: #111613;
+  --color-danger: #f07a7a;
+  --color-on-danger: #111613;
+  --color-info: #6aaee8;
+  --color-on-info: #111613;
+  --color-link: #80d2a3;
+  --color-link-hover: #b3e6c6;
+  --color-shadow: rgba(0, 0, 0, 0.4);
+  --color-overlay: rgba(0, 0, 0, 0.6);
+}
+
+.button {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.primary {
+  transition: color 0.2s;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+.primary:hover {
+  background: var(--color-primary-hover);
+  color: var(--color-on-primary);
+}
+
+.secondary {
+  background: var(--color-secondary);
+  color: var(--color-on-secondary);
+}
+.secondary:hover {
+  background: var(--color-secondary-hover);
+  color: var(--color-on-secondary);
+}
+
+#App {
+  background-color: rgba(140, 140, 140, 0.1450980392);
+  color: var(--color-text);
+}
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  transition: 0.1s ease !important;
+  font-weight: 500;
+  color: var(--color-info);
+  text-decoration: inherit;
+  box-sizing: border-box;
+  padding: 0.2rem 0.4rem;
+}
+
+a.primary {
+  background: transparent;
+  color: var(--color-primary);
+}
+
+a.primary:hover {
+  background: transparent;
+  transition: color 0.1s ease;
+  color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-focus-ring);
+  border-radius: 4px;
+}
+
+a.secondary {
+  color: var(--color-secondary);
+}
+
+a:hover {
+  transition: color 0.1s ease;
+  color: var(--color-on-info);
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--color-surface);
+  background-image: radial-gradient(var(--color-primary) 1px, transparent 0);
+  background-size: 40px 40px;
+  background-position: -19px -19px;
+}
+
+h1 {
+  line-height: 1.1;
+  color: var(--color-text);
+}
+
+h2 {
+  line-height: 1.2;
+  color: var(--color-text);
+}
+
+h3 {
+  line-height: 1.2;
+  color: var(--color-text-muted);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}/*# sourceMappingURL=style.css.map */

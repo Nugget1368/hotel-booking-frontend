@@ -1,0 +1,123 @@
+@use "colors" as *;
+:root {
+  @include theme-light;
+}
+[data-theme="dark"] {
+  @include theme-dark;
+}
+
+.button {
+  background: color(primary);
+  color: color(on-primary);
+}
+
+.primary {
+  transition: color 0.2s;
+  background: color(primary);
+  color: color(on-primary);
+  &:hover {
+    background: color(primary-hover);
+    color: color(on-primary);
+  }
+}
+
+.secondary {
+  background: color(secondary);
+  color: color(on-secondary);
+  &:hover {
+    background: color(secondary-hover);
+    color: color(on-secondary);
+  }
+}
+
+#App {
+  background-color: #8c8c8c25;
+  color: color(text);
+}
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  transition: 0.1s ease !important;
+  font-weight: 500;
+  color: color(info);
+  text-decoration: inherit;
+  box-sizing: border-box;
+  padding: 0.2rem 0.4rem;
+}
+a.primary {
+  background: transparent;
+  color: color(primary);
+}
+a.primary:hover {
+  background: transparent;
+
+  transition: color 0.1s ease;
+  color: color(primary);
+  box-shadow: 0 0 0 2px color(focus-ring);
+  border-radius: 4px;
+}
+a.secondary {
+  color: color(secondary);
+}
+a:hover {
+  transition: color 0.1s ease;
+  color: color(on-info);
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background: color(surface);
+  background-image: radial-gradient(color(primary) 1px, transparent 0);
+  background-size: 40px 40px;
+  background-position: -19px -19px;
+}
+
+h1 {
+  //   font-size: 3.2em;
+  line-height: 1.1;
+  color: color(text);
+}
+
+h2 {
+  //   font-size: 2em;
+  line-height: 1.2;
+  color: color(text);
+}
+
+h3 {
+  //   font-size: 1.5em;
+  line-height: 1.2;
+  color: color(text-muted);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}

@@ -5,6 +5,7 @@ import ReservationsList from "../components/reservations/ReservationsList"
 import { useEffect, useState } from "react"
 import api from "../application/api"
 import Card from "../components/Card"
+import './_page.scss'
 const HotelsPage = () => {
     const [myReservations, setMyReservations] = useState([]);
     const [hotels, setHotels] = useState([]);
@@ -62,7 +63,7 @@ const HotelsPage = () => {
                                 <p>Phone: {hotel.phone}</p>
                                 <p>Email: {hotel.email}</p>
                             </div>
-                            <Link to={`/booking?hotelId=${hotel.id}`}>Book This</Link>
+                            <Link className="primary" to={`/booking?hotelId=${hotel.id}`}>Book This</Link>
                         </Card>
                     ))
                 }
