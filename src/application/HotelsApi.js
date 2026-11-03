@@ -35,7 +35,6 @@ export default class HotelsApi {
         const apiUrl = import.meta.env.VITE_API_URL;
         let token = MySessionStorage.getUserToken();
         const img = hotel.img ? await FileHandler.fileToBase64(hotel.img) : null;
-        console.log("img: ", img);
         const imgType = hotel.img ? hotel.img.type : null;
         try {
             let response = await fetch(apiUrl + "/hotels", {

@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const MAX_IMAGE_SIZE = 10 * 1024 * 1024;
 
-function ImageInput({image, setImage}) {
+function ImageInput({ image, setImage }) {
   const [error, setError] = useState("");
   const [preview, setPreview] = useState("");
 
@@ -42,7 +42,7 @@ function ImageInput({image, setImage}) {
       <input
         id="hotel-image"
         type="file"
-        accept="image/*"
+        accept="image/png, image/jpeg"
         onChange={handleImageChange}
       />
 

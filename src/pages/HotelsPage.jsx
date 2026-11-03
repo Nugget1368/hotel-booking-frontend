@@ -17,6 +17,7 @@ const HotelsPage = () => {
 
     const getHotels = async () => {
         let result = await api.getHotelsAsync();
+        console.log("result: ", result);
         if (result) {
             setHotels(result);
         }
