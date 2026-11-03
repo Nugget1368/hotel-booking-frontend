@@ -1,7 +1,7 @@
 import './App.css'
 import BookingForms from './components/forms/BookingForms'
 import HotelsPage from './pages/HotelsPage'
-import Header from './components/Header'
+import Header from './components/Header/Header'
 import { BrowserRouter as Router, Route, Routes } from 'react-router'
 import LoginPage from './pages/LoginPage'
 import AdminPage from './pages/AdminPage'
@@ -11,8 +11,10 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<>
+        <div id="App">
           <Header />
           <HotelsPage />
+        </div>
         </>
         } />
         <Route path="/booking" element={<BookingForms />} />
