@@ -5,6 +5,5 @@
   min-width: 320px;
   min-height: 100vh;
   box-sizing: border-box;
-  /* background-color: #00000025; */
-  /* background-color: color(primary); */
+  max-width: 1200px;
 }
