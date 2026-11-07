@@ -1,10 +1,9 @@
 import BookingForms from "../components/forms/BookingForms"
-import { Link } from "react-router"
 import { MySessionStorage } from "../application/localStorage"
 import ReservationsList from "../components/reservations/ReservationsList"
 import { useEffect, useState } from "react"
 import api from "../application/api"
-import Card from "../components/Card"
+import HotelArticle from "../components/HotelArticle"
 import './_page.scss'
 const HotelsPage = () => {
     const [myReservations, setMyReservations] = useState([]);
@@ -44,27 +43,10 @@ const HotelsPage = () => {
             <section className="card-list">
                 {
                     hotels.map((hotel, index) => (
-                        <Card as="article" key={`hotel-${hotel.hotelId || index}`} className="card">
-                            <div className="column" style={{ width: "100%" }}>
-                                {hotel.img && hotel.img !== "" ?
-                                    <img src={`data:${hotel.imgType};base64,${hotel.img}`} alt={hotel.name} />
-                                    :
-                                    <img src="https://via.placeholder.com/150" alt={hotel.name} />}
-                            </div>
-                            <div className="column">
-                                <h2>{hotel.name}</h2>
-                                <p>Address: {hotel.address}</p>
-                            </div>
-                            <div className="row">
-                                <p>{hotel.city}</p>
-                                <p>{hotel.country}</p>
-                            </div>
-                            <div className="column">
-                                <p>Phone: {hotel.phone}</p>
-                                <p>Email: {hotel.email}</p>
-                            </div>
-                            <Link className="primary" to={`/booking?hotelId=${hotel.id}`}>Book This</Link>
-                        </Card>
+                        <HotelArticle
+                            key={`hotel-${hotel.hotelId || index}`}
+                            hotel={hotel}
+                        />
                     ))
                 }
             </section>
