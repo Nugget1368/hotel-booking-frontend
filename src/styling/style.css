@@ -74,13 +74,12 @@
   width: 100%;
 }
 
-.button {
-  background: var(--color-primary);
-  color: var(--color-on-primary);
+.btn {
+  border-radius: 0.25rem;
+  transition: color 0.2s;
 }
 
 .primary {
-  transition: color 0.2s;
   background: var(--color-primary);
   color: var(--color-on-primary);
 }
@@ -123,28 +122,6 @@ a {
   text-decoration: inherit;
   box-sizing: border-box;
   padding: 0.2rem 0.4rem;
-}
-
-a.primary {
-  background: transparent;
-  color: var(--color-primary);
-}
-
-a.primary:hover {
-  background: transparent;
-  transition: color 0.1s ease;
-  color: var(--color-primary);
-  box-shadow: 0 0 0 2px var(--color-focus-ring);
-  border-radius: 4px;
-}
-
-a.secondary {
-  color: var(--color-secondary);
-}
-
-a:hover {
-  transition: color 0.1s ease;
-  color: var(--color-on-info);
 }
 
 body {

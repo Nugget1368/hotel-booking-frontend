@@ -9,19 +9,18 @@ const HotelArticle = ({ hotel }) => (
                 :
                 <img src="https://via.placeholder.com/150" alt={hotel.name} />}
         </div>
-        <div className="column">
+        <div>
             <h2>{hotel.name}</h2>
-            <p>Address: {hotel.address}</p>
+            <p>Address: {hotel.adress ? hotel.adress : "-"}</p>
+            <p> {hotel.country}, {hotel.city}</p>
         </div>
-        <div className="row">
-            <p>{hotel.city}</p>
-            <p>{hotel.country}</p>
+        <div>
+            <p><strong>Phone:</strong> {hotel.phone}</p>
+            <p><strong>Email:</strong> {hotel.email}</p>
         </div>
-        <div className="column">
-            <p>Phone: {hotel.phone}</p>
-            <p>Email: {hotel.email}</p>
+        <div className="btn-container">
+            <Link className="btn primary" to={`/booking?hotelId=${hotel.id}`}>Book This</Link>
         </div>
-        <Link className="primary" to={`/booking?hotelId=${hotel.id}`}>Book This</Link>
     </Card>
 )
 
