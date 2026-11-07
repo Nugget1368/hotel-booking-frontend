@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import api from "../../application/api.js"
 import { MySessionStorage } from "../../application/localStorage.js"
+import CreateAccountForm from "./CreateAccountForm.jsx"
+import ReservationForm from "./ReservationForm.jsx"
 
 export default function BookingForms() {
     const [firstName, setFirstName] = useState("");
@@ -27,7 +29,7 @@ export default function BookingForms() {
         }
     }, [])
 
-    const reservation = async (e) => {
+    const CreateReservation = async (e) => {
         e.preventDefault();
         const hotelIdParam = searchParams.get("hotelId");
         const hotelId = hotelIdParam === null ? null : Number(hotelIdParam);
@@ -44,7 +46,8 @@ export default function BookingForms() {
         ///TODO: Move this to backend
         Object.keys(data).forEach(key => data[key] === "" ? data[key] = null : data[key]);
         let response;
-        loggedIn ? response = await api.createUserReservationAsync(MySessionStorage.getUserToken(), data) : response = await api.createGuestReservationAsync(data);
+        console.log("data", data);
+        // loggedIn ? response = await api.createUserReservationAsync(MySessionStorage.getUserToken(), data) : response = await api.createGuestReservationAsync(data);
         if (response.success) {
             alert("Reservation was made!");
             navigate("/");
@@ -60,7 +63,7 @@ export default function BookingForms() {
                 <header>
                     <h1>Make a reservation</h1>
                 </header>
-                <form onSubmit={reservation}>
+                <form onSubmit={CreateReservation}>
                     <fieldset>
                         {loggedIn ?
                             <div className="column">
@@ -68,45 +71,29 @@ export default function BookingForms() {
                                 <h4><strong>Email:</strong> {email}</h4>
                             </div>
                             :
-                            <>
-                                <div className="row">
-                                    <div className="column">
-                                        <label htmlFor="firstName">First Name</label>
-                                        <input type="text" name="firstName" id="firstName" required autoFocus value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                                    </div>
-                                    <div className="column">
-                                        <label htmlFor="lastName">Last Name</label>
-                                        <input type="text" name="lastName" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-                                    </div>
-                                </div>
-                                <div className="column">
-                                    <label htmlFor="email">Email</label>
-                                    <input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                                </div>
-                                <div className="column">
-                                    <label htmlFor="phone">Phone</label>
-                                    <input type="tel" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
-                                </div>
-                            </>
+                            <CreateAccountForm
+                                data={{
+                                    firstName,
+                                    setFirstName,
+                                    lastName,
+                                    setLastName,
+                                    email,
+                                    setEmail,
+                                    phone,
+                                    setPhone
+                                }}
+                            />
                         }
-                        <div className="column">
-                            <label htmlFor="roomType">Room Type</label>
-                            <select name="roomType" id="roomType" value={roomType} onChange={(e) => setRoomType(e.target.value)}>
-                                <option value="single">Single</option>
-                                <option value="double">Double</option>
-                            </select>
-                        </div>
-                        <div className="row">
-                            <div className="column">
-                                <label htmlFor="checkIn">Check In</label>
-                                <input type="date" name="checkIn" id="checkIn" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} />
-                            </div>
-                            <div className="column">
-                                <label htmlFor="checkOut">Check Out</label>
-                                <input type="date" name="checkOut" id="checkOut" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} />
-                            </div>
-                        </div>
-                        <button type="submit">Submit</button>
+                        <ReservationForm
+                            data={{
+                                roomType,
+                                setRoomType,
+                                checkIn,
+                                setCheckIn,
+                                checkOut,
+                                setCheckOut
+                            }}
+                        />
                     </fieldset>
                 </form>
             </article>
