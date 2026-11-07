@@ -11,15 +11,36 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<>
-        <div id="App">
-          <Header />
-          <HotelsPage />
-        </div>
+          <div id="App">
+            <Header />
+            <HotelsPage />
+          </div>
         </>
         } />
-        <Route path="/booking" element={<BookingForms />} />
-        <Route path="/profile/login" element={<LoginPage />} />
-        <Route path="/admin/dashboard" element={<><Header /> <AdminPage /> </>} />
+        <Route path="/booking" element={
+          <>
+            <div id="App">
+              <Header />
+              <BookingForms />
+            </div>
+          </>
+        } />
+        <Route path="/profile/login" element={
+          <>
+            <div id="App">
+              <Header />
+              <LoginPage />
+            </div>
+          </>
+        } />
+        <Route path="/admin/dashboard" element={
+          <>
+            <div id="App">
+              <Header />
+              <AdminPage />
+            </div>
+          </>
+        } />
         <Route path="*" element={<h1>404 Not found friend...</h1>} />
       </Routes>
     </Router>
