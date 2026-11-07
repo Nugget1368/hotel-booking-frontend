@@ -10,10 +10,9 @@
   max-width: 24rem;
   padding: 1rem;
   border: 1px solid color(border);
-  border-radius: 0.75rem;
   background-color: color(surface);
   color: color(text);
-  box-shadow: 0 2px 8px color(shadow);
+  box-shadow: 0 0 0px 1px color(shadow);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;

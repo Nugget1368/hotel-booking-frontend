@@ -6,6 +6,10 @@
   @include theme-dark;
 }
 
+#root{
+  width: 100%;
+}
+
 .button {
   background: color(primary);
   color: color(on-primary);

@@ -1,9 +1,10 @@
-#App{
-  display: flex;
-  flex-direction: column;
-  align-self: center;
+#App {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  width: min(100%, 1200px);
+  margin-inline: auto;
   min-width: 320px;
   min-height: 100vh;
   box-sizing: border-box;
-  max-width: 1200px;
 }

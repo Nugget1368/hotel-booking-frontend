@@ -70,6 +70,10 @@
   --color-overlay: rgba(0, 0, 0, 0.6);
 }
 
+#root {
+  width: 100%;
+}
+
 .button {
   background: var(--color-primary);
   color: var(--color-on-primary);

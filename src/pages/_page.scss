@@ -1,8 +1,11 @@
 .card-list{
-    display: flex;
-    justify-content: flex-start;
-    flex-flow: row wrap;
-    gap: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: 0.25rem;
     box-sizing: border-box;
     padding: 2rem;
+
+    > .card {
+        max-width: none;
+    }
 }
