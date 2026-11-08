@@ -3,6 +3,8 @@ import Api from "../application/api"
 import Card from "../components/Card"
 import Slider from "../components/Slider"
 import HotelForms from "../components/forms/HotelForms"
+import HotelArticle from "../components/HotelArticle"
+import { MySessionStorage } from "../application/localStorage"
 
 const AdminPage = () => {
 
@@ -16,6 +18,7 @@ const AdminPage = () => {
   });
   const [users, setUsers] = useState([]);
   const [hotels, setHotels] = useState([]);
+  const [userRole, setUserRole] = useState(null);
 
   const toggleEditMode = (id) => {
     setEditId(id);
@@ -87,64 +90,47 @@ const AdminPage = () => {
     getReservations();
     getAllUSers();
     getAllHotels();
+    async function fetchUserRole() {
+      const token = MySessionStorage.getUserToken();
+      const response = await Api.getUserRoleAsync(token);
+      setUserRole(response.role);
+    }
+    fetchUserRole();
   }, [])
 
   return (
     <>
       <header>
-        <h1>AdminPage</h1>
+        <h2>AdminPage</h2>
       </header>
       <section>
         <article>
           <header className="row">
-            <h2>Hotels</h2>
+            <h3>Hotels</h3>
           </header>
-            <Slider label="Add new hotel" defaultOpen={false}>
-              <HotelForms />
-            </Slider>
+          <Slider label="Add new hotel" defaultOpen={false}>
+            <HotelForms />
+          </Slider>
           <section className="btn-container">
             <button onClick={getAllHotels}>Refresh</button>
           </section>
-          <ul>
+          <section className="card-list">
             {hotels && hotels.length > 0 ?
               hotels.map((hotel, index) => {
                 return (
-                  <Card as="li" key={`hotel-${hotel.hotelId ? hotel.hotelId : index}`} className="row">
-                    {hotel.img && hotel.img !== "" ?
-                      <div className="column">
-                        <img src={`data:${hotel.imgType};base64,${hotel.img}`} alt={hotel.name} />
-                      </div>
-                      :
-                      <div className="column">
-                        <img src="https://via.placeholder.com/150" alt={hotel.name} />
-                      </div>
-                    }
-                    <div className="column align-self-start">
-                      <header>
-                        <h3>{hotel.name}</h3>
-                      </header>
-                      <section className="column">
-                        <p><strong>Location:</strong> {hotel.city}, {hotel.country}</p>
-                      </section>
-                      <section className="column">
-                        <h4>Contacts</h4>
-                        <p><strong>Email:</strong> {hotel.email}</p>
-                        <p><strong>Phone:</strong> {hotel.phone}</p>
-                      </section>
-                    </div>
-                    <section className="btn-container align-self-end">
-                      <button className="btn">Edit</button>
-                      <button className="btn">Delete</button>
-                    </section>
-                  </Card>
+                  <HotelArticle
+                    key={`hotel-${hotel.hotelId || index}`}
+                    hotel={hotel}
+                  >
+                    <button className="btn">Edit</button>
+                    <button className="btn">Delete</button>
+                  </HotelArticle>
                 )
               })
               :
-              <li>
-                <p>No hotels found.</p>
-              </li>
+              <p>No hotels found.</p>
             }
-          </ul>
+          </section>
         </article>
       </section>
       <section>

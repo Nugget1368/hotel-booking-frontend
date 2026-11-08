@@ -1,8 +1,7 @@
-import { Link } from "react-router"
 import Card from "./Card"
 
 export default function HotelArticle(props) {
-    const { hotel } = props;
+    const { hotel, children } = props;
     return (
         <Card as="article" className="card">
             <div className="column img-container" style={{ width: "100%" }}>
@@ -20,9 +19,10 @@ export default function HotelArticle(props) {
                 <p><strong>Phone:</strong> {hotel.phone}</p>
                 <p><strong>Email:</strong> {hotel.email}</p>
             </div>
-            <div className="btn-container">
-                <Link className="btn primary" to={`/booking?hotelId=${hotel.id}`}>Book This</Link>
-            </div>
+            {children &&
+                <div className="btn-container">
+                    {children}
+                </div>}
         </Card>
     )
 }

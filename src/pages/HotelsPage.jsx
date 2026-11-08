@@ -1,4 +1,4 @@
-import BookingForms from "../components/forms/BookingForms"
+import { Link } from "react-router";
 import { MySessionStorage } from "../application/localStorage"
 import ReservationsList from "../components/reservations/ReservationsList"
 import { useEffect, useState } from "react"
@@ -46,7 +46,9 @@ const HotelsPage = () => {
                         <HotelArticle
                             key={`hotel-${hotel.hotelId || index}`}
                             hotel={hotel}
-                        />
+                        >
+                            <Link className="btn primary" to={`/booking?hotelId=${hotel.id}`}>Book This</Link>
+                        </HotelArticle>
                     ))
                 }
             </section>
