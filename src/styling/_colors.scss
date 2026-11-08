@@ -56,10 +56,13 @@ $neutral-900: #1d2420;
 $neutral-950: #111613;
 
 // Status colors
+$amber-200: #fbe3b3;
 $amber-400: #f0b44c;
 $amber-600: #a15c00;
+$red-200:   #f7bebe;
 $red-400:   #f07a7a;
 $red-600:   #c93636;
+$red-800:   #8c1f1f;
 $blue-400:  #6aaee8;
 $blue-600:  #236fb5;
 
@@ -101,9 +104,11 @@ $theme-light: (
   // Status
   "success":           $green-600,
   "on-success":        $neutral-0,
-  "warning":           $amber-600,
+  "warning":           $amber-400,
+  "warning-hover":     $amber-600,
   "on-warning":        $neutral-0,
   "danger":            $red-600,
+  "danger-hover":      $red-800,
   "on-danger":         $neutral-0,
   "info":              $blue-600,
   "on-info":           $neutral-0,
@@ -149,9 +154,11 @@ $theme-dark: (
   // Status
   "success":           $green-400,
   "on-success":        $green-950,
-  "warning":           $amber-400,
+  "warning":           $amber-200,
+  "warning-hover":     $amber-400,
   "on-warning":        $neutral-950,
-  "danger":            $red-400,
+  "danger":            $red-200,
+  "danger-hover":      $red-400,
   "on-danger":         $neutral-950,
   "info":              $blue-400,
   "on-info":           $neutral-950,

@@ -122,8 +122,8 @@ const AdminPage = () => {
                     key={`hotel-${hotel.hotelId || index}`}
                     hotel={hotel}
                   >
-                    <button className="btn">Edit</button>
-                    <button className="btn">Delete</button>
+                    <button className="btn warning">Edit</button>
+                    <button className="btn danger">Delete</button>
                   </HotelArticle>
                 )
               })

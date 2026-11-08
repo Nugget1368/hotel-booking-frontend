@@ -58,6 +58,26 @@
   }
 }
 
+.warning {
+  color: color(on-warning);
+  background-color: color(warning);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  &:hover {
+    background-color: color(warning-hover);
+  }
+}
+
+.danger {
+  color: color(on-danger);
+  background-color: color(danger);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  &:hover {
+    background-color: color(danger-hover);
+  }
+}
+
 .primary {
   background: color(primary);
   color: color(on-primary);
