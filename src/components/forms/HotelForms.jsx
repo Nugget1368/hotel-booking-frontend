@@ -81,39 +81,40 @@ export default function HotelForms() {
                 </header>
                 <form onSubmit={submitHotel}>
                     <fieldset>
-                        <div className="row">
-                            <div className="column">
+                        <div className="form-fields">
+                            <div className="form-field">
                                 <label htmlFor="name">Name</label>
                                 <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
                             </div>
-                            <div className="column">
-                                <label htmlFor="email">Email</label>
-                                <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                            </div>
-                            <div className="column">
+                            <div className="form-field">
                                 <label htmlFor="phone">Phone</label>
                                 <input type="text" placeholder="Phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
                             </div>
-                        </div>
-                        <div className="row">
-                            <div className="column">
+                            <div className="form-field">
+                                <label htmlFor="email">Email</label>
+                                <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                            </div>
+                            <div className="form-field">
                                 <label htmlFor="adress">Address</label>
                                 <input type="text" placeholder="Adress" value={adress} onChange={(e) => setAdress(e.target.value)} />
                             </div>
-                            <div className="column">
+                            <div className="form-field">
                                 <label htmlFor="city">City</label>
                                 <input type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
                             </div>
-                            <div className="column">
+                            <div className="form-field">
                                 <label htmlFor="country">Country</label>
                                 <input type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} />
                             </div>
-                            <ImageInput image={image} setImage={setImage} />
+                            <div className="form-field">
+                                <ImageInput image={image} className="form-field" setImage={setImage} />
+                            </div>
+                            <div className="btn-container form-actions">
+                                <button type="button" className="btn danger" onClick={() => navigate(previousPage)}>Cancel</button>
+                                <button type="submit" className="btn primary">Create</button>
+                            </div>
                         </div>
-                        <section className="row">
-                            <button type="button" onClick={() => navigate(previousPage)}>Cancel</button>
-                            <button type="submit">Create</button>
-                        </section>
+
                     </fieldset>
                 </form>
             </article>
