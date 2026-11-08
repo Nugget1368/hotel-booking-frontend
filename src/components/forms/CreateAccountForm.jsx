@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 export default function CreateAccountForm(props) {
     const { formData, setFormData } = props
 
@@ -19,6 +21,13 @@ export default function CreateAccountForm(props) {
                 <label htmlFor="phone">Phone</label>
                 <input type="tel" name="phone" id="phone" autoComplete="tel" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
             </div>
+            {formData.password !== undefined ? (
+                <div className="form-field">
+                    <label htmlFor="password">Password</label>
+                    <input type="password" name="password" id="password" autoComplete="new-password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
+                </div>
+            ) : null}
+
         </div>
     )
 }

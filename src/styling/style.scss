@@ -12,8 +12,15 @@
 }
 
 .btn {
-  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  border: 0;
+  border-radius: 0.45rem;
   transition: color 0.2s;
+  transition: background-color 0.15s ease;
+  &:focus-visible {
+    outline: 2px solid color(focus-ring);
+    outline-offset: 2px;
+  }
 }
 
 .primary {
@@ -37,6 +44,15 @@
 #App {
   background-color: #8c8c8c25;
   color: color(text);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  width: min(100%, 1200px);
+  margin-inline: auto;
+  min-width: 320px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding-bottom: 4rem;
 }
 
 :root {
@@ -80,7 +96,7 @@ fieldset {
   border: 0;
 }
 
-header{
+header {
   box-sizing: border-box;
 }
 
@@ -102,11 +118,11 @@ h3 {
   color: color(text-muted);
 }
 
-article, header{
+article,
+header {
   box-sizing: border-box;
   padding: 0rem 1rem;
 }
-
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -125,7 +141,7 @@ article, header{
   display: flex;
   flex-flow: row wrap;
   gap: 0.5rem;
-  >*{
+  > * {
     flex: 1 1 0;
   }
 }

@@ -57,22 +57,8 @@
   justify-content: flex-start;
 }
 .form-actions button {
-  padding: 0.7rem 1.1rem;
-  border: 0;
-  border-radius: 0.45rem;
-  background-color: var(--color-primary);
-  color: var(--color-on-primary);
   font: inherit;
   font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.15s ease;
-}
-.form-actions button:hover {
-  background-color: var(--color-primary-hover);
-}
-.form-actions button:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 2px;
 }
 
 @media (max-width: 36rem) {
@@ -157,8 +143,15 @@
 }
 
 .btn {
-  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  border: 0;
+  border-radius: 0.45rem;
   transition: color 0.2s;
+  transition: background-color 0.15s ease;
+}
+.btn:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
 }
 
 .primary {
@@ -182,6 +175,15 @@
 #App {
   background-color: rgba(140, 140, 140, 0.1450980392);
   color: var(--color-text);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  width: min(100%, 1200px);
+  margin-inline: auto;
+  min-width: 320px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding-bottom: 4rem;
 }
 
 :root {
@@ -242,7 +244,8 @@ h3 {
   color: var(--color-text-muted);
 }
 
-article, header {
+article,
+header {
   box-sizing: border-box;
   padding: 0rem 1rem;
 }
