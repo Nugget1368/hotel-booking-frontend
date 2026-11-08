@@ -1,8 +1,7 @@
 import { Link } from "react-router"
 import { useState, useEffect } from "react";
-import {MySessionStorage} from "../../application/localStorage"
+import {MySessionStorage} from "../application/localStorage";
 import { useNavigate } from "react-router";
-import './Header.css'
 
 const Header = () => {
   const [loggedIn, setLoggedIn] = useState(false);

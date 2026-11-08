@@ -66,6 +66,21 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+#main-header {
+  box-sizing: border-box;
+  background-color: #333;
+  color: #fff;
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+}
+
 :root {
   color-scheme: light;
   --color-background: #f6f8f6;
@@ -308,4 +323,27 @@ header {
   display: flex;
   flex-flow: column;
   gap: 0.5rem;
+}
+
+.slider {
+  width: 100%;
+  min-width: 0;
+}
+
+.slider-content {
+  width: 100%;
+}
+
+.slider-toggle {
+  display: flex;
+  width: 100%;
+}
+.slider-toggle--left {
+  justify-content: flex-start;
+}
+.slider-toggle--center {
+  justify-content: center;
+}
+.slider-toggle--right {
+  justify-content: flex-end;
 }/*# sourceMappingURL=style.css.map */

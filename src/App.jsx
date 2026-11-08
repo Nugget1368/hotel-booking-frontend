@@ -1,9 +1,9 @@
 import BookingForms from './components/forms/BookingForms'
 import HotelsPage from './pages/HotelsPage'
-import Header from './components/Header/Header'
 import { BrowserRouter as Router, Route, Routes } from 'react-router'
 import LoginPage from './pages/LoginPage'
 import AdminPage from './pages/AdminPage'
+import Header from './components/Header'
 
 function App() {
   return (
