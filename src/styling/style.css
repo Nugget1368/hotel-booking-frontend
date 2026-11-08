@@ -163,4 +163,18 @@ h3 {
   button {
     background-color: #f9f9f9;
   }
+}
+.row {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 0.5rem;
+}
+.row > * {
+  flex: 1 1 0;
+}
+
+.column {
+  display: flex;
+  flex-flow: column;
+  gap: 0.5rem;
 }/*# sourceMappingURL=style.css.map */

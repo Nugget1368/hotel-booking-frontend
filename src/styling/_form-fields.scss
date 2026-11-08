@@ -1,0 +1,89 @@
+@use "colors" as *;
+
+.form-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem 1rem;
+  width: 100%;
+  margin-block: 0.5rem 1.25rem;
+}
+
+.form-fields--reservation {
+  margin-top: 1.25rem;
+}
+
+.form-field {
+  display: grid;
+  gap: 0.4rem;
+  min-width: 0;
+
+  label {
+    color: color(text);
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  input,
+  select,
+  textarea {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid color(border-strong);
+    border-radius: 0.45rem;
+    background-color: color(surface);
+    color: color(text);
+    font: inherit;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+
+    &:hover {
+      border-color: color(text-subtle);
+    }
+
+    &:focus-visible {
+      border-color: color(focus-ring);
+      outline: 2px solid color(focus-ring);
+      outline-offset: 2px;
+    }
+  }
+}
+
+.form-field--full,
+.form-actions {
+  grid-column: 1 / -1;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-start;
+
+  button {
+    padding: 0.7rem 1.1rem;
+    border: 0;
+    border-radius: 0.45rem;
+    background-color: color(primary);
+    color: color(on-primary);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+      background-color: color(primary-hover);
+    }
+
+    &:focus-visible {
+      outline: 2px solid color(focus-ring);
+      outline-offset: 2px;
+    }
+  }
+}
+
+@media (max-width: 36rem) {
+  .form-fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
