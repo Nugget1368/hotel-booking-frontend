@@ -19,7 +19,7 @@ export default function ReservationForm(props) {
                 <input type="date" name="checkOut" id="checkOut" value={formData.checkOut} onChange={(e) => setFormData({...formData, checkOut: e.target.value})} />
             </div>
             <div className="form-actions">
-                <button type="submit">Submit</button>
+                <button type="submit" className="btn primary">Submit</button>
             </div>
         </div>
     )
