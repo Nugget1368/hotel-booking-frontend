@@ -4,6 +4,7 @@ import api from "../application/api.js"
 import { MySessionStorage } from "../application/localStorage.js";
 import LoginForm from "../components/forms/LoginForm.jsx";
 import CreateAccountForm from "../components/forms/CreateAccountForm.jsx";
+import Slider from "../components/Slider.jsx";
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({
@@ -47,9 +48,6 @@ const LoginPage = () => {
 
     return (
         <>
-            <header>
-                <h2>Log in or create an account</h2>
-            </header>
             <section>
                 <article>
                     <header>
@@ -68,20 +66,22 @@ const LoginPage = () => {
                     </form>
                 </article>
                 <article>
-                    <header>
-                        <h3>Create Account</h3>
-                    </header>
-                    <form onSubmit={(e) => createAccount(e)}>
-                        <fieldset>
-                            <CreateAccountForm
-                                formData={formData}
-                                setFormData={setFormData}
-                            />
-                            <div className="form-actions">
-                                <button type="submit" className="btn primary">Create Account</button>
-                            </div>
-                        </fieldset>
-                    </form>
+                    <Slider label="Don't have an account?" defaultOpen={false} align="center">
+                        <header>
+                            <h3>Create Account</h3>
+                        </header>
+                        <form onSubmit={(e) => createAccount(e)}>
+                            <fieldset>
+                                <CreateAccountForm
+                                    formData={formData}
+                                    setFormData={setFormData}
+                                />
+                                <div className="form-actions">
+                                    <button type="submit" className="btn primary">Create Account</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </Slider>
                 </article>
             </section>
         </>

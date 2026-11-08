@@ -1,20 +1,23 @@
 import { useId, useState } from "react"
 
-const Slider = ({ label, children, defaultOpen = false, showVisibilityToggle = false }) => {
+const Slider = ({ label, children, defaultOpen = false, showVisibilityToggle = false, align = "left" }) => {
     const [isOpen, setIsOpen] = useState(defaultOpen)
     const contentId = useId()
 
     return (
-        <div>
-            <button
-                type="button"
-                aria-expanded={isOpen}
-                aria-controls={contentId}
-                onClick={() => setIsOpen((open) => !open)}
-            >
-                {showVisibilityToggle === true ? isOpen ? "Hide" : "Show" : ""} {label}
-            </button>
-            {isOpen && <div id={contentId}>{children}</div>}
+        <div className="slider">
+            <div className={`slider-toggle slider-toggle--${["left", "center", "right"].includes(align) ? align : "left"}`}>
+                <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={contentId}
+                    onClick={() => setIsOpen((open) => !open)}
+                    className="btn-link primary"
+                >
+                    {showVisibilityToggle === true ? isOpen ? "Hide" : "Show" : ""} {label}
+                </button>
+            </div>
+            {isOpen && <div id={contentId} className="slider-content">{children}</div>}
         </div>
     )
 }
