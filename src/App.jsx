@@ -1,4 +1,3 @@
-import './App.css'
 import BookingForms from './components/forms/BookingForms'
 import HotelsPage from './pages/HotelsPage'
 import Header from './components/Header/Header'
