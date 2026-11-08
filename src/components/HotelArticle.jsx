@@ -1,27 +1,28 @@
 import { Link } from "react-router"
 import Card from "./Card"
 
-const HotelArticle = ({ hotel }) => (
-    <Card as="article" className="card">
-        <div className="column img-container" style={{ width: "100%" }}>
-            {hotel.img && hotel.img !== "" ?
-                <img src={`data:${hotel.imgType};base64,${hotel.img}`} alt={hotel.name} />
-                :
-                <img src="https://via.placeholder.com/150" alt={hotel.name} />}
-        </div>
-        <div>
-            <h2>{hotel.name}</h2>
-            <p>Address: {hotel.adress ? hotel.adress : "-"}</p>
-            <p> {hotel.country}, {hotel.city}</p>
-        </div>
-        <div>
-            <p><strong>Phone:</strong> {hotel.phone}</p>
-            <p><strong>Email:</strong> {hotel.email}</p>
-        </div>
-        <div className="btn-container">
-            <Link className="btn primary" to={`/booking?hotelId=${hotel.id}`}>Book This</Link>
-        </div>
-    </Card>
-)
-
-export default HotelArticle
+export default function HotelArticle(props) {
+    const { hotel } = props;
+    return (
+        <Card as="article" className="card">
+            <div className="column img-container" style={{ width: "100%" }}>
+                {hotel.img && hotel.img !== "" ?
+                    <img src={`data:${hotel.imgType};base64,${hotel.img}`} alt={hotel.name} />
+                    :
+                    <img src="https://via.placeholder.com/150" alt={hotel.name} />}
+            </div>
+            <div>
+                <h2>{hotel.name}</h2>
+                <p>Address: {hotel.adress ? hotel.adress : "-"}</p>
+                <p> {hotel.country}, {hotel.city}</p>
+            </div>
+            <div>
+                <p><strong>Phone:</strong> {hotel.phone}</p>
+                <p><strong>Email:</strong> {hotel.email}</p>
+            </div>
+            <div className="btn-container">
+                <Link className="btn primary" to={`/booking?hotelId=${hotel.id}`}>Book This</Link>
+            </div>
+        </Card>
+    )
+}
