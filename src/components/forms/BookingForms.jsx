@@ -54,7 +54,7 @@ export default function BookingForms() {
         <>
             <article>
                 <header>
-                    <h1>Make a reservation</h1>
+                    <h2>Make a reservation</h2>
                 </header>
                 <form onSubmit={CreateReservation}>
                     <fieldset>

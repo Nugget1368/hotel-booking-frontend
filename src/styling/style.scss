@@ -76,6 +76,14 @@ body {
   background-position: -19px -19px;
 }
 
+fieldset {
+  border: 0;
+}
+
+header{
+  box-sizing: border-box;
+}
+
 h1 {
   //   font-size: 3.2em;
   line-height: 1.1;
@@ -93,6 +101,12 @@ h3 {
   line-height: 1.2;
   color: color(text-muted);
 }
+
+article, header{
+  box-sizing: border-box;
+  padding: 0rem 1rem;
+}
+
 
 @media (prefers-color-scheme: light) {
   :root {
