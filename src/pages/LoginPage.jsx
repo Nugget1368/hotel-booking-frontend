@@ -21,8 +21,7 @@ const LoginPage = () => {
         let data = { ...formData };
         ///TODO: Move this to backend
         Object.keys(data).forEach(key => data[key] === "" ? data[key] = null : data[key]);
-        console.log("createAccount data: ", data);
-        // let response = await api.createAccountAsync(data);
+        let response = await api.createAccountAsync(data);
         if (response.success) {
             alert("Account was created!");
         }
@@ -34,8 +33,7 @@ const LoginPage = () => {
     const login = async (e) => {
         e.preventDefault();
         let data = { email: formData.email, password: formData.password };
-        // let response = await api.loginUserAsync(data);
-        console.log("login data: ", data);
+        let response = await api.loginUserAsync(data);
         if (response.success) {
             MySessionStorage.setUserToken(response.rows.token);
             MySessionStorage.saveUserInfo(response.rows);
