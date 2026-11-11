@@ -1,0 +1,21 @@
+.card.card-long {
+  flex: 1 1 100%;
+  flex-direction: row;
+  align-items: center;
+  max-width: none;
+  grid-column: 1 / -1;
+
+  .img-container {
+    flex: 0 0 8rem;
+    width: 8rem;
+    aspect-ratio: 4 / 3;
+  }
+
+  .column {
+    flex: 1 1 0;
+  }
+
+  > a {
+    margin-top: 0;
+  }
+}

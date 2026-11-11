@@ -109,7 +109,7 @@ export default function HotelForms() {
                             <div className="form-field">
                                 <ImageInput image={image} className="form-field" setImage={setImage} />
                             </div>
-                            <div className="btn-container form-actions">
+                            <div className="form-field form-actions">
                                 <button type="button" className="btn danger" onClick={() => navigate(previousPage)}>Cancel</button>
                                 <button type="submit" className="btn primary">Create</button>
                             </div>

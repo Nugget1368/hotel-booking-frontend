@@ -5,30 +5,14 @@ import Slider from "../components/Slider"
 import HotelForms from "../components/forms/HotelForms"
 import HotelArticle from "../components/HotelArticle"
 import { MySessionStorage } from "../application/localStorage"
+import ReservationItem from "../components/reservations/ReservationItem"
 
 const AdminPage = () => {
 
   const [reservations, setReservations] = useState([]);
-  const [editMode, setEditMode] = useState(false);
-  const [editId, setEditId] = useState(null);
-  const [editData, setEditData] = useState({
-    roomType: "",
-    checkIn: "",
-    checkOut: ""
-  });
   const [users, setUsers] = useState([]);
   const [hotels, setHotels] = useState([]);
   const [userRole, setUserRole] = useState(null);
-
-  const toggleEditMode = (id) => {
-    setEditId(id);
-    setEditMode(!editMode);
-    setEditData({
-      roomType: "",
-      checkIn: "",
-      checkOut: ""
-    });
-  }
 
   const getReservations = async () => {
     let result = await Api.getReservationsAsync();
@@ -52,33 +36,6 @@ const AdminPage = () => {
     }
   }
 
-  const deleteReservation = async (id) => {
-    let result = await Api.deleteReservationAsync(id);
-    if (result.success) {
-      let newList = reservations.filter((reservation) => reservation.reservationId !== id);
-      setReservations(newList);
-    }
-    else {
-      alert("Could not delete reservation.");
-    }
-  }
-
-  const editReservation = async (reservation) => {
-    Object.keys(editData).forEach(key => {
-      if (editData[key] === "")
-        editData[key] = reservation[key];
-    })
-    let id = reservation.reservationId;
-    let result = await Api.editReservationAsync(id, editData);
-    if (result.success) {
-      let newList = reservations.map((r) => r.reservationId === id ? result.reservation : r);
-      setReservations(newList);
-      toggleEditMode(null);
-    }
-    else {
-      alert("Could not edit reservation.");
-    }
-  }
 
   const getAllHotels = async () => {
     let result = await Api.getHotelsAsync();
@@ -109,10 +66,12 @@ const AdminPage = () => {
             <h3>Hotels</h3>
           </header>
           <Slider label="Add new hotel" defaultOpen={false}>
-            <HotelForms />
+            <div className="border">
+              <HotelForms />
+            </div>
           </Slider>
           <section className="btn-container">
-            <button onClick={getAllHotels}>Refresh</button>
+            <button onClick={getAllHotels} className="btn primary">Refresh</button>
           </section>
           <section className="card-list">
             {hotels && hotels.length > 0 ?
@@ -142,39 +101,12 @@ const AdminPage = () => {
             {reservations && reservations.length > 0 ?
               reservations.map((reservation) => {
                 return (
-                  <Card as="li" key={reservation.reservationId}>
-                    <div className="row">
-                      <div className="column">
-                        <h3>{reservation.firstName} {reservation.lastName}</h3>
-                        {editMode && editId === reservation.reservationId ?
-                          <p><strong>Room Type:</strong> <input type="text" placeholder={reservation.roomType} defaultValue={reservation.roomType} onChange={(e) => setEditData({ ...editData, roomType: e.target.value })} /></p>
-                          :
-                          <p><strong>Room Type:</strong> {reservation.roomType}</p>
-                        }
-                        {editMode && editId === reservation.reservationId ?
-                          <>
-                            <p><strong>Check In:</strong> <input type="date" defaultValue={reservation.checkIn} placeholder={reservation.checkIn} onChange={(e) => setEditData({ ...editData, checkIn: e.target.value })} /></p>
-                            <p><strong>Check Out:</strong> <input type="date" defaultValue={reservation.checkOut} placeholder={reservation.checkOut} onChange={(e) => setEditData({ ...editData, checkOut: e.target.value })} /></p>
-                          </>
-                          :
-                          <p><strong>Check In:</strong> {reservation.checkIn} | <strong>Check Out:</strong> {reservation.checkOut}</p>
-                        }
-                      </div>
-                      <div className="btn-container">
-                        {editMode && editId === reservation.reservationId ?
-                          <>
-                            <button className="btn" onClick={() => editReservation(reservation)}>Save</button>
-                            <button className="btn" onClick={() => toggleEditMode(null)}>Cancel</button>
-                          </>
-                          :
-                          <>
-                            <button className="btn" onClick={() => toggleEditMode(reservation.reservationId)}>Edit</button>
-                            <button className="btn" onClick={() => deleteReservation(reservation.reservationId)}>Delete</button>
-                          </>
-                        }
-                      </div>
-                    </div>
-                  </Card>
+                  <ReservationItem
+                    key={reservation.reservationId}
+                    reservation={reservation}
+                    reservationList={reservations}
+                    setReservationsList={setReservations}
+                  />
                 )
               })
               :

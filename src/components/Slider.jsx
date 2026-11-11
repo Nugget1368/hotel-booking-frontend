@@ -14,7 +14,7 @@ const Slider = ({ label, children, defaultOpen = false, showVisibilityToggle = f
                     onClick={() => setIsOpen((open) => !open)}
                     className="btn-link primary"
                 >
-                    {showVisibilityToggle === true ? isOpen ? "Hide" : "Show" : ""} {label}
+                    {showVisibilityToggle === true ? isOpen ? "Hide" : "Show" : ""} {isOpen ? "Hide " + label : label}
                 </button>
             </div>
             {isOpen && <div id={contentId} className="slider-content">{children}</div>}

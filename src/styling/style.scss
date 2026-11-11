@@ -231,3 +231,9 @@ header {
     justify-content: flex-end;
   }
 }
+
+.border {
+  border:2px solid color(border);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
