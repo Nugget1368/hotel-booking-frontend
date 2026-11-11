@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Api from "../application/api"
-import Card from "../components/Card"
+import UserDataItem from "../components/users/UserDataItem"
 import Slider from "../components/Slider"
 import HotelForms from "../components/forms/HotelForms"
 import HotelArticle from "../components/HotelArticle"
@@ -24,24 +24,15 @@ const AdminPage = () => {
     setUsers(result);
   }
 
-  const deleteUser = async (id) => {
-    let result = await Api.deleteUserAsync(id);
-    if (result.success) {
-      let newList = users.filter((user) => user.guestId !== id);
-      setUsers(newList);
-      getReservations();
-    }
-    else {
-      alert("Could not delete user.");
-    }
-  }
-
-
   const getAllHotels = async () => {
     let result = await Api.getHotelsAsync();
     console.log(result);
     setHotels(result);
   }
+
+  const handleUserDeleted = () => {
+    getReservations();
+  };
 
   useEffect(() => {
     getReservations();
@@ -54,6 +45,7 @@ const AdminPage = () => {
     }
     fetchUserRole();
   }, [])
+
 
   return (
     <>
@@ -124,17 +116,11 @@ const AdminPage = () => {
             {users && users.length > 0 ?
               users.map((user) => {
                 return (
-                  <Card as="li" key={user.guestId}>
-                    <div className="row">
-                      <div className="column">
-                        <h3>{user.firstName} {user.lastName}</h3>
-                        <p><strong>Email:</strong> {user.email}</p>
-                      </div>
-                      <div className="btn-container">
-                        <button className="btn" onClick={() => deleteUser(user.guestId)}>Delete</button>
-                      </div>
-                    </div>
-                  </Card>
+                  <UserDataItem 
+                  key={user.guestId} 
+                  user={user} 
+                  userList={users} setUserList={setUsers}
+                  onUserDeleted={handleUserDeleted} />
                 )
               })
               :
