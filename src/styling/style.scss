@@ -179,6 +179,10 @@ header {
   padding: 0rem 1rem;
 }
 
+ul{ 
+  padding: 0;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

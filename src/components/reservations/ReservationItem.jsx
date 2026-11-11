@@ -49,7 +49,7 @@ export default function ReservationItem(props) {
 
   return (
     <CardLong as="li">
-      <div className="row">
+      <div>
         <h3>{reservation.firstName} {reservation.lastName}</h3>
         {editMode ?
           <p><strong>Room Type:</strong> <input type="text" placeholder={reservation.roomType} defaultValue={reservation.roomType} onChange={(e) => setEditData((data) => ({ ...data, roomType: e.target.value }))} /></p>
@@ -68,13 +68,13 @@ export default function ReservationItem(props) {
       <div className="btn-container">
         {editMode ?
           <>
-            <button className="btn" onClick={() => editReservation(reservation)}>Save</button>
-            <button className="btn" onClick={() => toggleEditMode(null)}>Cancel</button>
+            <button className="btn primary" onClick={() => editReservation(reservation)}>Save</button>
+            <button className="btn secondary" onClick={() => toggleEditMode(null)}>Cancel</button>
           </>
           :
           <>
-            <button className="btn" onClick={() => toggleEditMode(reservation.reservationId)}>Edit</button>
-            <button className="btn" onClick={() => deleteReservation(reservation.reservationId)}>Delete</button>
+            <button className="btn secondary" onClick={() => toggleEditMode(reservation.reservationId)}>Edit</button>
+            <button className="btn danger" onClick={() => deleteReservation(reservation.reservationId)}>Delete</button>
           </>
         }
       </div>
