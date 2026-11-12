@@ -5,3 +5,12 @@
   box-sizing: border-box;
   padding: 2rem;
 }
+
+.reservations-list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  gap: 0.25rem;
+  box-sizing: border-box;
+  list-style: none;
+}

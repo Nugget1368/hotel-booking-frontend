@@ -71,8 +71,8 @@ export default function BookingForms() {
                         <fieldset>
                             {loggedIn ?
                                 <div className="column">
-                                    <h3><strong>Logged in as:</strong> {firstName} {lastName}</h3>
-                                    <h4><strong>Email:</strong> {email}</h4>
+                                    <h3>Logged in as: {formData.firstName} {formData.lastName}</h3>
+                                    <h4>Email: {formData.email}</h4>
                                 </div>
                                 :
                                 <CreateAccountForm

@@ -35,10 +35,10 @@ const HotelsPage = () => {
     return (
         <>
             {myReservations && myReservations.length > 0 &&
-                <>
+                <div className="my-reservations">
                     <h2>My Reservations</h2>
                     <ReservationsList reservations={myReservations} />
-                </>
+                </div>
             }
             <HotelList>
                 {

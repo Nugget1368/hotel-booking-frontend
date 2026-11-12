@@ -305,6 +305,15 @@
   padding: 2rem;
 }
 
+.reservations-list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  gap: 0.25rem;
+  box-sizing: border-box;
+  list-style: none;
+}
+
 .slider {
   width: 100%;
   min-width: 0;
@@ -336,6 +345,11 @@
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
   justify-content: center;
   gap: 0.25rem;
+}
+
+.my-reservations {
+  padding: 2rem;
+  box-sizing: border-box;
 }
 
 :root {
@@ -572,6 +586,7 @@ h3 {
   font-size: 1.5em;
   line-height: 1.2;
   color: var(--color-text-muted);
+  margin: 0;
 }
 
 h4 {
