@@ -4,6 +4,7 @@
 @import "./header";
 @import "./hotelList";
 @import "./slider";
+@import "./bookingForm";
 
 :root {
   @include theme-light;
@@ -172,6 +173,13 @@ h2 {
 h3 {
   font-size: 1.5em;
   line-height: 1.2;
+  color: color(text-muted);
+}
+
+h4 {
+  font-size: 1.1rem;
+  line-height: 1.2;
+  margin: 0;
   color: color(text-muted);
 }
 

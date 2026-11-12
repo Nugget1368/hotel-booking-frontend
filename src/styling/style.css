@@ -100,6 +100,9 @@
 }
 
 .card__description {
+  display: flex;
+  flex-flow: column;
+  gap: 0.5rem;
   min-width: 0;
 }
 
@@ -326,6 +329,13 @@
 
 .slider__toggle--right {
   justify-content: flex-end;
+}
+
+.booking-form__content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  justify-content: center;
+  gap: 0.25rem;
 }
 
 :root {
@@ -561,6 +571,13 @@ h2 {
 h3 {
   font-size: 1.5em;
   line-height: 1.2;
+  color: var(--color-text-muted);
+}
+
+h4 {
+  font-size: 1.1rem;
+  line-height: 1.2;
+  margin: 0;
   color: var(--color-text-muted);
 }
 
