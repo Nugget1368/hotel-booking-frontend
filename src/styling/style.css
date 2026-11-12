@@ -397,6 +397,12 @@ ul {
 .row > * {
   flex: 1 1 0;
 }
+.row.--left {
+  justify-content: flex-start;
+}
+.row.--left > * {
+  flex: none;
+}
 
 .column {
   display: flex;

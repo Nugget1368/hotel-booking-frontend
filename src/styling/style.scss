@@ -203,6 +203,12 @@ ul{
   > * {
     flex: 1 1 0;
   }
+  &.--left {
+    justify-content: flex-start;
+    > * {
+      flex: none;
+    }
+  }
 }
 .column {
   display: flex;

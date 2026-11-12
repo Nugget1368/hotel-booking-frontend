@@ -57,10 +57,10 @@ export default function ReservationItem(props) {
           <p><strong>Room Type:</strong> {reservation.roomType}</p>
         }
         {editMode ?
-          <>
+          <div className="row --left">
             <p><strong>Check In:</strong> <input type="date" defaultValue={reservation.checkIn} placeholder={reservation.checkIn} onChange={(e) => setEditData((data) => ({ ...data, checkIn: e.target.value }))} /></p>
             <p><strong>Check Out:</strong> <input type="date" defaultValue={reservation.checkOut} placeholder={reservation.checkOut} onChange={(e) => setEditData((data) => ({ ...data, checkOut: e.target.value }))} /></p>
-          </>
+          </div>
           :
           <p><strong>Check In:</strong> {reservation.checkIn} | <strong>Check Out:</strong> {reservation.checkOut}</p>
         }

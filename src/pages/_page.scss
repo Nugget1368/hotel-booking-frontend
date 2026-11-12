@@ -1,11 +1,11 @@
-.card-list{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
-    gap: 0.25rem;
-    box-sizing: border-box;
-    padding: 2rem;
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 0.25rem;
+  box-sizing: border-box;
+  padding: 2rem;
 
-    > .card {
-        max-width: none;
-    }
+  > .card {
+    max-width: none;
+  }
 }
