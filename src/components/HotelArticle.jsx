@@ -13,15 +13,12 @@ export default function HotelArticle(props) {
                 </div>
                 <div className="card__hotel-info">
                     <header>
-                        <h2>{hotel.name}</h2>
+                        <h3>{hotel.name}</h3>
                     </header>
                     <div className="card__description">
                         <div>
-                            <p>Address: {hotel.adress ? hotel.adress : "-"} {hotel.city}, {hotel.country} </p>
-                            <div className="card__contact">
-                                <p><strong>Email:</strong> {hotel.email}</p>
-                                <p><strong>Phone:</strong> {hotel.phone}</p>
-                            </div>
+                            <p>{hotel.city}, {hotel.country} </p>
+                            <p>{hotel.adress ? hotel.adress : ""}</p>
                         </div>
                     </div>
                 </div>

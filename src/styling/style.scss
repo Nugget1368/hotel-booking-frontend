@@ -5,7 +5,6 @@
 @import "./hotelList";
 @import "./slider";
 
-
 :root {
   @include theme-light;
 }
@@ -19,7 +18,7 @@
 
 .btn {
   cursor: pointer;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 0.75rem;
   border: 0;
   border-radius: 0.45rem;
   transition: color 0.2s;
@@ -58,7 +57,7 @@
 
     &:hover {
       color: color(on-secondary);
-      background:transparent;
+      background: transparent;
     }
   }
 }
@@ -161,19 +160,17 @@ header {
 }
 
 h1 {
-  //   font-size: 3.2em;
   line-height: 1.1;
   color: color(text);
 }
 
 h2 {
-  //   font-size: 2em;
   line-height: 1.2;
   color: color(text);
 }
 
 h3 {
-  //   font-size: 1.5em;
+  font-size: 1.5em;
   line-height: 1.2;
   color: color(text-muted);
 }
@@ -184,7 +181,7 @@ header {
   padding: 0rem 1rem;
 }
 
-ul{ 
+ul {
   padding: 0;
 }
 
@@ -222,7 +219,7 @@ ul{
 }
 
 .border {
-  border:2px solid color(border);
+  border: 2px solid color(border);
   border-radius: 0.5rem;
   padding: 0.5rem;
 }

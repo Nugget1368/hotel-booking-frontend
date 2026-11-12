@@ -31,11 +31,13 @@
   gap: 0.5rem;
 }
 .card p {
+  font-size: 0.95rem;
   margin: 0;
   color: var(--color-text-muted);
   overflow-wrap: anywhere;
 }
-.card h2 {
+.card h2, .card h3 {
+  font-size: 1.1rem;
   margin: 0;
   color: var(--color-text);
 }
@@ -294,7 +296,7 @@
 }
 .hotel-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
   gap: 0.25rem;
   box-sizing: border-box;
   padding: 2rem;
@@ -408,7 +410,7 @@
 
 .btn {
   cursor: pointer;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 0.75rem;
   border: 0;
   border-radius: 0.45rem;
   transition: color 0.2s;
@@ -557,6 +559,7 @@ h2 {
 }
 
 h3 {
+  font-size: 1.5em;
   line-height: 1.2;
   color: var(--color-text-muted);
 }
