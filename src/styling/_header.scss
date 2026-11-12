@@ -1,6 +1,5 @@
-@use "colors" as *;
 
-#main-header {
+.main-header {
   box-sizing: border-box;
   position: sticky;
   top: 0;
@@ -16,55 +15,56 @@
   background: linear-gradient(110deg, color(primary-hover), color(primary));
   border-bottom: 1px solid color(border);
   box-shadow: 0 4px 14px color(shadow);
+}
 
-  > .row:first-child {
-    flex: 1 1 auto;
+.main-header__spacer {
+  flex: 1 1 auto;
+}
+
+.main-header__actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+
+  > a,
+  > button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid color(on-primary);
+    border-radius: 999px;
+    color: color(on-primary);
+    font: inherit;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      color: color(primary);
+      background-color: color(on-primary);
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid color(on-primary);
+      outline-offset: 3px;
+    }
   }
 
-  > .row:last-child {
-    flex: 0 0 auto;
-    align-items: center;
-    justify-content: flex-end;
-
-    > a,
-    > button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 2.5rem;
-      padding: 0.5rem 1rem;
-      border: 1px solid color(on-primary);
-      border-radius: 999px;
-      color: color(on-primary);
-      font: inherit;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
-
-      &:hover {
-        color: color(primary);
-        background-color: color(on-primary);
-      }
-
-      &:active {
-        transform: translateY(1px);
-      }
-
-      &:focus-visible {
-        outline: 2px solid color(on-primary);
-        outline-offset: 3px;
-      }
-    }
-
-    > button {
-      background: transparent;
-    }
+  > button {
+    background: transparent;
   }
 }
 
 @media (max-width: 480px) {
-  #main-header {
+  .main-header {
     min-height: 4rem;
     padding: 0.625rem 1rem;
   }

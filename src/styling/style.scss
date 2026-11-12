@@ -1,6 +1,11 @@
-@use "colors" as *;
-@use "form-fields";
-@use "header";
+@import "./colors";
+@import "./card";
+@import "./formFields";
+@import "./header";
+@import "./hotelList";
+@import "./slider";
+
+
 :root {
   @include theme-light;
 }
@@ -39,7 +44,7 @@
     color: color(link-hover);
     box-shadow: 0 2px 0px 0px color(link-hover);
   }
-  &.primary {
+  &--primary {
     color: color(primary);
     background: transparent;
     &:hover {
@@ -47,7 +52,7 @@
       background: transparent;
     }
   }
-  &.secondary {
+  &--secondary {
     color: color(on-secondary);
     background: transparent;
 
@@ -58,7 +63,7 @@
   }
 }
 
-.warning {
+.btn--warning {
   color: color(on-warning);
   background-color: color(warning);
   padding: 0.5rem 1rem;
@@ -68,7 +73,7 @@
   }
 }
 
-.danger {
+.btn--danger {
   color: color(on-danger);
   background-color: color(danger);
   padding: 0.5rem 1rem;
@@ -78,7 +83,7 @@
   }
 }
 
-.primary {
+.btn--primary {
   background: color(primary);
   color: color(on-primary);
   &:hover {
@@ -87,7 +92,7 @@
   }
 }
 
-.secondary {
+.btn--secondary {
   background: color(secondary);
   color: color(on-secondary);
   &:hover {
@@ -203,7 +208,7 @@ ul{
   > * {
     flex: 1 1 0;
   }
-  &.--left {
+  &.row--left {
     justify-content: flex-start;
     > * {
       flex: none;
@@ -214,32 +219,6 @@ ul{
   display: flex;
   flex-flow: column;
   gap: 0.5rem;
-}
-
-.slider {
-  width: 100%;
-  min-width: 0;
-}
-
-.slider-content {
-  width: 100%;
-}
-
-.slider-toggle {
-  display: flex;
-  width: 100%;
-
-  &--left {
-    justify-content: flex-start;
-  }
-
-  &--center {
-    justify-content: center;
-  }
-
-  &--right {
-    justify-content: flex-end;
-  }
 }
 
 .border {

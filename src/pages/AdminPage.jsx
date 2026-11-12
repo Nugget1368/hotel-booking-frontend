@@ -4,6 +4,7 @@ import UserDataItem from "../components/users/UserDataItem"
 import Slider from "../components/Slider"
 import HotelForms from "../components/forms/HotelForms"
 import HotelArticle from "../components/HotelArticle"
+import HotelList from "../components/HotelList"
 import { MySessionStorage } from "../application/localStorage"
 import ReservationItem from "../components/reservations/ReservationItem"
 
@@ -62,10 +63,10 @@ const AdminPage = () => {
               <HotelForms />
             </div>
           </Slider>
-          <section className="btn-container">
-            <button onClick={getAllHotels} className="btn primary">Refresh</button>
+          <section>
+          <button onClick={getAllHotels} className="btn btn--primary">Refresh</button>
           </section>
-          <section className="card-list">
+          <HotelList>
             {hotels && hotels.length > 0 ?
               hotels.map((hotel, index) => {
                 return (
@@ -73,15 +74,15 @@ const AdminPage = () => {
                     key={`hotel-${hotel.hotelId || index}`}
                     hotel={hotel}
                   >
-                    <button className="btn warning">Edit</button>
-                    <button className="btn danger">Delete</button>
+                    <button className="btn btn--warning">Edit</button>
+                    <button className="btn btn--danger">Delete</button>
                   </HotelArticle>
                 )
               })
               :
               <p>No hotels found.</p>
             }
-          </section>
+          </HotelList>
         </article>
       </section>
       <section>

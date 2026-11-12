@@ -21,8 +21,8 @@ const UserDataItem = (props) => {
         <h3>{user.firstName} {user.lastName}</h3>
         <p><strong>Email:</strong> {user.email}</p>
       </div>
-      <div className="btn-container">
-        <button className="btn danger" onClick={deleteUser}>Delete</button>
+      <div className="card__actions">
+        <button className="btn btn--danger" onClick={deleteUser}>Delete</button>
       </div>
     </CardLong>
   )

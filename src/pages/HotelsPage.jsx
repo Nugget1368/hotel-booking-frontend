@@ -4,7 +4,7 @@ import ReservationsList from "../components/reservations/ReservationsList"
 import { useEffect, useState } from "react"
 import api from "../application/api"
 import HotelArticle from "../components/HotelArticle"
-import './_page.scss'
+import HotelList from "../components/HotelList"
 const HotelsPage = () => {
     const [myReservations, setMyReservations] = useState([]);
     const [hotels, setHotels] = useState([]);
@@ -40,18 +40,18 @@ const HotelsPage = () => {
                     <ReservationsList reservations={myReservations} />
                 </>
             }
-            <section className="card-list">
+            <HotelList>
                 {
                     hotels.map((hotel, index) => (
                         <HotelArticle
                             key={`hotel-${hotel.hotelId || index}`}
                             hotel={hotel}
                         >
-                            <Link className="btn primary" to={`/booking?hotelId=${hotel.id}`}>Book This</Link>
+                            <Link className="btn btn--primary" to={`/booking?hotelId=${hotel.id}`}>Book This</Link>
                         </HotelArticle>
                     ))
                 }
-            </section>
+            </HotelList>
         </>
     )
 }

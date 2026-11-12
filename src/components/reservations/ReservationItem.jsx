@@ -57,7 +57,7 @@ export default function ReservationItem(props) {
           <p><strong>Room Type:</strong> {reservation.roomType}</p>
         }
         {editMode ?
-          <div className="row --left">
+          <div className="row row--left">
             <p><strong>Check In:</strong> <input type="date" defaultValue={reservation.checkIn} placeholder={reservation.checkIn} onChange={(e) => setEditData((data) => ({ ...data, checkIn: e.target.value }))} /></p>
             <p><strong>Check Out:</strong> <input type="date" defaultValue={reservation.checkOut} placeholder={reservation.checkOut} onChange={(e) => setEditData((data) => ({ ...data, checkOut: e.target.value }))} /></p>
           </div>
@@ -65,16 +65,16 @@ export default function ReservationItem(props) {
           <p><strong>Check In:</strong> {reservation.checkIn} | <strong>Check Out:</strong> {reservation.checkOut}</p>
         }
       </div>
-      <div className="btn-container">
+      <div className="card__actions">
         {editMode ?
           <>
-            <button className="btn primary" onClick={() => editReservation(reservation)}>Save</button>
-            <button className="btn secondary" onClick={() => toggleEditMode(null)}>Cancel</button>
+            <button className="btn btn--primary" onClick={() => editReservation(reservation)}>Save</button>
+            <button className="btn btn--secondary" onClick={() => toggleEditMode(null)}>Cancel</button>
           </>
           :
           <>
-            <button className="btn secondary" onClick={() => toggleEditMode(reservation.reservationId)}>Edit</button>
-            <button className="btn danger" onClick={() => deleteReservation(reservation.reservationId)}>Delete</button>
+            <button className="btn btn--secondary" onClick={() => toggleEditMode(reservation.reservationId)}>Edit</button>
+            <button className="btn btn--danger" onClick={() => deleteReservation(reservation.reservationId)}>Delete</button>
           </>
         }
       </div>

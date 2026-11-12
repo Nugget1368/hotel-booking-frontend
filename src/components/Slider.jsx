@@ -5,20 +5,22 @@ const Slider = ({ label, children, defaultOpen = false, showVisibilityToggle = f
     const contentId = useId()
 
     return (
-        <div className="slider">
-            <div className={`slider-toggle slider-toggle--${["left", "center", "right"].includes(align) ? align : "left"}`}>
-                <button
-                    type="button"
-                    aria-expanded={isOpen}
-                    aria-controls={contentId}
-                    onClick={() => setIsOpen((open) => !open)}
-                    className="btn-link primary"
-                >
-                    {showVisibilityToggle === true ? isOpen ? "Hide" : "Show" : ""} {isOpen ? "Hide " + label : label}
-                </button>
+        <>
+            <div className="slider">
+                <div className={`slider__toggle slider__toggle--${["left", "center", "right"].includes(align) ? align : "left"}`}>
+                    <button
+                        type="button"
+                        aria-expanded={isOpen}
+                        aria-controls={contentId}
+                        onClick={() => setIsOpen((open) => !open)}
+                        className="btn-link btn-link--primary"
+                    >
+                        {showVisibilityToggle === true ? isOpen ? "Hide" : "Show" : ""} {isOpen ? "Hide " + label : label}
+                    </button>
+                </div>
+                {isOpen && <div id={contentId} className="slider__content">{children}</div>}
             </div>
-            {isOpen && <div id={contentId} className="slider-content">{children}</div>}
-        </div>
+        </>
     )
 }
 

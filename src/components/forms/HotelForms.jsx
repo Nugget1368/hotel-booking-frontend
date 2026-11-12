@@ -82,36 +82,36 @@ export default function HotelForms() {
                 <form onSubmit={submitHotel}>
                     <fieldset>
                         <div className="form-fields">
-                            <div className="form-field">
+                            <div className="form-fields__field">
                                 <label htmlFor="name">Name</label>
                                 <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
                             </div>
-                            <div className="form-field">
+                            <div className="form-fields__field">
                                 <label htmlFor="phone">Phone</label>
                                 <input type="text" placeholder="Phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
                             </div>
-                            <div className="form-field">
+                            <div className="form-fields__field">
                                 <label htmlFor="email">Email</label>
                                 <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                             </div>
-                            <div className="form-field">
+                            <div className="form-fields__field">
                                 <label htmlFor="adress">Address</label>
                                 <input type="text" placeholder="Adress" value={adress} onChange={(e) => setAdress(e.target.value)} />
                             </div>
-                            <div className="form-field">
+                            <div className="form-fields__field">
                                 <label htmlFor="city">City</label>
                                 <input type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
                             </div>
-                            <div className="form-field">
+                            <div className="form-fields__field">
                                 <label htmlFor="country">Country</label>
                                 <input type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} />
                             </div>
-                            <div className="form-field">
-                                <ImageInput image={image} className="form-field" setImage={setImage} />
+                            <div className="form-fields__field">
+                                <ImageInput image={image} setImage={setImage} />
                             </div>
-                            <div className="form-field form-actions">
-                                <button type="button" className="btn danger" onClick={() => navigate(previousPage)}>Cancel</button>
-                                <button type="submit" className="btn primary">Create</button>
+                            <div className="form-fields__actions form-actions">
+                                <button type="button" className="btn btn--danger" onClick={() => navigate(previousPage)}>Cancel</button>
+                                <button type="submit" className="btn btn--primary">Create</button>
                             </div>
                         </div>
 

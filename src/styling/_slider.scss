@@ -1,0 +1,25 @@
+.slider {
+  width: 100%;
+  min-width: 0;
+}
+
+.slider__content {
+  width: 100%;
+}
+
+.slider__toggle {
+  display: flex;
+  width: 100%;
+}
+
+.slider__toggle--left {
+  justify-content: flex-start;
+}
+
+.slider__toggle--center {
+  justify-content: center;
+}
+
+.slider__toggle--right {
+  justify-content: flex-end;
+}

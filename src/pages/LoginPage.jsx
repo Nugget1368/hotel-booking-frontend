@@ -60,7 +60,7 @@ const LoginPage = () => {
                                 setFormData={setFormData}
                             />
                             <div className="form-actions">
-                                <button type="submit" className="btn primary">Log in</button>
+                                <button type="submit" className="btn btn--primary">Log in</button>
                             </div>
                         </fieldset>
                     </form>
@@ -77,7 +77,7 @@ const LoginPage = () => {
                                     setFormData={setFormData}
                                 />
                                 <div className="form-actions">
-                                    <button type="submit" className="btn primary">Create Account</button>
+                                    <button type="submit" className="btn btn--primary">Create Account</button>
                                 </div>
                             </fieldset>
                         </form>
