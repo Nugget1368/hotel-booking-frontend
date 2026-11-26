@@ -1,31 +1,19 @@
 import { useEffect, useState } from "react"
 import Api from "../application/api"
-import Card from "../components/Card"
+import UserDataItem from "../components/users/UserDataItem"
 import Slider from "../components/Slider"
 import HotelForms from "../components/forms/HotelForms"
+import HotelArticle from "../components/HotelArticle"
+import HotelList from "../components/HotelList"
+import { MySessionStorage } from "../application/localStorage"
+import ReservationItem from "../components/reservations/ReservationItem"
 
 const AdminPage = () => {
 
   const [reservations, setReservations] = useState([]);
-  const [editMode, setEditMode] = useState(false);
-  const [editId, setEditId] = useState(null);
-  const [editData, setEditData] = useState({
-    roomType: "",
-    checkIn: "",
-    checkOut: ""
-  });
   const [users, setUsers] = useState([]);
   const [hotels, setHotels] = useState([]);
-
-  const toggleEditMode = (id) => {
-    setEditId(id);
-    setEditMode(!editMode);
-    setEditData({
-      roomType: "",
-      checkIn: "",
-      checkOut: ""
-    });
-  }
+  const [userRole, setUserRole] = useState(null);
 
   const getReservations = async () => {
     let result = await Api.getReservationsAsync();
@@ -37,114 +25,65 @@ const AdminPage = () => {
     setUsers(result);
   }
 
-  const deleteUser = async (id) => {
-    let result = await Api.deleteUserAsync(id);
-    if (result.success) {
-      let newList = users.filter((user) => user.guestId !== id);
-      setUsers(newList);
-      getReservations();
-    }
-    else {
-      alert("Could not delete user.");
-    }
-  }
-
-  const deleteReservation = async (id) => {
-    let result = await Api.deleteReservationAsync(id);
-    if (result.success) {
-      let newList = reservations.filter((reservation) => reservation.reservationId !== id);
-      setReservations(newList);
-    }
-    else {
-      alert("Could not delete reservation.");
-    }
-  }
-
-  const editReservation = async (reservation) => {
-    Object.keys(editData).forEach(key => {
-      if (editData[key] === "")
-        editData[key] = reservation[key];
-    })
-    let id = reservation.reservationId;
-    let result = await Api.editReservationAsync(id, editData);
-    if (result.success) {
-      let newList = reservations.map((r) => r.reservationId === id ? result.reservation : r);
-      setReservations(newList);
-      toggleEditMode(null);
-    }
-    else {
-      alert("Could not edit reservation.");
-    }
-  }
-
   const getAllHotels = async () => {
     let result = await Api.getHotelsAsync();
     console.log(result);
     setHotels(result);
   }
 
+  const handleUserDeleted = () => {
+    getReservations();
+  };
+
   useEffect(() => {
     getReservations();
     getAllUSers();
     getAllHotels();
+    async function fetchUserRole() {
+      const token = MySessionStorage.getUserToken();
+      const response = await Api.getUserRoleAsync(token);
+      setUserRole(response.role);
+    }
+    fetchUserRole();
   }, [])
+
 
   return (
     <>
       <header>
-        <h1>AdminPage</h1>
+        <h2>AdminPage</h2>
       </header>
       <section>
         <article>
           <header className="row">
-            <h2>Hotels</h2>
+            <h3>Hotels</h3>
           </header>
-            <Slider label="Add new hotel" defaultOpen={false}>
+          <Slider label="Add new hotel" defaultOpen={false}>
+            <div className="border">
               <HotelForms />
-            </Slider>
-          <section className="btn-container">
-            <button onClick={getAllHotels}>Refresh</button>
+            </div>
+          </Slider>
+          <section>
+          <button onClick={getAllHotels} className="btn btn--primary">Refresh</button>
           </section>
-          <ul>
+          <HotelList>
             {hotels && hotels.length > 0 ?
               hotels.map((hotel, index) => {
                 return (
-                  <Card as="li" key={`hotel-${hotel.hotelId ? hotel.hotelId : index}`} className="row">
-                    {hotel.img && hotel.img !== "" ?
-                      <div className="column">
-                        <img src={`data:${hotel.imgType};base64,${hotel.img}`} alt={hotel.name} />
-                      </div>
-                      :
-                      <div className="column">
-                        <img src="https://via.placeholder.com/150" alt={hotel.name} />
-                      </div>
-                    }
-                    <div className="column align-self-start">
-                      <header>
-                        <h3>{hotel.name}</h3>
-                      </header>
-                      <section className="column">
-                        <p><strong>Location:</strong> {hotel.city}, {hotel.country}</p>
-                      </section>
-                      <section className="column">
-                        <h4>Contacts</h4>
-                        <p><strong>Email:</strong> {hotel.email}</p>
-                        <p><strong>Phone:</strong> {hotel.phone}</p>
-                      </section>
-                    </div>
-                    <section className="btn-container align-self-end">
-                      <button className="btn">Edit</button>
-                      <button className="btn">Delete</button>
-                    </section>
-                  </Card>
+                  <HotelArticle
+                    key={`hotel-${hotel.hotelId || index}`}
+                    hotel={hotel}
+                    showDetails
+                  >
+                    <button className="btn btn--warning">Edit</button>
+                    <button className="btn btn--danger">Delete</button>
+                  </HotelArticle>
                 )
               })
               :
-              <li>
-                <p>No hotels found.</p>
-              </li>
+              <p>No hotels found.</p>
             }
-          </ul>
+          </HotelList>
         </article>
       </section>
       <section>
@@ -156,39 +95,12 @@ const AdminPage = () => {
             {reservations && reservations.length > 0 ?
               reservations.map((reservation) => {
                 return (
-                  <Card as="li" key={reservation.reservationId}>
-                    <div className="row">
-                      <div className="column">
-                        <h3>{reservation.firstName} {reservation.lastName}</h3>
-                        {editMode && editId === reservation.reservationId ?
-                          <p><strong>Room Type:</strong> <input type="text" placeholder={reservation.roomType} defaultValue={reservation.roomType} onChange={(e) => setEditData({ ...editData, roomType: e.target.value })} /></p>
-                          :
-                          <p><strong>Room Type:</strong> {reservation.roomType}</p>
-                        }
-                        {editMode && editId === reservation.reservationId ?
-                          <>
-                            <p><strong>Check In:</strong> <input type="date" defaultValue={reservation.checkIn} placeholder={reservation.checkIn} onChange={(e) => setEditData({ ...editData, checkIn: e.target.value })} /></p>
-                            <p><strong>Check Out:</strong> <input type="date" defaultValue={reservation.checkOut} placeholder={reservation.checkOut} onChange={(e) => setEditData({ ...editData, checkOut: e.target.value })} /></p>
-                          </>
-                          :
-                          <p><strong>Check In:</strong> {reservation.checkIn} | <strong>Check Out:</strong> {reservation.checkOut}</p>
-                        }
-                      </div>
-                      <div className="btn-container">
-                        {editMode && editId === reservation.reservationId ?
-                          <>
-                            <button className="btn" onClick={() => editReservation(reservation)}>Save</button>
-                            <button className="btn" onClick={() => toggleEditMode(null)}>Cancel</button>
-                          </>
-                          :
-                          <>
-                            <button className="btn" onClick={() => toggleEditMode(reservation.reservationId)}>Edit</button>
-                            <button className="btn" onClick={() => deleteReservation(reservation.reservationId)}>Delete</button>
-                          </>
-                        }
-                      </div>
-                    </div>
-                  </Card>
+                  <ReservationItem
+                    key={reservation.reservationId}
+                    reservation={reservation}
+                    reservationList={reservations}
+                    setReservationsList={setReservations}
+                  />
                 )
               })
               :
@@ -206,17 +118,11 @@ const AdminPage = () => {
             {users && users.length > 0 ?
               users.map((user) => {
                 return (
-                  <Card as="li" key={user.guestId}>
-                    <div className="row">
-                      <div className="column">
-                        <h3>{user.firstName} {user.lastName}</h3>
-                        <p><strong>Email:</strong> {user.email}</p>
-                      </div>
-                      <div className="btn-container">
-                        <button className="btn" onClick={() => deleteUser(user.guestId)}>Delete</button>
-                      </div>
-                    </div>
-                  </Card>
+                  <UserDataItem 
+                  key={user.guestId} 
+                  user={user} 
+                  userList={users} setUserList={setUsers}
+                  onUserDeleted={handleUserDeleted} />
                 )
               })
               :

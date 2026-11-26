@@ -4,7 +4,7 @@ import Card from '../Card'
 
 const ReservationsList = ({ reservations }) => {
     return (
-        <ul>
+        <ul className="reservations-list">
             {reservations && reservations.length > 0 ?
                 reservations.map((reservation, index) => <Card as="li" key={index}><div className="column"><Reservation reservation={reservation} /></div></Card>) :
                 <li>Det finns inga bokningar</li>

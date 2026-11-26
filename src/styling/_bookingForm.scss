@@ -1,0 +1,8 @@
+.booking-form {
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    justify-content: center;
+    gap: 0.25rem;
+  }
+}

@@ -2,16 +2,24 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import api from "../../application/api.js"
 import { MySessionStorage } from "../../application/localStorage.js"
+import CreateAccountForm from "./CreateAccountForm.jsx"
+import ReservationForm from "./ReservationForm.jsx"
+import HotelArticle from "../HotelArticle.jsx";
+import Api from "../../application/api.js"
+
 
 export default function BookingForms() {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
-    const [roomType, setRoomType] = useState("single");
-    const [checkIn, setCheckIn] = useState("");
-    const [checkOut, setCheckOut] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);
+    const [hotel, setHotel] = useState({});
+    const [formData, setFormData] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        roomType: "single",
+        checkIn: "",
+        checkOut: ""
+    });
 
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
@@ -20,25 +28,23 @@ export default function BookingForms() {
         if (MySessionStorage.getUserInfo()) {
             setLoggedIn(true);
             let user = MySessionStorage.getUserInfo();
-            setFirstName(user.firstName);
-            setLastName(user.lastName);
-            setEmail(user.email);
-            setPhone(user.phone);
+            setFormData({ ...formData, firstName: user.firstName, lastName: user.lastName, email: user.email, phone: user.phone });
         }
+        async function getHotel(){
+            let h = await Api.getHotelByIdAsync(Number(searchParams.get("hotelId")));
+            if(h !== null){
+                setHotel(h);
+            }
+        }
+        getHotel();
     }, [])
 
-    const reservation = async (e) => {
+    const CreateReservation = async (e) => {
         e.preventDefault();
         const hotelIdParam = searchParams.get("hotelId");
         const hotelId = hotelIdParam === null ? null : Number(hotelIdParam);
         let data = {
-            firstName,
-            lastName,
-            email,
-            phone,
-            roomType,
-            checkIn,
-            checkOut,
+            ...formData,
             ...(Number.isInteger(hotelId) && hotelId > 0 ? { hotelId } : {})
         };
         ///TODO: Move this to backend
@@ -56,59 +62,32 @@ export default function BookingForms() {
 
     return (
         <>
-            <article>
-                <header>
-                    <h1>Make a reservation</h1>
+            <article className="booking-form">
+                <header className="booking-form__header">
+                    <h2>Make a reservation</h2>
                 </header>
-                <form onSubmit={reservation}>
-                    <fieldset>
-                        {loggedIn ?
-                            <div className="column">
-                                <h3><strong>Logged in as:</strong> {firstName} {lastName}</h3>
-                                <h4><strong>Email:</strong> {email}</h4>
-                            </div>
-                            :
-                            <>
-                                <div className="row">
-                                    <div className="column">
-                                        <label htmlFor="firstName">First Name</label>
-                                        <input type="text" name="firstName" id="firstName" required autoFocus value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                                    </div>
-                                    <div className="column">
-                                        <label htmlFor="lastName">Last Name</label>
-                                        <input type="text" name="lastName" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-                                    </div>
-                                </div>
+                <div className="booking-form__content">
+                    <form onSubmit={CreateReservation}>
+                        <fieldset>
+                            {loggedIn ?
                                 <div className="column">
-                                    <label htmlFor="email">Email</label>
-                                    <input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                    <h3>Logged in as: {formData.firstName} {formData.lastName}</h3>
+                                    <h4>Email: {formData.email}</h4>
                                 </div>
-                                <div className="column">
-                                    <label htmlFor="phone">Phone</label>
-                                    <input type="tel" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
-                                </div>
-                            </>
-                        }
-                        <div className="column">
-                            <label htmlFor="roomType">Room Type</label>
-                            <select name="roomType" id="roomType" value={roomType} onChange={(e) => setRoomType(e.target.value)}>
-                                <option value="single">Single</option>
-                                <option value="double">Double</option>
-                            </select>
-                        </div>
-                        <div className="row">
-                            <div className="column">
-                                <label htmlFor="checkIn">Check In</label>
-                                <input type="date" name="checkIn" id="checkIn" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} />
-                            </div>
-                            <div className="column">
-                                <label htmlFor="checkOut">Check Out</label>
-                                <input type="date" name="checkOut" id="checkOut" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} />
-                            </div>
-                        </div>
-                        <button type="submit">Submit</button>
-                    </fieldset>
-                </form>
+                                :
+                                <CreateAccountForm
+                                    formData={formData}
+                                    setFormData={setFormData}
+                                />
+                            }
+                            <ReservationForm
+                                formData={formData}
+                                setFormData={setFormData}
+                            />
+                        </fieldset>
+                    </form>
+                    <HotelArticle showDetails hotel={hotel}/>
+                </div>
             </article>
         </>
     );

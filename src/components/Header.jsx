@@ -1,6 +1,6 @@
 import { Link } from "react-router"
 import { useState, useEffect } from "react";
-import {MySessionStorage} from "../application/localStorage"
+import {MySessionStorage} from "../application/localStorage";
 import { useNavigate } from "react-router";
 
 const Header = () => {
@@ -19,9 +19,9 @@ const Header = () => {
   }
 
   return (
-    <header id="main-header">
-        <div className="row"></div>
-        <div className="row">
+    <header className="main-header">
+        <div className="main-header__spacer"></div>
+        <div className="main-header__actions">
             { loggedIn ?
             <button onClick={logout}>Log out</button> :
             <Link to="/profile/login">Login</Link>

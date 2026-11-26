@@ -1,0 +1,235 @@
+@use "./colors";
+@use "./card";
+@use "./formFields";
+@use "./header";
+@use "./hotelList";
+@use "./slider";
+@use "./bookingForm";
+@use "./hotelsPage";
+
+:root {
+  @include colors.theme-light;
+}
+[data-theme="dark"] {
+  @include colors.theme-dark;
+}
+
+#root {
+  width: 100%;
+}
+
+.btn {
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  border: 0;
+  border-radius: 0.45rem;
+  transition: color 0.2s;
+  transition: background-color 0.15s ease;
+  &:focus-visible {
+    outline: 2px solid colors.color(focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+.btn-link {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border: 0;
+  transition: color 0.2s;
+  background: transparent;
+  color: colors.color(link);
+  text-decoration: none;
+  padding: 0.2rem 0.4rem;
+  font-weight: 700;
+  &:hover {
+    color: colors.color(link-hover);
+    box-shadow: 0 2px 0px 0px colors.color(link-hover);
+  }
+  &--primary {
+    color: colors.color(primary);
+    background: transparent;
+    &:hover {
+      color: colors.color(primary-hover);
+      background: transparent;
+    }
+  }
+  &--secondary {
+    color: colors.color(on-secondary);
+    background: transparent;
+
+    &:hover {
+      color: colors.color(on-secondary);
+      background: transparent;
+    }
+  }
+}
+
+.btn--warning {
+  color: colors.color(on-warning);
+  background-color: colors.color(warning);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  &:hover {
+    background-color: colors.color(warning-hover);
+  }
+}
+
+.btn--danger {
+  color: colors.color(on-danger);
+  background-color: colors.color(danger);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  &:hover {
+    background-color: colors.color(danger-hover);
+  }
+}
+
+.btn--primary {
+  background: colors.color(primary);
+  color: colors.color(on-primary);
+  &:hover {
+    background: colors.color(primary-hover);
+    color: colors.color(on-primary);
+  }
+}
+
+.btn--secondary {
+  background: colors.color(secondary);
+  color: colors.color(on-secondary);
+  &:hover {
+    background: colors.color(secondary-hover);
+    color: colors.color(on-secondary);
+  }
+}
+
+#App {
+  background-color: #8c8c8c25;
+  color: colors.color(text);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  width: min(100%, 1200px);
+  margin-inline: auto;
+  min-width: 320px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding-bottom: 4rem;
+}
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  transition: 0.1s ease !important;
+  font-weight: 500;
+  color: colors.color(info);
+  text-decoration: inherit;
+  box-sizing: border-box;
+  padding: 0.2rem 0.4rem;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background: colors.color(surface);
+  background-image: radial-gradient(colors.color(primary) 1px, transparent 0);
+  background-size: 40px 40px;
+  background-position: -19px -19px;
+}
+
+fieldset {
+  border: 0;
+}
+
+header {
+  box-sizing: border-box;
+}
+
+h1 {
+  line-height: 1.1;
+  color: colors.color(text);
+}
+
+h2 {
+  line-height: 1.2;
+  color: colors.color(text);
+}
+
+h3 {
+  font-size: 1.5em;
+  line-height: 1.2;
+  color: colors.color(text-muted);
+  margin: 0;
+}
+
+h4 {
+  font-size: 1.1rem;
+  line-height: 1.2;
+  margin: 0;
+  color: colors.color(text-muted);
+}
+
+article,
+header {
+  box-sizing: border-box;
+  padding: 0rem 1rem;
+}
+
+ul {
+  padding: 0;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+.row {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 0.5rem;
+  > * {
+    flex: 1 1 0;
+  }
+  &.row--left {
+    justify-content: flex-start;
+    > * {
+      flex: none;
+    }
+  }
+}
+.column {
+  display: flex;
+  flex-flow: column;
+  gap: 0.5rem;
+}
+
+.border {
+  border: 2px solid colors.color(border);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}

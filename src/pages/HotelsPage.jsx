@@ -1,10 +1,10 @@
-import BookingForms from "../components/forms/BookingForms"
-import { Link } from "react-router"
+import { Link } from "react-router";
 import { MySessionStorage } from "../application/localStorage"
 import ReservationsList from "../components/reservations/ReservationsList"
 import { useEffect, useState } from "react"
 import api from "../application/api"
-import Card from "../components/Card"
+import HotelArticle from "../components/HotelArticle"
+import HotelList from "../components/HotelList"
 const HotelsPage = () => {
     const [myReservations, setMyReservations] = useState([]);
     const [hotels, setHotels] = useState([]);
@@ -35,38 +35,23 @@ const HotelsPage = () => {
     return (
         <>
             {myReservations && myReservations.length > 0 &&
-                <>
+                <div className="my-reservations">
                     <h2>My Reservations</h2>
                     <ReservationsList reservations={myReservations} />
-                </>
+                </div>
             }
-            <section className="card-list">
+            <HotelList>
                 {
                     hotels.map((hotel, index) => (
-                        <Card as="article" key={`hotel-${hotel.hotelId || index}`} className="card">
-                            <div className="column" style={{ width: "100%" }}>
-                                {hotel.img && hotel.img !== "" ?
-                                    <img src={`data:${hotel.imgType};base64,${hotel.img}`} alt={hotel.name} />
-                                    :
-                                    <img src="https://via.placeholder.com/150" alt={hotel.name} />}
-                            </div>
-                            <div className="column">
-                                <h2>{hotel.name}</h2>
-                                <p>Address: {hotel.address}</p>
-                            </div>
-                            <div className="row">
-                                <p>{hotel.city}</p>
-                                <p>{hotel.country}</p>
-                            </div>
-                            <div className="column">
-                                <p>Phone: {hotel.phone}</p>
-                                <p>Email: {hotel.email}</p>
-                            </div>
-                            <Link to={`/booking?hotelId=${hotel.id}`}>Book This</Link>
-                        </Card>
+                        <HotelArticle
+                            key={`hotel-${hotel.hotelId || index}`}
+                            hotel={hotel}
+                        >
+                            <Link className="btn btn--primary" to={`/booking?hotelId=${hotel.id}`}>Book This</Link>
+                        </HotelArticle>
                     ))
                 }
-            </section>
+            </HotelList>
         </>
     )
 }
