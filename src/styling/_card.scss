@@ -1,3 +1,4 @@
+@use "./colors";
 
 .card {
   box-sizing: border-box;
@@ -8,21 +9,21 @@
   min-width: 0;
   max-width: 24rem;
   padding: 1rem;
-  border: 1px solid color(border);
-  background-color: color(surface);
-  color: color(text);
-  box-shadow: 0 0 0 1px color(shadow);
+  border: 1px solid colors.color(border);
+  background-color: colors.color(surface);
+  color: colors.color(text);
+  box-shadow: 0 0 0 1px colors.color(shadow);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px color(shadow);
+    box-shadow: 0 8px 20px colors.color(shadow);
   }
 
   &:focus-within {
-    outline: 2px solid color(focus-ring);
+    outline: 2px solid colors.color(focus-ring);
     outline-offset: 2px;
   }
 
@@ -40,14 +41,14 @@
   p {
     font-size: 0.95rem;
     margin: 0;
-    color: color(text-muted);
+    color: colors.color(text-muted);
     overflow-wrap: anywhere;
   }
 
   h2, h3 {
     font-size: 1.1rem;
     margin: 0;
-    color: color(text);
+    color: colors.color(text);
   }
 
   > a {
@@ -59,24 +60,24 @@
 
   a.btn--primary {
     background: transparent;
-    color: color(primary);
+    color: colors.color(primary);
 
     &:hover {
       background: transparent;
       transition: color 0.1s ease;
-      color: color(primary);
-      box-shadow: 0 0 0 2px color(focus-ring);
+      color: colors.color(primary);
+      box-shadow: 0 0 0 2px colors.color(focus-ring);
       border-radius: 4px;
     }
   }
 
   a.btn--secondary {
-    color: color(secondary);
+    color: colors.color(secondary);
   }
 
   a:hover {
     transition: color 0.1s ease;
-    color: color(on-info);
+    color: colors.color(on-info);
   }
 }
 

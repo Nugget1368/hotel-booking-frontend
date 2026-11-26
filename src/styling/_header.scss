@@ -1,3 +1,4 @@
+@use "./colors";
 
 .main-header {
   box-sizing: border-box;
@@ -11,10 +12,10 @@
   width: 100%;
   min-height: 4.5rem;
   padding: 0.75rem 1.5rem;
-  color: color(on-primary);
-  background: linear-gradient(110deg, color(primary-hover), color(primary));
-  border-bottom: 1px solid color(border);
-  box-shadow: 0 4px 14px color(shadow);
+  color: colors.color(on-primary);
+  background: linear-gradient(110deg, colors.color(primary-hover), colors.color(primary));
+  border-bottom: 1px solid colors.color(border);
+  box-shadow: 0 4px 14px colors.color(shadow);
 }
 
 .main-header__spacer {
@@ -34,9 +35,9 @@
     justify-content: center;
     min-height: 2.5rem;
     padding: 0.5rem 1rem;
-    border: 1px solid color(on-primary);
+    border: 1px solid colors.color(on-primary);
     border-radius: 999px;
-    color: color(on-primary);
+    color: colors.color(on-primary);
     font: inherit;
     font-weight: 600;
     text-decoration: none;
@@ -44,8 +45,8 @@
     transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 
     &:hover {
-      color: color(primary);
-      background-color: color(on-primary);
+      color: colors.color(primary);
+      background-color: colors.color(on-primary);
     }
 
     &:active {
@@ -53,7 +54,7 @@
     }
 
     &:focus-visible {
-      outline: 2px solid color(on-primary);
+      outline: 2px solid colors.color(on-primary);
       outline-offset: 3px;
     }
   }

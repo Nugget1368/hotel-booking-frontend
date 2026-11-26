@@ -1,17 +1,17 @@
-@import "./colors";
-@import "./card";
-@import "./formFields";
-@import "./header";
-@import "./hotelList";
-@import "./slider";
-@import "./bookingForm";
-@import "./hotelsPage";
+@use "./colors";
+@use "./card";
+@use "./formFields";
+@use "./header";
+@use "./hotelList";
+@use "./slider";
+@use "./bookingForm";
+@use "./hotelsPage";
 
 :root {
-  @include theme-light;
+  @include colors.theme-light;
 }
 [data-theme="dark"] {
-  @include theme-dark;
+  @include colors.theme-dark;
 }
 
 #root {
@@ -26,7 +26,7 @@
   transition: color 0.2s;
   transition: background-color 0.15s ease;
   &:focus-visible {
-    outline: 2px solid color(focus-ring);
+    outline: 2px solid colors.color(focus-ring);
     outline-offset: 2px;
   }
 }
@@ -37,74 +37,74 @@
   border: 0;
   transition: color 0.2s;
   background: transparent;
-  color: color(link);
+  color: colors.color(link);
   text-decoration: none;
   padding: 0.2rem 0.4rem;
   font-weight: 700;
   &:hover {
-    color: color(link-hover);
-    box-shadow: 0 2px 0px 0px color(link-hover);
+    color: colors.color(link-hover);
+    box-shadow: 0 2px 0px 0px colors.color(link-hover);
   }
   &--primary {
-    color: color(primary);
+    color: colors.color(primary);
     background: transparent;
     &:hover {
-      color: color(primary-hover);
+      color: colors.color(primary-hover);
       background: transparent;
     }
   }
   &--secondary {
-    color: color(on-secondary);
+    color: colors.color(on-secondary);
     background: transparent;
 
     &:hover {
-      color: color(on-secondary);
+      color: colors.color(on-secondary);
       background: transparent;
     }
   }
 }
 
 .btn--warning {
-  color: color(on-warning);
-  background-color: color(warning);
+  color: colors.color(on-warning);
+  background-color: colors.color(warning);
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   &:hover {
-    background-color: color(warning-hover);
+    background-color: colors.color(warning-hover);
   }
 }
 
 .btn--danger {
-  color: color(on-danger);
-  background-color: color(danger);
+  color: colors.color(on-danger);
+  background-color: colors.color(danger);
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   &:hover {
-    background-color: color(danger-hover);
+    background-color: colors.color(danger-hover);
   }
 }
 
 .btn--primary {
-  background: color(primary);
-  color: color(on-primary);
+  background: colors.color(primary);
+  color: colors.color(on-primary);
   &:hover {
-    background: color(primary-hover);
-    color: color(on-primary);
+    background: colors.color(primary-hover);
+    color: colors.color(on-primary);
   }
 }
 
 .btn--secondary {
-  background: color(secondary);
-  color: color(on-secondary);
+  background: colors.color(secondary);
+  color: colors.color(on-secondary);
   &:hover {
-    background: color(secondary-hover);
-    color: color(on-secondary);
+    background: colors.color(secondary-hover);
+    color: colors.color(on-secondary);
   }
 }
 
 #App {
   background-color: #8c8c8c25;
-  color: color(text);
+  color: colors.color(text);
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-content: start;
@@ -134,7 +134,7 @@
 a {
   transition: 0.1s ease !important;
   font-weight: 500;
-  color: color(info);
+  color: colors.color(info);
   text-decoration: inherit;
   box-sizing: border-box;
   padding: 0.2rem 0.4rem;
@@ -147,8 +147,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background: color(surface);
-  background-image: radial-gradient(color(primary) 1px, transparent 0);
+  background: colors.color(surface);
+  background-image: radial-gradient(colors.color(primary) 1px, transparent 0);
   background-size: 40px 40px;
   background-position: -19px -19px;
 }
@@ -163,18 +163,18 @@ header {
 
 h1 {
   line-height: 1.1;
-  color: color(text);
+  color: colors.color(text);
 }
 
 h2 {
   line-height: 1.2;
-  color: color(text);
+  color: colors.color(text);
 }
 
 h3 {
   font-size: 1.5em;
   line-height: 1.2;
-  color: color(text-muted);
+  color: colors.color(text-muted);
   margin: 0;
 }
 
@@ -182,7 +182,7 @@ h4 {
   font-size: 1.1rem;
   line-height: 1.2;
   margin: 0;
-  color: color(text-muted);
+  color: colors.color(text-muted);
 }
 
 article,
@@ -229,7 +229,7 @@ ul {
 }
 
 .border {
-  border: 2px solid color(border);
+  border: 2px solid colors.color(border);
   border-radius: 0.5rem;
   padding: 0.5rem;
 }

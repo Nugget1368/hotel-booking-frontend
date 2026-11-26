@@ -1,3 +1,4 @@
+@use "./colors";
 
 .form-fields {
   display: grid;
@@ -17,7 +18,7 @@
   min-width: 0;
 
   label {
-    color: color(text);
+    color: colors.color(text);
     font-size: 0.95rem;
     font-weight: 600;
   }
@@ -29,22 +30,22 @@
     width: 100%;
     min-width: 0;
     padding: 0.7rem 0.8rem;
-    border: 1px solid color(border-strong);
+    border: 1px solid colors.color(border-strong);
     border-radius: 0.45rem;
-    background-color: color(surface);
-    color: color(text);
+    background-color: colors.color(surface);
+    color: colors.color(text);
     font: inherit;
     transition:
       border-color 0.15s ease,
       box-shadow 0.15s ease;
 
     &:hover {
-      border-color: color(text-subtle);
+      border-color: colors.color(text-subtle);
     }
 
     &:focus-visible {
-      border-color: color(focus-ring);
-      outline: 2px solid color(focus-ring);
+      border-color: colors.color(focus-ring);
+      outline: 2px solid colors.color(focus-ring);
       outline-offset: 2px;
     }
   }
