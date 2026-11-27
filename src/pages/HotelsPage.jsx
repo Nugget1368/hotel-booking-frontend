@@ -9,14 +9,12 @@ import {fetchHotels} from "../store/hotelSlice.js";
 import {fetchReservations} from "../store/reservationSlice.js";
 
 const HotelsPage = () => {
-    // const [myReservations, setMyReservations] = useState([]);
     const {hotels, hotelCurrent, status, error} = useSelector((state) => state.hotels);
     const {reservations} = useSelector((state) => state.reservations);
     let dispatch = useDispatch();
 
     useEffect(() => {
         if (MySessionStorage.getUserToken()) {
-            console.log("HEllo token")
             dispatch(fetchReservations(mySessionStorage.getUserToken()));
         }
         if (hotels.length <= 0) {
