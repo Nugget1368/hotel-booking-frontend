@@ -1,9 +1,8 @@
 import { MySessionStorage } from "./localStorage";
 
 export default class GuestsApi {
-    static getAllGuestsAsync = async () => {
+    static getAllGuestsAsync = async (token) => {
         const apiUrl = import.meta.env.VITE_API_URL;
-        let token = MySessionStorage.getUserToken();
         try {
             let response = await fetch(apiUrl + "/guests", {
                 method: "GET",
@@ -19,9 +18,8 @@ export default class GuestsApi {
         }
     }
 
-    static deleteUserAsync = async (id) => {
+    static deleteUserAsync = async (id, token) => {
         const apiUrl = import.meta.env.VITE_API_URL;
-        let token = MySessionStorage.getUserToken();
         try {
             let response = await fetch(apiUrl + `/guests/${id}`, {
                 method: "DELETE",
@@ -71,9 +69,8 @@ export default class GuestsApi {
         }
     }
 
-    static getUserRoleAsync = async () => {
+    static getUserRoleAsync = async (token) => {
         const apiUrl = import.meta.env.VITE_API_URL;
-        let token = MySessionStorage.getUserToken();
         try {
             let response = await fetch(apiUrl + "/guests/profile/role", {
                 method: "GET",

@@ -1,7 +1,7 @@
 import {Link} from "react-router";
 import {MySessionStorage as mySessionStorage, MySessionStorage} from "../application/localStorage"
 import ReservationsList from "../components/reservations/ReservationsList"
-import {useEffect, useState} from "react"
+import {useEffect} from "react"
 import HotelArticle from "../components/HotelArticle"
 import HotelList from "../components/HotelList"
 import {useSelector, useDispatch} from "react-redux";
