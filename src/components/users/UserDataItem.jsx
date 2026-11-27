@@ -1,20 +1,15 @@
 import CardLong from "../CardLong"
-import Api from "../../application/api"
-import {useDispatch, useSelector} from "react-redux"
-import {setGuestAll} from "../../store/guestSlice.js";
+import {useDispatch} from "react-redux"
+import {deleteGuest} from "../../store/guestSlice.js";
 
 const UserDataItem = (props) => {
-  const { user, userList, onUserDeleted } = props;
+  const { user } = props;
   const dispatch = useDispatch();
 
   const deleteUser = async () => {
-    let result = await Api.deleteUserAsync(user.guestId);
-    if (result.success) {
-      let newList = userList.filter((u) => u.guestId !== user.guestId);
-      dispatch(setGuestAll(newList));
-      onUserDeleted(); // Call the callback function to notify the parent component
-    }
-    else {
+    try {
+      await dispatch(deleteGuest(user.guestId)).unwrap();
+    } catch {
       alert("Could not delete user.");
     }
   }

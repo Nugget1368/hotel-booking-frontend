@@ -22,22 +22,38 @@ export const reservationSlice = createSlice({
 
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchReservations.pending, (state, action) => {
+        builder.addCase(fetchUserReservations.pending, (state, action) => {
             state.status = "pending"
         })
-            .addCase(fetchReservations.fulfilled, (state, action) => {
+            .addCase(fetchUserReservations.fulfilled, (state, action) => {
                 state.status = "fulfilled"
                 state.reservations = action.payload
             })
-            .addCase(fetchReservations.rejected, (state, action) => {
+            .addCase(fetchUserReservations.rejected, (state, action) => {
+                state.status = "rejected"
+                state.error = action.error.message;
+            })
+            .addCase(fetchReservationsAll.pending, (state, action) => {
+                state.status = "pending"
+            })
+            .addCase(fetchReservationsAll.fulfilled, (state, action) => {
+                state.status = "fulfilled"
+                state.reservations = action.payload
+            })
+            .addCase(fetchReservationsAll.rejected, (state, action) => {
                 state.status = "rejected"
                 state.error = action.error.message;
             })
     }
 })
 
-export const fetchReservations = createAsyncThunk("reservations/fetchReservations", async (token) => {
+export const fetchUserReservations = createAsyncThunk("reservations/fetchUserReservations", async (token) => {
     let result = await api.getUserReservationAsync(token);
+    return result;
+})
+
+export const fetchReservationsAll = createAsyncThunk("reservations/fetchReservationsAll", async (token) => {
+    let result = await api.getReservationsAsync(token);
     return result;
 })
 

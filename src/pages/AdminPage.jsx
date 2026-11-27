@@ -5,51 +5,24 @@ import Slider from "../components/Slider"
 import HotelForms from "../components/forms/HotelForms"
 import HotelArticle from "../components/HotelArticle"
 import HotelList from "../components/HotelList"
-import {MySessionStorage} from "../application/localStorage"
 import ReservationItem from "../components/reservations/ReservationItem"
 import {useSelector, useDispatch} from "react-redux";
-import {fetchGuests, deleteGuest} from "../store/guestSlice.js";
+import {fetchGuests} from "../store/guestSlice.js";
+import {fetchHotels} from "../store/hotelSlice.js";
+import {fetchReservationsAll} from "../store/reservationSlice.js";
 
 const AdminPage = () => {
 
-    ///TODO: Remove this
-    const [reservations, setReservations] = useState([]);
-    // const [users, setUsers] = useState([]);
-    const [hotels, setHotels] = useState([]);
-    const [userRole, setUserRole] = useState(null);
-    /// Remove this
-
-    const {guestAll} = useSelector((state) => state.guests);
+    const {guestAll, status, error} = useSelector((state) => state.guests);
+    const {hotels} = useSelector((state) => state.hotels);
+    const {reservations} = useSelector((state) => state.reservations);
     const dispatch = useDispatch();
-
-    const getReservations = async () => {
-        let result = await Api.getReservationsAsync();
-        setReservations(result);
-    }
-
-    const getAllHotels = async () => {
-        let result = await Api.getHotelsAsync();
-        console.log(result);
-        setHotels(result);
-    }
-
-    const handleUserDeleted = () => {
-        getReservations();
-    };
 
     useEffect(() => {
         dispatch(fetchGuests());
-        // getReservations();
-        // getAllHotels();
-
-        // async function fetchUserRole() {
-        //     const token = MySessionStorage.getUserToken();
-        //     const response = await Api.getUserRoleAsync(token);
-        //     setUserRole(response.role);
-        // }
-        //
-        // fetchUserRole();
-    }, [])
+        dispatch(fetchHotels());
+        dispatch(fetchReservationsAll())
+    }, [dispatch])
 
 
     return (
@@ -68,7 +41,7 @@ const AdminPage = () => {
                         </div>
                     </Slider>
                     <section>
-                        <button onClick={getAllHotels} className="btn btn--primary">Refresh</button>
+                        <button onClick={() => dispatch(fetchHotels())} className="btn btn--primary">Refresh</button>
                     </section>
                     <HotelList>
                         {hotels && hotels.length > 0 ?
@@ -103,7 +76,6 @@ const AdminPage = () => {
                                         key={reservation.reservationId}
                                         reservation={reservation}
                                         reservationList={reservations}
-                                        setReservationsList={setReservations}
                                     />
                                 )
                             })
@@ -119,17 +91,17 @@ const AdminPage = () => {
                         <h2>Users</h2>
                     </header>
                     <ul>
-                        {guestAll && guestAll.length > 0 ?
+                        {status === "pending" && <li><p>Loading users...</p></li>}
+                        {status === "rejected" && <li><p role="alert">{error}</p></li>}
+                        {status !== "pending" && guestAll && guestAll.length > 0 ?
                             guestAll.map((guest) => {
                                 return (
                                     <UserDataItem
-                                        key={user.guestId}
-                                        user={user}
-                                        userList={guest}
-                                        onUserDeleted={handleUserDeleted}/>
+                                        key={guest.guestId}
+                                        user={guest}/>
                                 )
                             })
-                            :
+                            : status !== "pending" && status !== "rejected" &&
                             <li>
                                 <p>There are no users</p>
                             </li>

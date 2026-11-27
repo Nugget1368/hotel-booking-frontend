@@ -6,7 +6,7 @@ import HotelArticle from "../components/HotelArticle"
 import HotelList from "../components/HotelList"
 import {useSelector, useDispatch} from "react-redux";
 import {fetchHotels} from "../store/hotelSlice.js";
-import {fetchReservations} from "../store/reservationSlice.js";
+import {fetchUserReservations} from "../store/reservationSlice.js";
 
 const HotelsPage = () => {
     const {hotels, hotelCurrent, status, error} = useSelector((state) => state.hotels);
@@ -15,7 +15,7 @@ const HotelsPage = () => {
 
     useEffect(() => {
         if (MySessionStorage.getUserToken()) {
-            dispatch(fetchReservations(mySessionStorage.getUserToken()));
+            dispatch(fetchUserReservations(mySessionStorage.getUserToken()));
         }
         if (hotels.length <= 0) {
             dispatch(fetchHotels());

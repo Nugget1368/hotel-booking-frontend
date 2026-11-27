@@ -1,10 +1,14 @@
 import CardLong from "../CardLong"
 import { useState } from "react";
 import Api from "../../application/api.js"
+import {useDispatch} from "react-redux";
+import {setReservations} from "../../store/reservationSlice.js";
 
 export default function ReservationItem(props) {
-  const { reservation, reservationList, setReservationsList } = props;
+  const { reservation, reservationList } = props;
   const [editMode, setEditMode] = useState(false);
+  const dispatch = useDispatch();
+
   const [editData, setEditData] = useState({
     roomType: reservation.roomType,
     checkIn: reservation.checkIn,
@@ -23,7 +27,7 @@ export default function ReservationItem(props) {
     let result = await Api.deleteReservationAsync(id);
     if (result.success) {
       let newList = reservationList.filter((reservation) => reservation.reservationId !== id);
-      setReservationsList(newList);
+
     }
     else {
       alert("Could not delete reservation.");
@@ -40,6 +44,7 @@ export default function ReservationItem(props) {
     if (result.success) {
       let newList = reservationList.map((r) => r.reservationId === id ? result.reservation : r);
       setReservationsList(newList);
+      dispatch(setReservations(newList));
       toggleEditMode(null);
     }
     else {
