@@ -1,29 +1,23 @@
 import {Link} from "react-router";
-import {MySessionStorage} from "../application/localStorage"
+import {MySessionStorage as mySessionStorage, MySessionStorage} from "../application/localStorage"
 import ReservationsList from "../components/reservations/ReservationsList"
 import {useEffect, useState} from "react"
-import api from "../application/api"
 import HotelArticle from "../components/HotelArticle"
 import HotelList from "../components/HotelList"
 import {useSelector, useDispatch} from "react-redux";
-import {setHotels, setHotelCurrent, fetchHotels} from "../store/hotelSlice.js";
+import {fetchHotels} from "../store/hotelSlice.js";
+import {fetchReservations} from "../store/reservationSlice.js";
 
 const HotelsPage = () => {
-    const [myReservations, setMyReservations] = useState([]);
-    // const [hotels, setHotels] = useState([]);
+    // const [myReservations, setMyReservations] = useState([]);
     const {hotels, hotelCurrent, status, error} = useSelector((state) => state.hotels);
+    const {reservations} = useSelector((state) => state.reservations);
     let dispatch = useDispatch();
-
-    const getReservations = async () => {
-        let result = await api.getUserReservationAsync(MySessionStorage.getUserToken());
-        if (result) {
-            setMyReservations(result);
-        }
-    }
 
     useEffect(() => {
         if (MySessionStorage.getUserToken()) {
-            getReservations();
+            console.log("HEllo token")
+            dispatch(fetchReservations(mySessionStorage.getUserToken()));
         }
         if (hotels.length <= 0) {
             dispatch(fetchHotels());
@@ -32,10 +26,10 @@ const HotelsPage = () => {
 
     return (
         <>
-            {myReservations && myReservations.length > 0 &&
+            {reservations && reservations.length > 0 &&
                 <div className="my-reservations">
                     <h2>My Reservations</h2>
-                    <ReservationsList reservations={myReservations}/>
+                    <ReservationsList reservations={reservations}/>
                 </div>
             }
             <HotelList>
