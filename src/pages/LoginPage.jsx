@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import api from "../application/api.js"
-import { MySessionStorage } from "../application/localStorage.js";
+import { useDispatch, useSelector } from "react-redux";
+import { createGuest, getGuestRole, loginGuest } from "../store/guestSlice.js";
 import LoginForm from "../components/forms/LoginForm.jsx";
 import CreateAccountForm from "../components/forms/CreateAccountForm.jsx";
 import Slider from "../components/Slider.jsx";
@@ -16,39 +16,40 @@ const LoginPage = () => {
     });
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { status, error } = useSelector((state) => state.guests);
 
     const createAccount = async (e) => {
         e.preventDefault();
         let data = { ...formData };
         ///TODO: Move this to backend
         Object.keys(data).forEach(key => data[key] === "" ? data[key] = null : data[key]);
-        let response = await api.createAccountAsync(data);
-        if (response.success) {
+        const action = await dispatch(createGuest(data));
+        if (createGuest.fulfilled.match(action)) {
             alert("Account was created!");
-        }
-        else {
-            alert("Account was not created!");
         }
     }
 
     const login = async (e) => {
         e.preventDefault();
         let data = { email: formData.email, password: formData.password };
-        let response = await api.loginUserAsync(data);
-        if (response.success) {
-            MySessionStorage.setUserToken(response.rows.token);
-            MySessionStorage.saveUserInfo(response.rows);
-            let roleResponse = await api.getUserRoleAsync(response.rows.token);
-            roleResponse.role === "admin" ? navigate("/admin/dashboard") : navigate("/");
+        const action = await dispatch(loginGuest(data));
+        if (!loginGuest.fulfilled.match(action)) {
+            return;
         }
-        else {
-            alert("Login was not successful...");
-        }
+
+        const roleAction = await dispatch(getGuestRole(action.payload.rows.token));
+        navigate(
+            getGuestRole.fulfilled.match(roleAction) && roleAction.payload.role === "admin"
+                ? "/admin/dashboard"
+                : "/"
+        );
     }
 
     return (
         <>
             <section>
+                {error && <p role="alert">{error}</p>}
                 <article>
                     <header>
                         <h3>Log in</h3>
@@ -60,7 +61,7 @@ const LoginPage = () => {
                                 setFormData={setFormData}
                             />
                             <div className="form-actions">
-                                <button type="submit" className="btn btn--primary">Log in</button>
+                                <button type="submit" className="btn btn--primary" disabled={status === "pending"}>Log in</button>
                             </div>
                         </fieldset>
                     </form>
@@ -77,7 +78,7 @@ const LoginPage = () => {
                                     setFormData={setFormData}
                                 />
                                 <div className="form-actions">
-                                    <button type="submit" className="btn btn--primary">Create Account</button>
+                                    <button type="submit" className="btn btn--primary" disabled={status === "pending"}>Create Account</button>
                                 </div>
                             </fieldset>
                         </form>

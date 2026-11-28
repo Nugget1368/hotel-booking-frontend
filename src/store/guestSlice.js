@@ -27,11 +27,19 @@ export const deleteGuest = createAsyncThunk("guests/deleteGuest", async (id, {re
 
 export const createGuest = createAsyncThunk("guests/createGuest", async (guest, {rejectWithValue}) => {
     const result = await api.createAccountAsync(guest);
+    if (!result.success) {
+        return rejectWithValue(result.message || "Account was not created.");
+    }
     return result;
 })
 
 export const loginGuest = createAsyncThunk("guests/loginGuest", async (guest, {rejectWithValue}) => {
     const result = await api.loginUserAsync(guest);
+    if (!result.success || !result.rows?.token) {
+        return rejectWithValue(result.message || "Login was not successful.");
+    }
+    // MySessionStorage.setUserToken(result.rows.token);
+    // MySessionStorage.saveUserInfo(result.rows);
     return result;
 })
 
@@ -97,7 +105,7 @@ export const guestSlice = createSlice({
                 state.guestCurrent = {
                     ...state.guestCurrent,
                     ...action.payload.rows,
-                    token: action.payload.rows?.token || "",
+                    token: action.payload.rows.token,
                 };
             })
             .addCase(loginGuest.rejected, (state, action) => {
