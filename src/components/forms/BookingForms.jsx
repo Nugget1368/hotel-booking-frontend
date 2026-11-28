@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import api from "../../application/api.js"
 import CreateAccountForm from "./CreateAccountForm.jsx"
 import ReservationForm from "./ReservationForm.jsx"
 import HotelArticle from "../HotelArticle.jsx";
+import { fetchHotelById, setHotelCurrent } from "../../store/hotelSlice.js";
 
 
 export default function BookingForms() {
     const guestCurrent = useSelector((state) => state.guests.guestCurrent);
     const loggedIn = Boolean(guestCurrent.token);
-    const [hotel, setHotel] = useState({});
+    const {hotelCurrent: hotel, status, error} = useSelector((state) => state.hotels);
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -23,6 +24,10 @@ export default function BookingForms() {
 
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
+    const dispatch = useDispatch();
+    const hotelIdParam = searchParams.get("hotelId");
+    const parsedHotelId = hotelIdParam === null ? null : Number(hotelIdParam);
+    const hotelId = Number.isInteger(parsedHotelId) && parsedHotelId > 0 ? parsedHotelId : null;
 
     useEffect(() => {
         if (loggedIn) {
@@ -45,22 +50,18 @@ export default function BookingForms() {
     }, [loggedIn, guestCurrent.firstName, guestCurrent.lastName, guestCurrent.email, guestCurrent.phone]);
 
     useEffect(() => {
-        async function getHotel(){
-            let h = await api.getHotelByIdAsync(Number(searchParams.get("hotelId")));
-            if(h !== null){
-                setHotel(h);
-            }
+        if (hotelId !== null) {
+            dispatch(fetchHotelById(hotelId));
+        } else {
+            dispatch(setHotelCurrent({}));
         }
-        getHotel();
-    }, [searchParams])
+    }, [dispatch, hotelId])
 
     const CreateReservation = async (e) => {
         e.preventDefault();
-        const hotelIdParam = searchParams.get("hotelId");
-        const hotelId = hotelIdParam === null ? null : Number(hotelIdParam);
         let data = {
             ...formData,
-            ...(Number.isInteger(hotelId) && hotelId > 0 ? { hotelId } : {})
+            ...(hotelId !== null ? { hotelId } : {})
         };
         ///TODO: Move this to backend
         Object.keys(data).forEach(key => data[key] === "" ? data[key] = null : data[key]);
@@ -102,6 +103,7 @@ export default function BookingForms() {
                         </fieldset>
                     </form>
                     <HotelArticle showDetails hotel={hotel}/>
+                    {status === "rejected" && error && <p role="alert">{error}</p>}
                 </div>
             </article>
         </>

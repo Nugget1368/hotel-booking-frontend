@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router";
-import { useSelector } from "react-redux";
-import api from "../../application/api.js"
+import { useDispatch, useSelector } from "react-redux";
+import {
+    createHotel as createHotelThunk,
+    fetchHotelById,
+    fetchHotels,
+    setHotelCurrent,
+    updateHotel as updateHotelThunk
+} from "../../store/hotelSlice.js";
 import ImageInput from "./ImageInput.jsx";
 
 export default function HotelForms() {
@@ -11,78 +17,73 @@ export default function HotelForms() {
     const [adress, setAdress] = useState("");
     const [city, setCity] = useState("");
     const [country, setCountry] = useState("");
-    const [hotelId, setHotelId] = useState(null);
     const [image, setImage] = useState(null);
 
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    const token = useSelector((state) => state.guests.guestCurrent.token);
+    const dispatch = useDispatch();
+    const {hotelCurrent, status, error} = useSelector((state) => state.hotels);
 
     const previousPage = "/admin/dashboard";
+    const hotelIdParam = searchParams.get("hotelId");
+    const parsedHotelId = hotelIdParam === null ? null : Number(hotelIdParam);
+    const hotelId = Number.isInteger(parsedHotelId) && parsedHotelId > 0 ? parsedHotelId : null;
 
     useEffect(() => {
-        const hotelIdParam = searchParams.get("hotelId");
-        if (hotelIdParam !== null) {
-            setHotelId(Number(hotelIdParam));
+        if (hotelId !== null) {
+            dispatch(fetchHotelById(hotelId));
+        } else {
+            dispatch(setHotelCurrent({}));
         }
-        if (Number.isInteger(hotelId) && hotelId > 0) {
-            fetchHotel(hotelId);
-        }
-    }, [])
+    }, [dispatch, hotelId])
 
-    const fetchHotel = async (hotelId) => {
-        let response = await api.getHotelByIdAsync(hotelId);
-        if (response) {
-            setName(response.name);
-            setEmail(response.email);
-            setPhone(response.phone);
-            setAdress(response.adress);
-            setCity(response.city);
-            setCountry(response.country);
-        }
-    }
+    useEffect(() => {
+        setName(hotelCurrent.name ?? "");
+        setEmail(hotelCurrent.email ?? "");
+        setPhone(hotelCurrent.phone ?? "");
+        setAdress(hotelCurrent.adress ?? "");
+        setCity(hotelCurrent.city ?? "");
+        setCountry(hotelCurrent.country ?? "");
+    }, [hotelCurrent])
 
     const submitHotel = async (e) => {
         e.preventDefault();
         let data = { name, email, phone, adress, city, country, img: image };
         if (hotelId !== null) {
             data.id = hotelId;
-            updateHotel(data);
+            await updateHotel(data);
         }
         else {
-            createHotel(data);
+            await createHotel(data);
         }
     }
 
     const updateHotel = async (data) => {
-        let response = await api.updateHotelAsync(data, token);
-        if (response.success) {
+        const action = await dispatch(updateHotelThunk(data));
+        if (updateHotelThunk.fulfilled.match(action)) {
+            await dispatch(fetchHotels());
             alert("Hotel was updated!");
             navigate(previousPage);
-        }
-        else {
-            alert("Hotel was not updated!");
         }
     }
 
     const createHotel = async (data) => {
-        let response = await api.createHotelAsync(data, token);
-        if (response.success) {
+        const action = await dispatch(createHotelThunk(data));
+        if (createHotelThunk.fulfilled.match(action)) {
+            await dispatch(fetchHotels());
             alert("Hotel was created!");
             navigate(previousPage);
-        }
-        else {
-            alert("Hotel was not created!");
         }
     }
     return (
         <>
             <article>
                 <header>
-                    <h3>Create new hotel</h3>
+                    <h3>{hotelId === null ? "Create new hotel" : "Update hotel"}</h3>
                 </header>
                 <form onSubmit={submitHotel}>
                     <fieldset>
+                        {status === "rejected" && error && <p role="alert">{error}</p>}
                         <div className="form-fields">
                             <div className="form-fields__field">
                                 <label htmlFor="name">Name</label>
@@ -113,7 +114,9 @@ export default function HotelForms() {
                             </div>
                             <div className="form-fields__actions form-actions">
                                 <button type="button" className="btn btn--danger" onClick={() => navigate(previousPage)}>Cancel</button>
-                                <button type="submit" className="btn btn--primary">Create</button>
+                                <button type="submit" className="btn btn--primary" disabled={status === "pending"}>
+                                    {hotelId === null ? "Create" : "Save"}
+                                </button>
                             </div>
                         </div>
 
