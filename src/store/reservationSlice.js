@@ -19,6 +19,19 @@ export const reservationSlice = createSlice({
         setReservationCurrent: (state, action) => {
             state.reservationCurrent = action.payload
         },
+        updateReservation: (state, action) => {
+            const index = state.reservations.findIndex(
+                (reservation) => reservation.reservationId === action.payload.reservationId
+            );
+            if (index !== -1) {
+                state.reservations[index] = action.payload;
+            }
+        },
+        removeReservation: (state, action) => {
+            state.reservations = state.reservations.filter(
+                (reservation) => reservation.reservationId !== action.payload
+            );
+        },
 
     },
     extraReducers: (builder) => {
@@ -57,5 +70,10 @@ export const fetchReservationsAll = createAsyncThunk("reservations/fetchReservat
     return result;
 })
 
-export const {setReservations, setReservationCurrent} = reservationSlice.actions;
+export const {
+    setReservations,
+    setReservationCurrent,
+    updateReservation,
+    removeReservation,
+} = reservationSlice.actions;
 export default reservationSlice.reducer

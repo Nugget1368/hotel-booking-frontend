@@ -75,7 +75,6 @@ const AdminPage = () => {
                                     <ReservationItem
                                         key={reservation.reservationId}
                                         reservation={reservation}
-                                        reservationList={reservations}
                                     />
                                 )
                             })
