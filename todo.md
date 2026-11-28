@@ -1,7 +1,7 @@
 # :star: Nice To Have
 
 - [x] Validering med JWT inloggning
-- [x] Logga ut knapp - Töm sessionStorage
+- [x] Logga ut knapp - Rensa guestSlice
 
 # :hammer: Needs Fixing
 

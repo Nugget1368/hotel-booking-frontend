@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
 import api from "../../application/api.js"
-import { MySessionStorage } from "../../application/localStorage.js"
 import CreateAccountForm from "./CreateAccountForm.jsx"
 import ReservationForm from "./ReservationForm.jsx"
 import HotelArticle from "../HotelArticle.jsx";
-import Api from "../../application/api.js"
+import { fetchHotelById, setHotelCurrent } from "../../store/hotelSlice.js";
 
 
 export default function BookingForms() {
-    const [loggedIn, setLoggedIn] = useState(false);
-    const [hotel, setHotel] = useState({});
+    const guestCurrent = useSelector((state) => state.guests.guestCurrent);
+    const loggedIn = Boolean(guestCurrent.token);
+    const {hotelCurrent: hotel, status, error} = useSelector((state) => state.hotels);
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -23,34 +24,49 @@ export default function BookingForms() {
 
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
+    const dispatch = useDispatch();
+    const hotelIdParam = searchParams.get("hotelId");
+    const parsedHotelId = hotelIdParam === null ? null : Number(hotelIdParam);
+    const hotelId = Number.isInteger(parsedHotelId) && parsedHotelId > 0 ? parsedHotelId : null;
 
     useEffect(() => {
-        if (MySessionStorage.getUserInfo()) {
-            setLoggedIn(true);
-            let user = MySessionStorage.getUserInfo();
-            setFormData({ ...formData, firstName: user.firstName, lastName: user.lastName, email: user.email, phone: user.phone });
+        if (loggedIn) {
+            setFormData((data) => ({
+                ...data,
+                firstName: guestCurrent.firstName,
+                lastName: guestCurrent.lastName,
+                email: guestCurrent.email,
+                phone: guestCurrent.phone
+            }));
+        } else {
+            setFormData((data) => ({
+                ...data,
+                firstName: "",
+                lastName: "",
+                email: "",
+                phone: ""
+            }));
         }
-        async function getHotel(){
-            let h = await Api.getHotelByIdAsync(Number(searchParams.get("hotelId")));
-            if(h !== null){
-                setHotel(h);
-            }
+    }, [loggedIn, guestCurrent.firstName, guestCurrent.lastName, guestCurrent.email, guestCurrent.phone]);
+
+    useEffect(() => {
+        if (hotelId !== null) {
+            dispatch(fetchHotelById(hotelId));
+        } else {
+            dispatch(setHotelCurrent({}));
         }
-        getHotel();
-    }, [])
+    }, [dispatch, hotelId])
 
     const CreateReservation = async (e) => {
         e.preventDefault();
-        const hotelIdParam = searchParams.get("hotelId");
-        const hotelId = hotelIdParam === null ? null : Number(hotelIdParam);
         let data = {
             ...formData,
-            ...(Number.isInteger(hotelId) && hotelId > 0 ? { hotelId } : {})
+            ...(hotelId !== null ? { hotelId } : {})
         };
         ///TODO: Move this to backend
         Object.keys(data).forEach(key => data[key] === "" ? data[key] = null : data[key]);
         let response;
-        loggedIn ? response = await api.createUserReservationAsync(MySessionStorage.getUserToken(), data) : response = await api.createGuestReservationAsync(data);
+        loggedIn ? response = await api.createUserReservationAsync(guestCurrent.token, data) : response = await api.createGuestReservationAsync(data);
         if (response.success) {
             alert("Reservation was made!");
             navigate("/");
@@ -87,6 +103,7 @@ export default function BookingForms() {
                         </fieldset>
                     </form>
                     <HotelArticle showDetails hotel={hotel}/>
+                    {status === "rejected" && error && <p role="alert">{error}</p>}
                 </div>
             </article>
         </>

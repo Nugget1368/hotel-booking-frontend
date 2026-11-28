@@ -1,55 +1,47 @@
-import { Link } from "react-router";
-import { MySessionStorage } from "../application/localStorage"
+import {Link} from "react-router";
 import ReservationsList from "../components/reservations/ReservationsList"
-import { useEffect, useState } from "react"
-import api from "../application/api"
+import {useEffect} from "react"
 import HotelArticle from "../components/HotelArticle"
 import HotelList from "../components/HotelList"
-const HotelsPage = () => {
-    const [myReservations, setMyReservations] = useState([]);
-    const [hotels, setHotels] = useState([]);
-    const getReservations = async () => {
-        let result = await api.getUserReservationAsync(MySessionStorage.getUserToken());
-        if (result) {
-            setMyReservations(result);
-        }
-    }
+import {useSelector, useDispatch} from "react-redux";
+import {fetchHotels} from "../store/hotelSlice.js";
+import {fetchUserReservations} from "../store/reservationSlice.js";
 
-    const getHotels = async () => {
-        let result = await api.getHotelsAsync();
-        console.log("result: ", result);
-        if (result) {
-            setHotels(result);
-        }
-    }
+const HotelsPage = () => {
+    const {hotels, hotelCurrent, status, error} = useSelector((state) => state.hotels);
+    const {reservations} = useSelector((state) => state.reservations);
+    const token = useSelector((state) => state.guests.guestCurrent.token);
+    let dispatch = useDispatch();
 
     useEffect(() => {
-        if (MySessionStorage.getUserToken()) {
-            getReservations();
+        if (token) {
+            dispatch(fetchUserReservations());
         }
-        if (hotels === undefined || hotels.length === 0) {
-            getHotels();
+        if (hotels.length <= 0) {
+            dispatch(fetchHotels());
         }
-    }, [])
+    }, [dispatch, hotels.length, token])
 
     return (
         <>
-            {myReservations && myReservations.length > 0 &&
+            {token && reservations && reservations.length > 0 &&
                 <div className="my-reservations">
                     <h2>My Reservations</h2>
-                    <ReservationsList reservations={myReservations} />
+                    <ReservationsList reservations={reservations}/>
                 </div>
             }
             <HotelList>
-                {
-                    hotels.map((hotel, index) => (
-                        <HotelArticle
-                            key={`hotel-${hotel.hotelId || index}`}
-                            hotel={hotel}
-                        >
-                            <Link className="btn btn--primary" to={`/booking?hotelId=${hotel.id}`}>Book This</Link>
-                        </HotelArticle>
-                    ))
+                {status === "pending" ? <div><p>Loading...</p></div> :
+                    status === "error" ? <div>An error has occurred</div> :
+                        hotels && hotels.map((hotel, index) => (
+                            <HotelArticle
+                                key={`hotel-${hotel.hotelId || index}`}
+                                hotel={hotel}
+                            >
+                                <Link className="btn btn--primary" to={`/booking?hotelId=${hotel.id}`}>Book
+                                    This</Link>
+                            </HotelArticle>
+                        ))
                 }
             </HotelList>
         </>
