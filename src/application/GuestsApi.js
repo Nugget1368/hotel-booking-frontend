@@ -1,5 +1,3 @@
-import { MySessionStorage } from "./localStorage";
-
 export default class GuestsApi {
     static getAllGuestsAsync = async (token) => {
         const apiUrl = import.meta.env.VITE_API_URL;

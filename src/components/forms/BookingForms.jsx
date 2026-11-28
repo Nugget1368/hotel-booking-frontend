@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
+import { useSelector } from "react-redux";
 import api from "../../application/api.js"
-import { MySessionStorage } from "../../application/localStorage.js"
 import CreateAccountForm from "./CreateAccountForm.jsx"
 import ReservationForm from "./ReservationForm.jsx"
 import HotelArticle from "../HotelArticle.jsx";
-import Api from "../../application/api.js"
 
 
 export default function BookingForms() {
-    const [loggedIn, setLoggedIn] = useState(false);
+    const guestCurrent = useSelector((state) => state.guests.guestCurrent);
+    const loggedIn = Boolean(guestCurrent.token);
     const [hotel, setHotel] = useState({});
     const [formData, setFormData] = useState({
         firstName: "",
@@ -25,19 +25,34 @@ export default function BookingForms() {
     const [searchParams] = useSearchParams();
 
     useEffect(() => {
-        if (MySessionStorage.getUserInfo()) {
-            setLoggedIn(true);
-            let user = MySessionStorage.getUserInfo();
-            setFormData({ ...formData, firstName: user.firstName, lastName: user.lastName, email: user.email, phone: user.phone });
+        if (loggedIn) {
+            setFormData((data) => ({
+                ...data,
+                firstName: guestCurrent.firstName,
+                lastName: guestCurrent.lastName,
+                email: guestCurrent.email,
+                phone: guestCurrent.phone
+            }));
+        } else {
+            setFormData((data) => ({
+                ...data,
+                firstName: "",
+                lastName: "",
+                email: "",
+                phone: ""
+            }));
         }
+    }, [loggedIn, guestCurrent.firstName, guestCurrent.lastName, guestCurrent.email, guestCurrent.phone]);
+
+    useEffect(() => {
         async function getHotel(){
-            let h = await Api.getHotelByIdAsync(Number(searchParams.get("hotelId")));
+            let h = await api.getHotelByIdAsync(Number(searchParams.get("hotelId")));
             if(h !== null){
                 setHotel(h);
             }
         }
         getHotel();
-    }, [])
+    }, [searchParams])
 
     const CreateReservation = async (e) => {
         e.preventDefault();
@@ -50,7 +65,7 @@ export default function BookingForms() {
         ///TODO: Move this to backend
         Object.keys(data).forEach(key => data[key] === "" ? data[key] = null : data[key]);
         let response;
-        loggedIn ? response = await api.createUserReservationAsync(MySessionStorage.getUserToken(), data) : response = await api.createGuestReservationAsync(data);
+        loggedIn ? response = await api.createUserReservationAsync(guestCurrent.token, data) : response = await api.createGuestReservationAsync(data);
         if (response.success) {
             alert("Reservation was made!");
             navigate("/");

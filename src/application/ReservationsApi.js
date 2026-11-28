@@ -1,9 +1,6 @@
-import { MySessionStorage } from "./localStorage";
-
 export default class ReservationsApi {
-    static getReservationsAsync = async () => {
+    static getReservationsAsync = async (token) => {
         const apiUrl = import.meta.env.VITE_API_URL;
-        let token = MySessionStorage.getUserToken();
         try {
             let response = await fetch(apiUrl + "/reservations", {
                 method: "GET",
@@ -71,9 +68,8 @@ export default class ReservationsApi {
         }
     }
 
-    static deleteReservationAsync = async (id) => {
+    static deleteReservationAsync = async (id, token) => {
         const apiUrl = import.meta.env.VITE_API_URL;
-        let token = MySessionStorage.getUserToken();
         try {
             let response = await fetch(apiUrl + `/reservations/${id}`, {
                 method: "DELETE",
@@ -89,9 +85,8 @@ export default class ReservationsApi {
         }
     }
 
-    static editReservationAsync = async (id, data) => {
+    static editReservationAsync = async (id, data, token) => {
         const apiUrl = import.meta.env.VITE_API_URL;
-        let token = MySessionStorage.getUserToken();
         let newData = { checkIn: data.checkIn, checkOut: data.checkOut, roomType: data.roomType };
         try {
             let response = await fetch(apiUrl + `/reservations/${id}`, {

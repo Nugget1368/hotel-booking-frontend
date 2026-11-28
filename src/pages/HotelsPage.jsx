@@ -1,5 +1,4 @@
 import {Link} from "react-router";
-import {MySessionStorage as mySessionStorage, MySessionStorage} from "../application/localStorage"
 import ReservationsList from "../components/reservations/ReservationsList"
 import {useEffect} from "react"
 import HotelArticle from "../components/HotelArticle"
@@ -11,20 +10,21 @@ import {fetchUserReservations} from "../store/reservationSlice.js";
 const HotelsPage = () => {
     const {hotels, hotelCurrent, status, error} = useSelector((state) => state.hotels);
     const {reservations} = useSelector((state) => state.reservations);
+    const token = useSelector((state) => state.guests.guestCurrent.token);
     let dispatch = useDispatch();
 
     useEffect(() => {
-        if (MySessionStorage.getUserToken()) {
-            dispatch(fetchUserReservations(mySessionStorage.getUserToken()));
+        if (token) {
+            dispatch(fetchUserReservations());
         }
         if (hotels.length <= 0) {
             dispatch(fetchHotels());
         }
-    }, [])
+    }, [dispatch, hotels.length, token])
 
     return (
         <>
-            {reservations && reservations.length > 0 &&
+            {token && reservations && reservations.length > 0 &&
                 <div className="my-reservations">
                     <h2>My Reservations</h2>
                     <ReservationsList reservations={reservations}/>

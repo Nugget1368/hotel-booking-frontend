@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router";
+import { useSelector } from "react-redux";
 import api from "../../application/api.js"
 import ImageInput from "./ImageInput.jsx";
 
@@ -15,6 +16,7 @@ export default function HotelForms() {
 
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
+    const token = useSelector((state) => state.guests.guestCurrent.token);
 
     const previousPage = "/admin/dashboard";
 
@@ -53,7 +55,7 @@ export default function HotelForms() {
     }
 
     const updateHotel = async (data) => {
-        let response = await api.updateHotelAsync(data);
+        let response = await api.updateHotelAsync(data, token);
         if (response.success) {
             alert("Hotel was updated!");
             navigate(previousPage);
@@ -64,7 +66,7 @@ export default function HotelForms() {
     }
 
     const createHotel = async (data) => {
-        let response = await api.createHotelAsync(data);
+        let response = await api.createHotelAsync(data, token);
         if (response.success) {
             alert("Hotel was created!");
             navigate(previousPage);

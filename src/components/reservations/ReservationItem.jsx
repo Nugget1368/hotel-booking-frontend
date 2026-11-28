@@ -1,13 +1,14 @@
 import CardLong from "../CardLong"
 import { useState } from "react";
 import Api from "../../application/api.js"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { removeReservation, updateReservation } from "../../store/reservationSlice.js";
 
 export default function ReservationItem(props) {
   const { reservation } = props;
   const [editMode, setEditMode] = useState(false);
   const dispatch = useDispatch();
+  const token = useSelector((state) => state.guests.guestCurrent.token);
 
   const [editData, setEditData] = useState({
     roomType: reservation.roomType ?? "",
@@ -24,7 +25,7 @@ export default function ReservationItem(props) {
   }
 
   const deleteReservation = async (id) => {
-    let result = await Api.deleteReservationAsync(id);
+    let result = await Api.deleteReservationAsync(id, token);
     if (result.success) {
       dispatch(removeReservation(id));
     }
@@ -41,7 +42,7 @@ export default function ReservationItem(props) {
       checkIn: editData.checkIn || reservation.checkIn,
       checkOut: editData.checkOut || reservation.checkOut
     };
-    let result = await Api.editReservationAsync(id, updatedData);
+    let result = await Api.editReservationAsync(id, updatedData, token);
     if (result.success) {
       dispatch(updateReservation(result.reservation ?? { ...reservation, ...updatedData }));
       setEditMode(false);

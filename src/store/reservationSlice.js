@@ -1,5 +1,6 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import api from "../application/api.js";
+import {logoutGuest} from "./guestSlice.js";
 
 const initialState = {
     reservations: [],
@@ -37,6 +38,7 @@ export const reservationSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchUserReservations.pending, (state, action) => {
             state.status = "pending"
+            state.reservations = [];
         })
             .addCase(fetchUserReservations.fulfilled, (state, action) => {
                 state.status = "fulfilled"
@@ -57,16 +59,20 @@ export const reservationSlice = createSlice({
                 state.status = "rejected"
                 state.error = action.error.message;
             })
+            .addCase(logoutGuest, (state) => {
+                state.reservations = [];
+                state.reservationCurrent = {};
+            })
     }
 })
 
-export const fetchUserReservations = createAsyncThunk("reservations/fetchUserReservations", async (token) => {
-    let result = await api.getUserReservationAsync(token);
+export const fetchUserReservations = createAsyncThunk("reservations/fetchUserReservations", async (_, {getState}) => {
+    let result = await api.getUserReservationAsync(getState().guests.guestCurrent.token);
     return result;
 })
 
-export const fetchReservationsAll = createAsyncThunk("reservations/fetchReservationsAll", async (token) => {
-    let result = await api.getReservationsAsync(token);
+export const fetchReservationsAll = createAsyncThunk("reservations/fetchReservationsAll", async (_, {getState}) => {
+    let result = await api.getReservationsAsync(getState().guests.guestCurrent.token);
     return result;
 })
 

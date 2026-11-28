@@ -1,4 +1,3 @@
-import { MySessionStorage } from "./localStorage";
 import FileHandler from "../utils/fileHadler.js"
 export default class HotelsApi {
     static getHotelsAsync = async () => {
@@ -31,9 +30,8 @@ export default class HotelsApi {
             return null;
         }
     }
-    static createHotelAsync = async (hotel) => {
+    static createHotelAsync = async (hotel, token) => {
         const apiUrl = import.meta.env.VITE_API_URL;
-        let token = MySessionStorage.getUserToken();
         const img = hotel.img ? await FileHandler.fileToBase64(hotel.img) : null;
         const imgType = hotel.img ? hotel.img.type : null;
         try {
@@ -51,9 +49,8 @@ export default class HotelsApi {
             return null;
         }
     }
-    static updateHotelAsync = async (hotel) => {
+    static updateHotelAsync = async (hotel, token) => {
         const apiUrl = import.meta.env.VITE_API_URL;
-        let token = MySessionStorage.getUserToken();
         const img = hotel.img ? await FileHandler.fileToBase64(hotel.img) : null;
         const imgType = hotel.img ? hotel.img.type : null;
         try {
@@ -72,9 +69,8 @@ export default class HotelsApi {
             return null;
         }
     }
-    static deleteHotelAsync = async (hotelId) => {
+    static deleteHotelAsync = async (hotelId, token) => {
         const apiUrl = import.meta.env.VITE_API_URL;
-        let token = MySessionStorage.getUserToken();
         try {
             let response = await fetch(apiUrl + "/hotels/" + hotelId, {
                 method: "DELETE",

@@ -1,20 +1,15 @@
 import { Link } from "react-router"
-import { useState, useEffect } from "react";
-import {MySessionStorage} from "../application/localStorage";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { logoutGuest } from "../store/guestSlice.js";
 
 const Header = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
-
   const navigate = useNavigate();
-
-  useEffect(() => {
-    MySessionStorage.getUserInfo() ? setLoggedIn(true) : setLoggedIn(false);
-  }, [loggedIn]);
+  const dispatch = useDispatch();
+  const loggedIn = Boolean(useSelector((state) => state.guests.guestCurrent.token));
 
   const logout = () => {
-    MySessionStorage.removeUser();
-    setLoggedIn(false);
+    dispatch(logoutGuest());
     navigate("/");
   }
 
